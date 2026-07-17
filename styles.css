@@ -237,46 +237,58 @@ body.is-ar .track-artist {
   animation: cardPulse 0.45s ease;
 }
 
-.quote-en {
-  margin: 0.25rem 0 0;
+.quote-card.is-loading .verse-content {
+  opacity: 0.58;
+}
+
+.verse-content {
+  transition: opacity 0.2s ease;
+}
+
+.verse-title {
+  margin: 0 0 1rem;
   font-family: var(--font-quote);
-  font-size: clamp(2.4rem, 6vw, 3.6rem);
-  font-weight: 500;
+  font-size: clamp(1.2rem, 2.4vw, 1.55rem);
+  font-weight: 600;
   line-height: 1.15;
+  color: #1f2430;
+}
+
+.verse-content {
+  min-height: 228px;
+  padding: clamp(1.25rem, 3vw, 1.75rem) 0;
+  border-top: 1px solid rgba(115, 86, 40, 0.22);
+  border-bottom: 1px solid rgba(115, 86, 40, 0.22);
+}
+
+.quote-en {
+  max-width: 31rem;
+  margin: 0 auto 0.8rem;
+  font-family: var(--font-quote);
+  font-size: clamp(1.3rem, 2.8vw, 1.6rem);
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.5;
   color: #1a1a1a;
 }
 
 .quote-ar {
-  margin: 0;
+  margin: 0 auto 1.1rem;
+  max-width: 34rem;
   font-family: var(--font-ar);
-  font-size: clamp(1.55rem, 3.8vw, 2.15rem);
+  font-size: clamp(2.15rem, 5.2vw, 3rem);
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.8;
   color: #2c2c2c;
 }
 
-.quote-divider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.65rem;
-  margin: 1.35rem auto 1.15rem;
-  width: min(280px, 70%);
-}
-
-.divider-line {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  opacity: 0.85;
-}
-
-.divider-diamond {
-  width: 8px;
-  height: 8px;
-  background: var(--gold);
-  transform: rotate(45deg);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.18);
+.verse-reference {
+  margin: 0;
+  color: #6b6257;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .card-actions {
@@ -305,6 +317,112 @@ body.is-ar .track-artist {
 .card-action:hover {
   color: var(--ink);
   transform: translateY(-1px);
+}
+
+.share-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.share-menu {
+  display: flex;
+  gap: 0.45rem;
+  margin-top: 0.65rem;
+  padding: 0.45rem;
+  border: 1px solid rgba(115, 86, 40, 0.16);
+  border-radius: 14px;
+  background: rgba(255, 253, 248, 0.96);
+  box-shadow: 0 12px 30px rgba(30, 40, 60, 0.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.share-menu[hidden] {
+  display: none;
+}
+
+.share-menu button {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  color: #3d3a35;
+  background: transparent;
+  cursor: pointer;
+}
+
+.share-menu button:hover,
+.share-menu button:focus-visible {
+  color: #6e4f1b;
+  background: rgba(244, 231, 201, 0.78);
+  outline: none;
+}
+
+.share-menu .share-option-whatsapp {
+  color: #fff;
+  background: #25d366;
+}
+
+.share-menu .share-option-whatsapp:hover,
+.share-menu .share-option-whatsapp:focus-visible {
+  color: #fff;
+  background: #1eb55a;
+}
+
+.share-menu .share-option-facebook {
+  color: #fff;
+  background: #1877f2;
+}
+
+.share-menu .share-option-facebook:hover,
+.share-menu .share-option-facebook:focus-visible {
+  color: #fff;
+  background: #0f65d5;
+}
+
+.share-menu .share-option-messages {
+  color: #fff;
+  background: #2d8cff;
+}
+
+.share-menu .share-option-messages:hover,
+.share-menu .share-option-messages:focus-visible {
+  color: #fff;
+  background: #1674dc;
+}
+
+.share-menu .share-option-notes {
+  color: #77571a;
+  background: #f7d96d;
+}
+
+.share-menu .share-option-notes:hover,
+.share-menu .share-option-notes:focus-visible {
+  color: #624610;
+  background: #edc64b;
+}
+
+.share-menu .share-option-wechat {
+  color: #fff;
+  background: #07c160;
+}
+
+.share-menu .share-option-wechat:hover,
+.share-menu .share-option-wechat:focus-visible {
+  color: #fff;
+  background: #06a952;
+}
+
+.facebook-mark {
+  font-family: Arial, sans-serif;
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 1;
+  transform: translateY(2px);
 }
 
 .action-circle {
@@ -417,6 +535,174 @@ body.is-ar .track-artist {
   font-size: 1.15rem;
   color: #444;
   direction: rtl;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.prayer-reminder-card {
+  margin-top: 1.2rem;
+  padding: 1.4rem;
+  border: 1px solid rgba(115, 86, 40, 0.18);
+  border-radius: 18px;
+  background: rgba(255, 253, 248, 0.9);
+  box-shadow: 0 10px 28px rgba(30, 40, 60, 0.08);
+}
+
+.prayer-reminder-header {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.prayer-reminder-icon {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  color: #647da8;
+  background: rgba(222, 231, 245, 0.8);
+}
+
+.prayer-reminder-header h3 {
+  margin: 0 0 0.2rem;
+  font-family: var(--font-quote);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #1f2430;
+}
+
+.prayer-reminder-header p,
+.prayer-status,
+.prayer-hint {
+  margin: 0;
+  color: #5a6270;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.prayer-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin: 1.25rem 0;
+}
+
+.prayer-time-card {
+  padding: 0.75rem 0.45rem;
+  border: 1px solid rgba(115, 86, 40, 0.14);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.72);
+  text-align: center;
+}
+
+.prayer-time-card span {
+  display: block;
+  margin-bottom: 0.22rem;
+  color: #8c6d33;
+  font-size: 0.67rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.prayer-time-card time {
+  color: #2e3440;
+  font-family: var(--font-quote);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.prayer-settings {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(115, 86, 40, 0.16);
+}
+
+.prayer-method-label {
+  display: grid;
+  gap: 0.35rem;
+  color: #6f665a;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.prayer-method {
+  min-height: 38px;
+  padding: 0 1.8rem 0 0.65rem;
+  border: 1px solid rgba(115, 86, 40, 0.25);
+  border-radius: 9px;
+  color: #3a3329;
+  background: rgba(255, 255, 255, 0.9);
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+}
+
+.prayer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.prayer-enable,
+.prayer-refresh,
+.prayer-disable {
+  min-height: 40px;
+  padding: 0 0.85rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.prayer-enable {
+  border: 0;
+  color: #fff;
+  background: #526f9d;
+  box-shadow: 0 7px 14px rgba(82, 111, 157, 0.2);
+}
+
+.prayer-enable:hover {
+  background: #415d8a;
+  transform: translateY(-1px);
+}
+
+.prayer-refresh,
+.prayer-disable {
+  border: 1px solid rgba(115, 86, 40, 0.25);
+  color: #6d6255;
+  background: transparent;
+}
+
+.prayer-refresh:hover,
+.prayer-disable:hover {
+  background: rgba(222, 231, 245, 0.65);
+}
+
+.prayer-status {
+  margin-top: 0.9rem;
+}
+
+.prayer-hint {
+  margin-top: 0.28rem;
+  color: #7a7369;
+  font-size: 0.75rem;
 }
 
 /* Player */
@@ -672,6 +958,19 @@ body.is-ar .track-artist {
     justify-content: center;
     gap: 1.25rem;
   }
+
+  .prayer-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .prayer-settings {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .prayer-actions {
+    justify-content: flex-start;
+  }
 }
 
 @media (max-width: 520px) {
@@ -687,6 +986,22 @@ body.is-ar .track-artist {
     padding: 1.75rem 1.2rem 1.25rem;
   }
 
+  .verse-content {
+    min-height: 0;
+  }
+
+  .prayer-reminder-card {
+    padding: 1.2rem;
+  }
+
+  .prayer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .prayer-time-card:last-child {
+    grid-column: 1 / -1;
+  }
+
   .player-bar {
     bottom: 0.65rem;
   }
@@ -698,6 +1013,31 @@ body.is-ar .site-header {
 
 body.is-ar .card-actions {
   flex-direction: row-reverse;
+}
+
+body.is-ar .share-menu {
+  align-self: flex-start;
+}
+
+body.is-ar .share-menu button {
+  font-family: var(--font-ar);
+  text-align: right;
+}
+
+body.is-ar .prayer-reminder-card,
+body.is-ar .prayer-settings,
+body.is-ar .prayer-actions {
+  direction: rtl;
+}
+
+body.is-ar .prayer-reminder-header h3,
+body.is-ar .prayer-reminder-header p,
+body.is-ar .prayer-method-label,
+body.is-ar .prayer-method,
+body.is-ar .prayer-time-card time,
+body.is-ar .prayer-status,
+body.is-ar .prayer-hint {
+  font-family: var(--font-ar);
 }
 
 body.is-ar .player-bar {
