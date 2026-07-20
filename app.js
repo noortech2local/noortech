@@ -359,14 +359,51 @@ function openShareWindow(url) {
   hideShareMenu();
 }
 
+function openAppShareWithFallback(appUrl, webUrl) {
+  let appOpened = false;
+  let fallbackTimer;
+
+  const removeListeners = () => {
+    window.removeEventListener("blur", cancelFallback);
+    document.removeEventListener("visibilitychange", handleVisibilityChange);
+  };
+
+  const cancelFallback = () => {
+    appOpened = true;
+    window.clearTimeout(fallbackTimer);
+    removeListeners();
+  };
+
+  const handleVisibilityChange = () => {
+    if (document.visibilityState === "hidden") cancelFallback();
+  };
+
+  window.addEventListener("blur", cancelFallback, { once: true });
+  document.addEventListener("visibilitychange", handleVisibilityChange);
+  fallbackTimer = window.setTimeout(() => {
+    removeListeners();
+    if (!appOpened) window.location.href = webUrl;
+  }, 1500);
+
+  window.location.href = appUrl;
+  hideShareMenu();
+}
+
 function shareToWhatsApp() {
   const text = `${getVerseShareText()}\n${getVerseShareUrl()}`;
-  openShareWindow(`https://wa.me/?text=${encodeURIComponent(text)}`);
+  const encodedText = encodeURIComponent(text);
+  openAppShareWithFallback(
+    `whatsapp://send?text=${encodedText}`,
+    `https://wa.me/?text=${encodedText}`
+  );
 }
 
 function shareToFacebook() {
-  openShareWindow(
-    `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(getVerseShareUrl())}`
+  const shareUrl = getVerseShareUrl();
+  const encodedUrl = encodeURIComponent(shareUrl);
+  openAppShareWithFallback(
+    `fb://share?link=${encodedUrl}`,
+    `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`
   );
 }
 
