@@ -73,7 +73,7 @@ const i18n = {
     messages: "Messages",
     notes: "Save to Notes",
     wechat: "WeChat",
-    wechatCopied: "Verse copied. Open WeChat and paste it.",
+    wechatCopied: "Verse copied. WeChat is opening — choose a chat and paste it.",
     copyLink: "Copy link",
     linkCopied: "Link copied",
     verseLoadFailed: "Could not load a new verse. Please try again.",
@@ -115,7 +115,7 @@ const i18n = {
     messages: "الرسائل",
     notes: "الحفظ في الملاحظات",
     wechat: "وي تشات",
-    wechatCopied: "تم نسخ الآية. افتح وي تشات والصقها.",
+    wechatCopied: "تم نسخ الآية. يُفتح وي تشات الآن — اختر محادثة والصقها.",
     copyLink: "نسخ الرابط",
     linkCopied: "تم نسخ الرابط",
     verseLoadFailed: "تعذّر تحميل آية جديدة. حاول مرة أخرى.",
@@ -442,6 +442,11 @@ async function copyVerseForWeChat() {
   }
 }
 
+function shareToWeChat() {
+  copyVerseForWeChat();
+  openAppShareWithFallback("weixin://", window.location.href);
+}
+
 async function copyVerseLink() {
   try {
     await navigator.clipboard.writeText(`${getVerseShareText()}\n${getVerseShareUrl()}`);
@@ -716,7 +721,7 @@ els.shareWhatsAppBtn.addEventListener("click", shareToWhatsApp);
 els.shareFacebookBtn.addEventListener("click", shareToFacebook);
 els.shareMessagesBtn.addEventListener("click", shareToMessages);
 els.shareNotesBtn.addEventListener("click", shareToNotes);
-els.shareWeChatBtn.addEventListener("click", copyVerseForWeChat);
+els.shareWeChatBtn.addEventListener("click", shareToWeChat);
 els.copyLinkBtn.addEventListener("click", copyVerseLink);
 els.favoritesBtn.addEventListener("click", toggleFavorite);
 els.prayerEnableBtn.addEventListener("click", enablePrayerReminders);
