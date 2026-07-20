@@ -52,6 +52,60 @@ const tracks = [
     src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
     thumb: "assets/thumb.jpg",
   },
+  {
+    title: { en: "Golden Light", ar: "نور ذهبي" },
+    artist: { en: "Ambient Music", ar: "موسيقى هادئة" },
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+    thumb: "assets/thumb.jpg",
+  },
+  {
+    title: { en: "Gentle Rain", ar: "مطر هادئ" },
+    artist: { en: "Calm Soundscape", ar: "أجواء مطمئنة" },
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
+    thumb: "assets/thumb.jpg",
+  },
+  {
+    title: { en: "Evening Calm", ar: "سكينة المساء" },
+    artist: { en: "Soft Keys", ar: "أنغام هادئة" },
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
+    thumb: "assets/thumb.jpg",
+  },
+  {
+    title: { en: "Soft Horizon", ar: "أفق هادئ" },
+    artist: { en: "Ambient Music", ar: "موسيقى هادئة" },
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
+    thumb: "assets/thumb.jpg",
+  },
+  {
+    title: { en: "Quiet Garden", ar: "حديقة هادئة" },
+    artist: { en: "Calm Soundscape", ar: "أجواء مطمئنة" },
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
+    thumb: "assets/thumb.jpg",
+  },
+  {
+    title: { en: "Moonlit Path", ar: "طريق مضاء بالقمر" },
+    artist: { en: "Soft Keys", ar: "أنغام هادئة" },
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
+    thumb: "assets/thumb.jpg",
+  },
+  {
+    title: { en: "Restful Breeze", ar: "نسيم مريح" },
+    artist: { en: "Ambient Music", ar: "موسيقى هادئة" },
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3",
+    thumb: "assets/thumb.jpg",
+  },
+  {
+    title: { en: "Morning Stillness", ar: "سكون الصباح" },
+    artist: { en: "Calm Soundscape", ar: "أجواء مطمئنة" },
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3",
+    thumb: "assets/thumb.jpg",
+  },
+  {
+    title: { en: "Tender Waves", ar: "أمواج رقيقة" },
+    artist: { en: "Soft Keys", ar: "أنغام هادئة" },
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3",
+    thumb: "assets/thumb.jpg",
+  },
 ];
 
 const i18n = {
