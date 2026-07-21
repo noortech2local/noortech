@@ -5,10 +5,10 @@
   --ink: #2a2a2a;
   --ink-soft: #4a4a4a;
   --muted: #6b6b6b;
-  --glass: rgba(255, 255, 255, 0.58);
-  --glass-strong: rgba(255, 255, 255, 0.72);
-  --glass-border: rgba(255, 255, 255, 0.55);
-  --shadow: 0 20px 50px rgba(20, 30, 50, 0.18);
+  --glass: rgba(255, 253, 247, 0.72);
+  --glass-strong: rgba(255, 253, 247, 0.84);
+  --glass-border: rgba(119, 105, 73, 0.18);
+  --shadow: 0 20px 50px rgba(86, 72, 43, 0.12);
   --radius-card: 28px;
   --radius-pill: 999px;
   --font-ui: "Outfit", "Segoe UI", sans-serif;
@@ -33,7 +33,7 @@ body {
   min-height: 100vh;
   font-family: var(--font-ui);
   color: var(--ink);
-  background: #1a2430;
+  background: #f8f4ea;
   overflow-x: hidden;
 }
 
@@ -58,10 +58,9 @@ body.is-ar .track-artist {
   inset: 0;
   z-index: -2;
   background:
-    url("assets/hero.jpg") center / cover no-repeat,
-    linear-gradient(160deg, #2a3a52 0%, #6a7f96 42%, #c4a484 78%, #8b9eae 100%);
-  transform: scale(1.04);
-  animation: bgDrift 28s ease-in-out infinite alternate;
+    radial-gradient(ellipse 74% 52% at 50% 42%, rgba(178, 195, 168, 0.42) 0%, rgba(178, 195, 168, 0.16) 46%, transparent 74%),
+    radial-gradient(circle at 82% 16%, rgba(226, 197, 133, 0.24) 0%, transparent 20rem),
+    #f8f4ea;
 }
 
 .bg-veil {
@@ -69,23 +68,8 @@ body.is-ar .track-artist {
   inset: 0;
   z-index: -1;
   background:
-    linear-gradient(
-      180deg,
-      rgba(18, 28, 42, 0.22) 0%,
-      rgba(18, 28, 42, 0.08) 35%,
-      rgba(18, 28, 42, 0.15) 70%,
-      rgba(12, 20, 32, 0.45) 100%
-    );
+    linear-gradient(180deg, rgba(255, 255, 255, 0.26) 0%, rgba(248, 242, 229, 0.5) 100%);
   pointer-events: none;
-}
-
-@keyframes bgDrift {
-  from {
-    transform: scale(1.04) translate3d(0, 0, 0);
-  }
-  to {
-    transform: scale(1.1) translate3d(-1.2%, -0.8%, 0);
-  }
 }
 
 /* Header */
@@ -215,8 +199,8 @@ body.is-ar .track-artist {
   font-weight: 500;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.92);
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+  color: #6f654f;
+  text-shadow: none;
   animation: fadeUp 0.9s 0.15s ease both;
 }
 
@@ -448,8 +432,8 @@ body.is-ar .track-artist {
   gap: 0.2rem;
   margin: 0;
   font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.78);
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+  color: #7b705d;
+  text-shadow: none;
   animation: bob 2.4s ease-in-out infinite;
   pointer-events: none;
 }
@@ -460,9 +444,9 @@ body.is-ar .track-artist {
   padding: 4rem clamp(1.2rem, 4vw, 3rem) 8rem;
   background: linear-gradient(
     180deg,
-    rgba(12, 20, 32, 0.35) 0%,
-    rgba(245, 247, 250, 0.92) 28%,
-    #f3f5f8 100%
+    rgba(248, 244, 234, 0) 0%,
+    rgba(248, 244, 234, 0.82) 28%,
+    #f6f1e6 100%
   );
 }
 
