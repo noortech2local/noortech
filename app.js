@@ -443,8 +443,25 @@ function openAppShareWithFallback(appUrl, webUrl) {
   hideShareMenu();
 }
 
-function shareToWhatsApp() {
-  const text = `${getVerseShareText()}\n${getVerseShareUrl()}`;
+async function shareToWhatsApp() {
+  const shareUrl = getVerseShareUrl();
+
+  if (isIOSDevice() && typeof navigator.share === "function") {
+    try {
+      await navigator.share({
+        title: "NoorTech",
+        text: getVerseShareText(),
+        url: shareUrl,
+      });
+    } catch (error) {
+      if (error.name !== "AbortError") showToast(i18n[lang].shareFailed);
+    } finally {
+      hideShareMenu();
+    }
+    return;
+  }
+
+  const text = `${getVerseShareText()}\n${shareUrl}`;
   const encodedText = encodeURIComponent(text);
   openAppShareWithFallback(
     `whatsapp://send?text=${encodedText}`,
@@ -452,8 +469,29 @@ function shareToWhatsApp() {
   );
 }
 
-function shareToFacebook() {
+function isIOSDevice() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent)
+    || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+}
+
+async function shareToFacebook() {
   const shareUrl = getVerseShareUrl();
+
+  if (isIOSDevice() && typeof navigator.share === "function") {
+    try {
+      await navigator.share({
+        title: "NoorTech",
+        text: getVerseShareText(),
+        url: shareUrl,
+      });
+    } catch (error) {
+      if (error.name !== "AbortError") showToast(i18n[lang].shareFailed);
+    } finally {
+      hideShareMenu();
+    }
+    return;
+  }
+
   const encodedUrl = encodeURIComponent(shareUrl);
   openAppShareWithFallback(
     `fb://share?link=${encodedUrl}`,
