@@ -203,14 +203,6 @@ const els = {
   quoteReference: document.getElementById("quoteReference"),
   newInspirationBtn: document.getElementById("newInspirationBtn"),
   shareBtn: document.getElementById("shareBtn"),
-  shareWrap: document.getElementById("shareWrap"),
-  shareMenu: document.getElementById("shareMenu"),
-  shareWhatsAppBtn: document.getElementById("shareWhatsAppBtn"),
-  shareFacebookBtn: document.getElementById("shareFacebookBtn"),
-  shareMessagesBtn: document.getElementById("shareMessagesBtn"),
-  shareNotesBtn: document.getElementById("shareNotesBtn"),
-  shareWeChatBtn: document.getElementById("shareWeChatBtn"),
-  copyLinkBtn: document.getElementById("copyLinkBtn"),
   favoritesBtn: document.getElementById("favoritesBtn"),
   reflectionGrid: document.getElementById("reflectionGrid"),
   audioEl: document.getElementById("audioEl"),
@@ -396,116 +388,7 @@ function getVerseShareText() {
   return `${currentVerse.ar}\n“${currentVerse.en}”\n${currentVerse.ref}\n— NoorTech`;
 }
 
-function hideShareMenu() {
-  els.shareMenu.hidden = true;
-  els.shareBtn.setAttribute("aria-expanded", "false");
-}
-
-function toggleShareMenu() {
-  const willOpen = els.shareMenu.hidden;
-  els.shareMenu.hidden = !willOpen;
-  els.shareBtn.setAttribute("aria-expanded", String(willOpen));
-}
-
-function openShareWindow(url) {
-  const shareWindow = window.open(url, "_blank", "noopener,noreferrer");
-  if (!shareWindow) showToast(i18n[lang].shareFailed);
-  hideShareMenu();
-}
-
-function openAppShareWithFallback(appUrl, webUrl) {
-  let appOpened = false;
-  let fallbackTimer;
-
-  const removeListeners = () => {
-    window.removeEventListener("blur", cancelFallback);
-    document.removeEventListener("visibilitychange", handleVisibilityChange);
-  };
-
-  const cancelFallback = () => {
-    appOpened = true;
-    window.clearTimeout(fallbackTimer);
-    removeListeners();
-  };
-
-  const handleVisibilityChange = () => {
-    if (document.visibilityState === "hidden") cancelFallback();
-  };
-
-  window.addEventListener("blur", cancelFallback, { once: true });
-  document.addEventListener("visibilitychange", handleVisibilityChange);
-  fallbackTimer = window.setTimeout(() => {
-    removeListeners();
-    if (!appOpened) window.location.href = webUrl;
-  }, 1500);
-
-  window.location.href = appUrl;
-  hideShareMenu();
-}
-
-async function shareToWhatsApp() {
-  const shareUrl = getVerseShareUrl();
-
-  if (isIOSDevice() && typeof navigator.share === "function") {
-    try {
-      await navigator.share({
-        title: "NoorTech",
-        text: getVerseShareText(),
-        url: shareUrl,
-      });
-    } catch (error) {
-      if (error.name !== "AbortError") showToast(i18n[lang].shareFailed);
-    } finally {
-      hideShareMenu();
-    }
-    return;
-  }
-
-  const text = `${getVerseShareText()}\n${shareUrl}`;
-  const encodedText = encodeURIComponent(text);
-  openAppShareWithFallback(
-    `whatsapp://send?text=${encodedText}`,
-    `https://wa.me/?text=${encodedText}`
-  );
-}
-
-function isIOSDevice() {
-  return /iPad|iPhone|iPod/.test(navigator.userAgent)
-    || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-}
-
-async function shareToFacebook() {
-  const shareUrl = getVerseShareUrl();
-
-  if (isIOSDevice() && typeof navigator.share === "function") {
-    try {
-      await navigator.share({
-        title: "NoorTech",
-        text: getVerseShareText(),
-        url: shareUrl,
-      });
-    } catch (error) {
-      if (error.name !== "AbortError") showToast(i18n[lang].shareFailed);
-    } finally {
-      hideShareMenu();
-    }
-    return;
-  }
-
-  const encodedUrl = encodeURIComponent(shareUrl);
-  openAppShareWithFallback(
-    `fb://share?link=${encodedUrl}`,
-    `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`
-  );
-}
-
-function shareToMessages() {
-  const text = `${getVerseShareText()}\n${getVerseShareUrl()}`;
-  window.location.href = `sms:?&body=${encodeURIComponent(text)}`;
-  hideShareMenu();
-}
-
-async function shareToNotes() {
+async function shareVerse() {
   if (!navigator.share) {
     copyVerseLink();
     return;
@@ -519,31 +402,13 @@ async function shareToNotes() {
     });
   } catch (error) {
     if (error.name !== "AbortError") showToast(i18n[lang].shareFailed);
-  } finally {
-    hideShareMenu();
   }
-}
-
-async function copyVerseForWeChat() {
-  try {
-    await navigator.clipboard.writeText(`${getVerseShareText()}\n${getVerseShareUrl()}`);
-    showToast(i18n[lang].wechatCopied);
-    hideShareMenu();
-  } catch {
-    showToast(i18n[lang].shareFailed);
-  }
-}
-
-function shareToWeChat() {
-  copyVerseForWeChat();
-  openAppShareWithFallback("weixin://", window.location.href);
 }
 
 async function copyVerseLink() {
   try {
     await navigator.clipboard.writeText(`${getVerseShareText()}\n${getVerseShareUrl()}`);
     showToast(i18n[lang].linkCopied);
-    hideShareMenu();
   } catch {
     showToast(i18n[lang].shareFailed);
   }
@@ -808,13 +673,7 @@ document.querySelectorAll(".lang-btn").forEach((btn) => {
 });
 
 els.newInspirationBtn.addEventListener("click", loadRandomVerse);
-els.shareBtn.addEventListener("click", toggleShareMenu);
-els.shareWhatsAppBtn.addEventListener("click", shareToWhatsApp);
-els.shareFacebookBtn.addEventListener("click", shareToFacebook);
-els.shareMessagesBtn.addEventListener("click", shareToMessages);
-els.shareNotesBtn.addEventListener("click", shareToNotes);
-els.shareWeChatBtn.addEventListener("click", shareToWeChat);
-els.copyLinkBtn.addEventListener("click", copyVerseLink);
+els.shareBtn.addEventListener("click", shareVerse);
 els.favoritesBtn.addEventListener("click", toggleFavorite);
 els.prayerEnableBtn.addEventListener("click", enablePrayerReminders);
 els.prayerRefreshBtn.addEventListener("click", updatePrayerTimes);
@@ -848,14 +707,6 @@ els.audioEl.addEventListener("pause", () => setPlayingUI(false));
 els.audioEl.addEventListener("ended", () => loadRandomTrack(true));
 els.audioEl.addEventListener("error", () => {
   setPlayingUI(false);
-});
-
-document.addEventListener("click", (event) => {
-  if (!els.shareWrap.contains(event.target)) hideShareMenu();
-});
-
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") hideShareMenu();
 });
 
 /* Init */
