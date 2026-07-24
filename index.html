@@ -142,12 +142,6 @@
 
     <section class="more-section" id="more">
       <div class="more-inner">
-        <h2 data-i18n="moreTitle">Reflections for the Heart</h2>
-        <p class="more-lead" data-i18n="moreLead">
-          Small reminders to carry through your day — gratitude, patience, and light.
-        </p>
-        <div class="reflection-grid" id="reflectionGrid"></div>
-
         <section class="prayer-reminder-card" aria-labelledby="prayerTitle">
           <div class="prayer-reminder-header">
             <div class="prayer-reminder-icon" aria-hidden="true">
@@ -180,11 +174,60 @@
                 Enable local reminders
               </button>
               <button class="prayer-refresh" id="prayerRefreshBtn" type="button" data-i18n="updatePrayerTimes">
-                Update times
+                Refresh location
+              </button>
+              <button
+                class="prayer-change"
+                id="prayerChangeBtn"
+                type="button"
+                aria-expanded="false"
+                aria-controls="cityPicker"
+                data-i18n="changePrayerLocation"
+              >
+                Change city
               </button>
               <button class="prayer-disable" id="prayerDisableBtn" type="button" hidden data-i18n="turnOffPrayerReminders">
                 Turn off
               </button>
+            </div>
+          </div>
+          <section class="city-picker" id="cityPicker" hidden aria-labelledby="cityPickerTitle">
+            <div class="city-picker-header">
+              <h4 id="cityPickerTitle" data-i18n="cityPickerTitle">Choose a city</h4>
+              <button
+                class="city-picker-close"
+                id="cityPickerCloseBtn"
+                type="button"
+                data-i18n-aria-label="cityPickerClose"
+                aria-label="Close city picker"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <form class="city-search-form" id="citySearchForm">
+              <label class="visually-hidden" for="citySearchInput" data-i18n="citySearchLabel">Search for a city</label>
+              <input
+                class="city-search-input"
+                id="citySearchInput"
+                type="search"
+                autocomplete="off"
+                data-i18n-placeholder="citySearchPlaceholder"
+                placeholder="Search any city or country"
+                aria-describedby="citySearchStatus"
+              />
+              <button class="city-search-submit" type="submit" data-i18n="citySearchButton">Search</button>
+            </form>
+            <p class="city-search-status" id="citySearchStatus" aria-live="polite"></p>
+            <div class="city-search-results" id="citySearchResults" aria-live="polite"></div>
+          </section>
+          <div class="prayer-location" id="prayerLocationDetails" hidden aria-live="polite">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path d="M20 10.4c0 5.2-8 10.1-8 10.1S4 15.6 4 10.4a8 8 0 1 1 16 0Z" />
+              <circle cx="12" cy="10.4" r="2.7" />
+            </svg>
+            <div>
+              <p class="prayer-location-name" id="prayerLocationName"></p>
+              <p class="prayer-location-updated" id="prayerLocationUpdated"></p>
             </div>
           </div>
           <p class="prayer-status" id="prayerStatus" aria-live="polite" data-i18n="prayerLocationPrompt">
@@ -265,6 +308,6 @@
 
     <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-    <script src="app.js?v=20260722-3"></script>
+    <script src="app.js?v=20260724-1"></script>
   </body>
 </html>

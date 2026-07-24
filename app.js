@@ -7,30 +7,13 @@ const fallbackVerse = {
 const QURAN_AYAH_COUNT = 6236;
 const QURAN_API_BASE = "https://api.alquran.cloud/v1/ayah";
 const PRAYER_TIMES_API_BASE = "https://api.aladhan.com/v1/timings";
+const CITY_SEARCH_API_BASE = "https://geocoding-api.open-meteo.com/v1/search";
 const PRAYERS = [
   { id: "Fajr", en: "Fajr", ar: "الفجر" },
   { id: "Dhuhr", en: "Dhuhr", ar: "الظهر" },
   { id: "Asr", en: "Asr", ar: "العصر" },
   { id: "Maghrib", en: "Maghrib", ar: "المغرب" },
   { id: "Isha", en: "Isha", ar: "العشاء" },
-];
-
-const reflections = [
-  {
-    label: { en: "Sabr", ar: "صبر" },
-    en: "Hold steady through the wait.",
-    ar: "اثبت في الانتظار.",
-  },
-  {
-    label: { en: "Shukr", ar: "شكر" },
-    en: "Name one blessing today.",
-    ar: "اذكر نعمة واحدة اليوم.",
-  },
-  {
-    label: { en: "Noor", ar: "نور" },
-    en: "Let your intention purify your path.",
-    ar: "اجعل نيتك تُنير طريقك.",
-  },
 ];
 
 const tracks = [
@@ -135,12 +118,27 @@ const i18n = {
     prayerLead: "Receive gentle reminders for each of the five daily prayers.",
     prayerMethodLabel: "Calculation method",
     enablePrayerReminders: "Enable local reminders",
-    updatePrayerTimes: "Update times",
+    updatePrayerTimes: "Refresh location",
+    changePrayerLocation: "Change city",
     turnOffPrayerReminders: "Turn off",
     prayerLocationPrompt:
       "Enable reminders to use your location and load today's prayer times.",
     prayerLoading: "Loading today's local prayer times…",
     prayerReady: "Local prayer times are ready. Five reminders are scheduled.",
+    prayerUsingCurrentLocation: "Using your current location",
+    prayerUsingSavedLocation: "Using your saved location",
+    prayerUsingSelectedCity: "Using your selected city",
+    prayerLocationUpdated: "Last updated {time}",
+    cityPickerTitle: "Choose a city",
+    cityPickerClose: "Close city picker",
+    citySearchLabel: "Search for a city",
+    citySearchPlaceholder: "Search any city or country",
+    citySearchButton: "Search",
+    citySearchPrompt: "Search for a city anywhere in the world.",
+    citySearchTypeMore: "Type at least 3 characters for city suggestions.",
+    citySearchLoading: "Searching cities…",
+    citySearchEmpty: "No cities found. Try a different search.",
+    citySearchFailed: "Could not search for cities. Please try again.",
     prayerDisabled: "Local salah reminders are turned off.",
     prayerLocationDenied:
       "Location was not available. Allow location access to set local prayer reminders.",
@@ -177,12 +175,27 @@ const i18n = {
     prayerLead: "احصل على تذكيرات لطيفة للصلوات الخمس اليومية.",
     prayerMethodLabel: "طريقة الحساب",
     enablePrayerReminders: "تفعيل التذكيرات المحلية",
-    updatePrayerTimes: "تحديث الأوقات",
+    updatePrayerTimes: "تحديث الموقع",
+    changePrayerLocation: "تغيير المدينة",
     turnOffPrayerReminders: "إيقاف",
     prayerLocationPrompt:
       "فعّل التذكيرات لاستخدام موقعك وتحميل مواقيت الصلاة لليوم.",
     prayerLoading: "جارٍ تحميل مواقيت الصلاة المحلية لليوم…",
     prayerReady: "مواقيت الصلاة المحلية جاهزة وتم ضبط خمسة تذكيرات.",
+    prayerUsingCurrentLocation: "يتم استخدام موقعك الحالي",
+    prayerUsingSavedLocation: "يتم استخدام موقعك المحفوظ",
+    prayerUsingSelectedCity: "يتم استخدام مدينتك المختارة",
+    prayerLocationUpdated: "آخر تحديث {time}",
+    cityPickerTitle: "اختر مدينة",
+    cityPickerClose: "إغلاق اختيار المدينة",
+    citySearchLabel: "ابحث عن مدينة",
+    citySearchPlaceholder: "ابحث عن أي مدينة أو بلد",
+    citySearchButton: "بحث",
+    citySearchPrompt: "ابحث عن مدينة في أي مكان في العالم.",
+    citySearchTypeMore: "اكتب ثلاثة أحرف على الأقل لاقتراحات المدن.",
+    citySearchLoading: "جارٍ البحث عن مدن…",
+    citySearchEmpty: "لم يتم العثور على مدن. جرّب بحثًا آخر.",
+    citySearchFailed: "تعذّر البحث عن المدن. حاول مرة أخرى.",
     prayerDisabled: "تم إيقاف تذكيرات الصلاة المحلية.",
     prayerLocationDenied:
       "تعذّر الوصول إلى الموقع. اسمح بالوصول إلى الموقع لضبط تذكيرات الصلاة المحلية.",
@@ -204,7 +217,6 @@ const els = {
   newInspirationBtn: document.getElementById("newInspirationBtn"),
   shareBtn: document.getElementById("shareBtn"),
   favoritesBtn: document.getElementById("favoritesBtn"),
-  reflectionGrid: document.getElementById("reflectionGrid"),
   audioEl: document.getElementById("audioEl"),
   playBtn: document.getElementById("playBtn"),
   prevBtn: document.getElementById("prevBtn"),
@@ -220,7 +232,17 @@ const els = {
   prayerMethod: document.getElementById("prayerMethod"),
   prayerEnableBtn: document.getElementById("prayerEnableBtn"),
   prayerRefreshBtn: document.getElementById("prayerRefreshBtn"),
+  prayerChangeBtn: document.getElementById("prayerChangeBtn"),
   prayerDisableBtn: document.getElementById("prayerDisableBtn"),
+  cityPicker: document.getElementById("cityPicker"),
+  cityPickerCloseBtn: document.getElementById("cityPickerCloseBtn"),
+  citySearchForm: document.getElementById("citySearchForm"),
+  citySearchInput: document.getElementById("citySearchInput"),
+  citySearchStatus: document.getElementById("citySearchStatus"),
+  citySearchResults: document.getElementById("citySearchResults"),
+  prayerLocationDetails: document.getElementById("prayerLocationDetails"),
+  prayerLocationName: document.getElementById("prayerLocationName"),
+  prayerLocationUpdated: document.getElementById("prayerLocationUpdated"),
   prayerStatus: document.getElementById("prayerStatus"),
 };
 
@@ -233,10 +255,18 @@ let trackIndex = Math.floor(Math.random() * tracks.length);
 let favorites = new Set(JSON.parse(localStorage.getItem("noortech-favs") || "[]"));
 let prayerTimings = null;
 let prayerLocation = JSON.parse(localStorage.getItem("noortech-prayer-location") || "null");
+let prayerLocationName = localStorage.getItem("noortech-prayer-location-name") || "";
+let prayerLocationUpdatedAt =
+  localStorage.getItem("noortech-prayer-location-updated-at") || "";
+let prayerLocationMode =
+  localStorage.getItem("noortech-prayer-location-mode") || "saved";
+let prayerLocationIsCurrent = false;
 let prayerRemindersEnabled =
   localStorage.getItem("noortech-prayer-reminders-enabled") === "true";
 let prayerTimers = {};
 let prayerRefreshTimer = null;
+let citySearchRequestId = 0;
+let citySearchTimer = null;
 let toastTimer = null;
 
 function showToast(message) {
@@ -260,12 +290,21 @@ function applyI18n() {
     if (dict[key]) node.textContent = dict[key];
   });
 
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+    const key = node.getAttribute("data-i18n-placeholder");
+    if (dict[key]) node.setAttribute("placeholder", dict[key]);
+  });
+
+  document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+    const key = node.getAttribute("data-i18n-aria-label");
+    if (dict[key]) node.setAttribute("aria-label", dict[key]);
+  });
+
   document.querySelectorAll(".lang-btn").forEach((btn) => {
     btn.classList.toggle("is-active", btn.dataset.lang === lang);
   });
 
   renderQuote(false);
-  renderReflections();
   renderTrackMeta();
   updateFavoriteState();
   renderPrayerReminders();
@@ -340,20 +379,6 @@ async function loadRandomVerse(animate = true, requestedVerseNumber = null) {
       els.quoteCard.classList.remove("is-loading");
     }
   }
-}
-
-function renderReflections() {
-  els.reflectionGrid.innerHTML = reflections
-    .map(
-      (item) => `
-      <article class="reflection-card">
-        <span class="ref-label">${item.label[lang]}</span>
-        <p class="ref-en">${item.en}</p>
-        <p class="ref-ar" dir="rtl" lang="ar">${item.ar}</p>
-      </article>
-    `
-    )
-    .join("");
 }
 
 function updateFavoriteState() {
@@ -484,6 +509,181 @@ function isValidPrayerLocation(location) {
   );
 }
 
+function formatPrayerLocationUpdatedAt(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+
+  return new Intl.DateTimeFormat(lang === "ar" ? "ar" : undefined, {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(date);
+}
+
+function renderPrayerLocation() {
+  const hasLocation = prayerRemindersEnabled && isValidPrayerLocation(prayerLocation);
+  els.prayerLocationDetails.hidden = !hasLocation;
+  if (!hasLocation) return;
+
+  const source = prayerLocationIsCurrent
+    ? i18n[lang].prayerUsingCurrentLocation
+    : prayerLocationMode === "manual"
+      ? i18n[lang].prayerUsingSelectedCity
+      : i18n[lang].prayerUsingSavedLocation;
+  els.prayerLocationName.textContent = prayerLocationName
+    ? `${source} · ${prayerLocationName}`
+    : source;
+
+  const updatedAt = formatPrayerLocationUpdatedAt(prayerLocationUpdatedAt);
+  els.prayerLocationUpdated.textContent = updatedAt
+    ? i18n[lang].prayerLocationUpdated.replace("{time}", updatedAt)
+    : "";
+  els.prayerLocationUpdated.hidden = !updatedAt;
+}
+
+function getCityLabel(city) {
+  return [city.name, city.admin1, city.country]
+    .filter((part, index, parts) => part && parts.indexOf(part) === index)
+    .join(", ");
+}
+
+function setCitySearchStatus(message = "") {
+  els.citySearchStatus.textContent = message;
+}
+
+function setCityPickerOpen(isOpen) {
+  els.cityPicker.hidden = !isOpen;
+  els.prayerChangeBtn.setAttribute("aria-expanded", String(isOpen));
+  if (isOpen) {
+    setCitySearchStatus(i18n[lang].citySearchPrompt);
+    window.setTimeout(() => els.citySearchInput.focus(), 0);
+  }
+}
+
+function clearCitySearchResults() {
+  els.citySearchResults.replaceChildren();
+}
+
+function renderCitySearchResults(results) {
+  clearCitySearchResults();
+
+  results.forEach((city) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "city-search-result";
+
+    const name = document.createElement("span");
+    name.className = "city-result-name";
+    name.textContent = city.name;
+
+    const detail = document.createElement("span");
+    detail.className = "city-result-detail";
+    detail.textContent = [city.admin1, city.country]
+      .filter((part, index, parts) => part && parts.indexOf(part) === index)
+      .join(", ");
+
+    button.append(name, detail);
+    button.addEventListener("click", () => selectPrayerCity(city));
+    els.citySearchResults.append(button);
+  });
+}
+
+async function searchCities(query, minimumLength = 2) {
+  if (query.length < minimumLength) {
+    clearCitySearchResults();
+    setCitySearchStatus(i18n[lang].citySearchPrompt);
+    return;
+  }
+
+  const requestId = ++citySearchRequestId;
+  clearCitySearchResults();
+  setCitySearchStatus(i18n[lang].citySearchLoading);
+
+  try {
+    const response = await fetch(
+      `${CITY_SEARCH_API_BASE}?name=${encodeURIComponent(query)}&count=6&language=${lang}&format=json`
+    );
+    if (!response.ok) throw new Error("City search request failed");
+
+    const result = await response.json();
+    if (requestId !== citySearchRequestId) return;
+
+    const cities = Array.isArray(result.results)
+      ? result.results.filter(
+          (city) => Number.isFinite(city.latitude) && Number.isFinite(city.longitude)
+        )
+      : [];
+    if (!cities.length) {
+      setCitySearchStatus(i18n[lang].citySearchEmpty);
+      return;
+    }
+
+    renderCitySearchResults(cities);
+    setCitySearchStatus("");
+  } catch {
+    if (requestId === citySearchRequestId) {
+      setCitySearchStatus(i18n[lang].citySearchFailed);
+    }
+  }
+}
+
+function submitCitySearch(event) {
+  event.preventDefault();
+  clearTimeout(citySearchTimer);
+  searchCities(els.citySearchInput.value.trim());
+}
+
+function queueCitySearch() {
+  clearTimeout(citySearchTimer);
+  ++citySearchRequestId;
+
+  const query = els.citySearchInput.value.trim();
+  if (!query) {
+    clearCitySearchResults();
+    setCitySearchStatus(i18n[lang].citySearchPrompt);
+    return;
+  }
+
+  if (query.length < 3) {
+    clearCitySearchResults();
+    setCitySearchStatus(i18n[lang].citySearchTypeMore);
+    return;
+  }
+
+  citySearchTimer = window.setTimeout(() => searchCities(query, 3), 300);
+}
+
+async function loadPrayerLocationName() {
+  if (!isValidPrayerLocation(prayerLocation)) return;
+
+  const { latitude, longitude } = prayerLocation;
+  const locationKey = `${latitude},${longitude}`;
+  try {
+    const response = await fetch(
+      `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${encodeURIComponent(latitude)}&longitude=${encodeURIComponent(longitude)}&localityLanguage=${lang}`
+    );
+    if (!response.ok) throw new Error("Location name request failed");
+
+    const result = await response.json();
+    if (
+      `${prayerLocation?.latitude},${prayerLocation?.longitude}` !== locationKey
+    ) {
+      return;
+    }
+    const locality = result.city || result.locality || result.principalSubdivision;
+    const region = result.principalSubdivision;
+    const locationParts = [locality, region].filter(
+      (part, index, parts) => part && parts.indexOf(part) === index
+    );
+    prayerLocationName = locationParts.join(", ");
+    if (prayerLocationName) {
+      localStorage.setItem("noortech-prayer-location-name", prayerLocationName);
+      renderPrayerLocation();
+    }
+  } catch {
+    // The city label is optional; prayer times still use the approved coordinates.
+  }
+}
+
 function getPrayerApiDate() {
   const date = new Date();
   return [
@@ -521,6 +721,7 @@ function renderPrayerReminders() {
   els.prayerMethod.value = savedMethod;
   els.prayerDisableBtn.hidden = !prayerRemindersEnabled;
   renderPrayerTimes();
+  renderPrayerLocation();
 
   if (prayerTimings && prayerRemindersEnabled) {
     els.prayerStatus.textContent = i18n[lang].prayerReady;
@@ -608,6 +809,7 @@ async function loadLocalPrayerTimes(silent = false) {
       PRAYERS.map(({ id }) => [id, cleanPrayerTime(timings[id])])
     );
     renderPrayerTimes();
+    renderPrayerLocation();
     schedulePrayerReminders();
     els.prayerStatus.textContent = prayerRemindersEnabled
       ? i18n[lang].prayerReady
@@ -624,6 +826,8 @@ function requestPrayerLocation() {
     return;
   }
 
+  prayerLocationIsCurrent = false;
+  renderPrayerLocation();
   els.prayerStatus.textContent = i18n[lang].prayerLoading;
   navigator.geolocation.getCurrentPosition(
     (position) => {
@@ -631,8 +835,17 @@ function requestPrayerLocation() {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude,
       };
+      prayerLocationName = "";
+      prayerLocationUpdatedAt = new Date().toISOString();
+      prayerLocationMode = "device";
+      prayerLocationIsCurrent = true;
       localStorage.setItem("noortech-prayer-location", JSON.stringify(prayerLocation));
+      localStorage.removeItem("noortech-prayer-location-name");
+      localStorage.setItem("noortech-prayer-location-updated-at", prayerLocationUpdatedAt);
+      localStorage.setItem("noortech-prayer-location-mode", prayerLocationMode);
+      renderPrayerLocation();
       loadLocalPrayerTimes();
+      loadPrayerLocationName();
     },
     () => {
       els.prayerStatus.textContent = i18n[lang].prayerLocationDenied;
@@ -642,17 +855,45 @@ function requestPrayerLocation() {
   );
 }
 
-function enablePrayerReminders() {
+function activatePrayerReminders() {
   prayerRemindersEnabled = true;
   localStorage.setItem("noortech-prayer-reminders-enabled", "true");
   els.prayerDisableBtn.hidden = false;
   requestPrayerNotificationPermission();
+}
+
+function enablePrayerReminders() {
+  activatePrayerReminders();
   requestPrayerLocation();
 }
 
 function updatePrayerTimes() {
-  if (isValidPrayerLocation(prayerLocation)) loadLocalPrayerTimes();
-  else requestPrayerLocation();
+  requestPrayerLocation();
+}
+
+function selectPrayerCity(city) {
+  const latitude = Number(city.latitude);
+  const longitude = Number(city.longitude);
+  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return;
+
+  activatePrayerReminders();
+  clearPrayerSchedules();
+  prayerTimings = null;
+  prayerLocation = { latitude, longitude };
+  prayerLocationName = getCityLabel(city);
+  prayerLocationUpdatedAt = new Date().toISOString();
+  prayerLocationMode = "manual";
+  prayerLocationIsCurrent = false;
+  localStorage.setItem("noortech-prayer-location", JSON.stringify(prayerLocation));
+  localStorage.setItem("noortech-prayer-location-name", prayerLocationName);
+  localStorage.setItem("noortech-prayer-location-updated-at", prayerLocationUpdatedAt);
+  localStorage.setItem("noortech-prayer-location-mode", prayerLocationMode);
+  renderPrayerTimes();
+  renderPrayerLocation();
+  setCityPickerOpen(false);
+  clearCitySearchResults();
+  setCitySearchStatus("");
+  loadLocalPrayerTimes();
 }
 
 function disablePrayerReminders() {
@@ -677,6 +918,12 @@ els.shareBtn.addEventListener("click", shareVerse);
 els.favoritesBtn.addEventListener("click", toggleFavorite);
 els.prayerEnableBtn.addEventListener("click", enablePrayerReminders);
 els.prayerRefreshBtn.addEventListener("click", updatePrayerTimes);
+els.prayerChangeBtn.addEventListener("click", () => {
+  setCityPickerOpen(els.cityPicker.hidden);
+});
+els.cityPickerCloseBtn.addEventListener("click", () => setCityPickerOpen(false));
+els.citySearchForm.addEventListener("submit", submitCitySearch);
+els.citySearchInput.addEventListener("input", queueCitySearch);
 els.prayerDisableBtn.addEventListener("click", disablePrayerReminders);
 els.prayerMethod.addEventListener("change", () => {
   localStorage.setItem("noortech-prayer-method", els.prayerMethod.value);
@@ -714,6 +961,7 @@ applyI18n();
 loadRandomVerse(false, getVerseNumberFromUrl());
 if (prayerRemindersEnabled && isValidPrayerLocation(prayerLocation)) {
   loadLocalPrayerTimes();
+  if (!prayerLocationName) loadPrayerLocationName();
 }
 setVolume(els.volumeSlider.value);
 loadTrack(trackIndex, false);
