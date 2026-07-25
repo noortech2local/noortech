@@ -120,6 +120,7 @@ const i18n = {
     enablePrayerReminders: "Enable local reminders",
     updatePrayerTimes: "Refresh location",
     changePrayerLocation: "Change city",
+    savePrayerCalendar: "Save to calendar",
     turnOffPrayerReminders: "Turn off",
     prayerLocationPrompt:
       "Enable reminders to use your location and load today's prayer times.",
@@ -129,6 +130,11 @@ const i18n = {
     prayerUsingSavedLocation: "Using your saved location",
     prayerUsingSelectedCity: "Using your selected city",
     prayerLocationUpdated: "Last updated {time}",
+    prayerCalendarSaved:
+      "Calendar file downloaded. Open it to add today's five salah times.",
+    prayerCalendarUnavailable:
+      "Load local prayer times before saving them to your calendar.",
+    prayerCalendarEvent: "{prayer} salah",
     cityPickerTitle: "Choose a city",
     cityPickerClose: "Close city picker",
     citySearchLabel: "Search for a city",
@@ -148,7 +154,7 @@ const i18n = {
     prayerAlertTitle: "Time for {prayer}",
     prayerAlertBody: "A moment for salah is here.",
     prayerHint:
-      "Times mark the start of each prayer and can differ from your local masjid's jama'ah schedule. Alerts work while this site stays open.",
+      "Times mark the start of each prayer and can differ from your local masjid's jama'ah schedule. Calendar saves today's displayed times. Alerts work while this site stays open.",
   },
   ar: {
     tagline: "ابحث عن الإلهام. غذِّ روحك.",
@@ -177,6 +183,7 @@ const i18n = {
     enablePrayerReminders: "تفعيل التذكيرات المحلية",
     updatePrayerTimes: "تحديث الموقع",
     changePrayerLocation: "تغيير المدينة",
+    savePrayerCalendar: "الحفظ في التقويم",
     turnOffPrayerReminders: "إيقاف",
     prayerLocationPrompt:
       "فعّل التذكيرات لاستخدام موقعك وتحميل مواقيت الصلاة لليوم.",
@@ -186,6 +193,11 @@ const i18n = {
     prayerUsingSavedLocation: "يتم استخدام موقعك المحفوظ",
     prayerUsingSelectedCity: "يتم استخدام مدينتك المختارة",
     prayerLocationUpdated: "آخر تحديث {time}",
+    prayerCalendarSaved:
+      "تم تنزيل ملف التقويم. افتحه لإضافة مواقيت الصلاة الخمسة لليوم.",
+    prayerCalendarUnavailable:
+      "حمّل مواقيت الصلاة المحلية قبل حفظها في التقويم.",
+    prayerCalendarEvent: "صلاة {prayer}",
     cityPickerTitle: "اختر مدينة",
     cityPickerClose: "إغلاق اختيار المدينة",
     citySearchLabel: "ابحث عن مدينة",
@@ -205,7 +217,7 @@ const i18n = {
     prayerAlertTitle: "حان وقت {prayer}",
     prayerAlertBody: "حان وقت الصلاة.",
     prayerHint:
-      "تشير الأوقات إلى بداية كل صلاة وقد تختلف عن جدول الجماعة في المسجد المحلي. تعمل التنبيهات أثناء بقاء الموقع مفتوحًا.",
+      "تشير الأوقات إلى بداية كل صلاة وقد تختلف عن جدول الجماعة في المسجد المحلي. يحفظ التقويم مواقيت اليوم المعروضة. تعمل التنبيهات أثناء بقاء الموقع مفتوحًا.",
   },
 };
 
@@ -233,6 +245,7 @@ const els = {
   prayerEnableBtn: document.getElementById("prayerEnableBtn"),
   prayerRefreshBtn: document.getElementById("prayerRefreshBtn"),
   prayerChangeBtn: document.getElementById("prayerChangeBtn"),
+  prayerCalendarBtn: document.getElementById("prayerCalendarBtn"),
   prayerDisableBtn: document.getElementById("prayerDisableBtn"),
   cityPicker: document.getElementById("cityPicker"),
   cityPickerCloseBtn: document.getElementById("cityPickerCloseBtn"),
@@ -260,6 +273,10 @@ let prayerLocationUpdatedAt =
   localStorage.getItem("noortech-prayer-location-updated-at") || "";
 let prayerLocationMode =
   localStorage.getItem("noortech-prayer-location-mode") || "saved";
+let prayerLocationTimezone =
+  localStorage.getItem("noortech-prayer-location-timezone") ||
+  Intl.DateTimeFormat().resolvedOptions().timeZone ||
+  "UTC";
 let prayerLocationIsCurrent = false;
 let prayerRemindersEnabled =
   localStorage.getItem("noortech-prayer-reminders-enabled") === "true";
@@ -684,25 +701,101 @@ async function loadPrayerLocationName() {
   }
 }
 
+function getPrayerTimeZone() {
+  try {
+    new Intl.DateTimeFormat("en-CA", { timeZone: prayerLocationTimezone }).format();
+    return prayerLocationTimezone;
+  } catch {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+  }
+}
+
+function getZonedDateParts(date, timeZone = getPrayerTimeZone(), includeTime = false) {
+  const formatter = new Intl.DateTimeFormat("en-CA", {
+    timeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    ...(includeTime
+      ? { hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23" }
+      : {}),
+  });
+  const values = Object.fromEntries(
+    formatter
+      .formatToParts(date)
+      .filter((part) => part.type !== "literal")
+      .map((part) => [part.type, Number(part.value)])
+  );
+
+  return {
+    year: values.year,
+    month: values.month,
+    day: values.day,
+    hour: values.hour || 0,
+    minute: values.minute || 0,
+    second: values.second || 0,
+  };
+}
+
+function getTimeZoneOffsetMs(timeZone, date) {
+  const parts = getZonedDateParts(date, timeZone, true);
+  return (
+    Date.UTC(
+      parts.year,
+      parts.month - 1,
+      parts.day,
+      parts.hour,
+      parts.minute,
+      parts.second
+    ) - date.getTime()
+  );
+}
+
+function getDateForZonedTime(parts, timeZone = getPrayerTimeZone()) {
+  const utcGuess = Date.UTC(
+    parts.year,
+    parts.month - 1,
+    parts.day,
+    parts.hour,
+    parts.minute,
+    parts.second || 0
+  );
+  let result = new Date(utcGuess - getTimeZoneOffsetMs(timeZone, new Date(utcGuess)));
+  result = new Date(utcGuess - getTimeZoneOffsetMs(timeZone, result));
+  return result;
+}
+
 function getPrayerApiDate() {
-  const date = new Date();
+  const date = getZonedDateParts(new Date());
   return [
-    String(date.getDate()).padStart(2, "0"),
-    String(date.getMonth() + 1).padStart(2, "0"),
-    date.getFullYear(),
+    String(date.day).padStart(2, "0"),
+    String(date.month).padStart(2, "0"),
+    date.year,
   ].join("-");
 }
 
-function getPrayerTimeDate(time) {
+function getPrayerTimeDate(time, dayOffset = 0) {
   const [hours, minutes] = cleanPrayerTime(time).split(":").map(Number);
-  const date = new Date();
-  date.setHours(hours, minutes, 0, 0);
-  return date;
+  const timeZone = getPrayerTimeZone();
+  const today = getZonedDateParts(new Date(), timeZone);
+  const date = new Date(Date.UTC(today.year, today.month - 1, today.day + dayOffset));
+  return getDateForZonedTime(
+    {
+      year: date.getUTCFullYear(),
+      month: date.getUTCMonth() + 1,
+      day: date.getUTCDate(),
+      hour: hours,
+      minute: minutes,
+      second: 0,
+    },
+    timeZone
+  );
 }
 
 function renderPrayerTimes() {
   if (!prayerTimings) {
     els.prayerGrid.innerHTML = "";
+    els.prayerCalendarBtn.hidden = true;
     return;
   }
 
@@ -714,6 +807,7 @@ function renderPrayerTimes() {
       </article>
     `
   ).join("");
+  els.prayerCalendarBtn.hidden = !prayerRemindersEnabled;
 }
 
 function renderPrayerReminders() {
@@ -767,7 +861,7 @@ function schedulePrayerReminders() {
 
   PRAYERS.forEach(({ id }) => {
     let target = getPrayerTimeDate(prayerTimings[id]);
-    if (target <= new Date()) target.setDate(target.getDate() + 1);
+    if (target <= new Date()) target = getPrayerTimeDate(prayerTimings[id], 1);
 
     prayerTimers[id] = setTimeout(() => {
       const prayerName = getPrayerName(id);
@@ -784,6 +878,79 @@ function schedulePrayerReminders() {
   });
 
   schedulePrayerTimesRefresh();
+}
+
+function formatIcsUtc(date) {
+  return [
+    date.getUTCFullYear(),
+    String(date.getUTCMonth() + 1).padStart(2, "0"),
+    String(date.getUTCDate()).padStart(2, "0"),
+  ].join("") +
+    "T" +
+    [
+      String(date.getUTCHours()).padStart(2, "0"),
+      String(date.getUTCMinutes()).padStart(2, "0"),
+      String(date.getUTCSeconds()).padStart(2, "0"),
+    ].join("") +
+    "Z";
+}
+
+function escapeIcs(value) {
+  return String(value)
+    .replace(/\\/g, "\\\\")
+    .replace(/;/g, "\\;")
+    .replace(/,/g, "\\,")
+    .replace(/\r?\n/g, "\\n");
+}
+
+function savePrayerCalendar() {
+  if (!prayerTimings) {
+    showToast(i18n[lang].prayerCalendarUnavailable);
+    return;
+  }
+
+  const now = new Date();
+  const dateParts = getZonedDateParts(now);
+  const dateKey = `${dateParts.year}${String(dateParts.month).padStart(2, "0")}${String(
+    dateParts.day
+  ).padStart(2, "0")}`;
+  const location = prayerLocationName || i18n[lang].prayerUsingCurrentLocation;
+  const events = PRAYERS.map(({ id }) => {
+    const start = getPrayerTimeDate(prayerTimings[id]);
+    const end = new Date(start.getTime() + 15 * 60 * 1000);
+    const title = i18n[lang].prayerCalendarEvent.replace("{prayer}", getPrayerName(id));
+    return [
+      "BEGIN:VEVENT",
+      `UID:noortech-${dateKey}-${id.toLowerCase()}@noortech`,
+      `DTSTAMP:${formatIcsUtc(now)}`,
+      `DTSTART:${formatIcsUtc(start)}`,
+      `DTEND:${formatIcsUtc(end)}`,
+      `SUMMARY:${escapeIcs(title)}`,
+      `DESCRIPTION:${escapeIcs("Prayer time from NoorTech.")}`,
+      `LOCATION:${escapeIcs(location)}`,
+      "END:VEVENT",
+    ].join("\r\n");
+  });
+  const calendar = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//NoorTech//Salah Times//EN",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH",
+    ...events,
+    "END:VCALENDAR",
+    "",
+  ].join("\r\n");
+  const file = new Blob([calendar], { type: "text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(file);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `noortech-salah-${dateKey}.ics`;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+  showToast(i18n[lang].prayerCalendarSaved);
 }
 
 async function loadLocalPrayerTimes(silent = false) {
@@ -808,6 +975,11 @@ async function loadLocalPrayerTimes(silent = false) {
     prayerTimings = Object.fromEntries(
       PRAYERS.map(({ id }) => [id, cleanPrayerTime(timings[id])])
     );
+    const apiTimezone = result.data?.meta?.timezone;
+    if (apiTimezone) {
+      prayerLocationTimezone = apiTimezone;
+      localStorage.setItem("noortech-prayer-location-timezone", prayerLocationTimezone);
+    }
     renderPrayerTimes();
     renderPrayerLocation();
     schedulePrayerReminders();
@@ -838,11 +1010,13 @@ function requestPrayerLocation() {
       prayerLocationName = "";
       prayerLocationUpdatedAt = new Date().toISOString();
       prayerLocationMode = "device";
+      prayerLocationTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
       prayerLocationIsCurrent = true;
       localStorage.setItem("noortech-prayer-location", JSON.stringify(prayerLocation));
       localStorage.removeItem("noortech-prayer-location-name");
       localStorage.setItem("noortech-prayer-location-updated-at", prayerLocationUpdatedAt);
       localStorage.setItem("noortech-prayer-location-mode", prayerLocationMode);
+      localStorage.setItem("noortech-prayer-location-timezone", prayerLocationTimezone);
       renderPrayerLocation();
       loadLocalPrayerTimes();
       loadPrayerLocationName();
@@ -883,11 +1057,13 @@ function selectPrayerCity(city) {
   prayerLocationName = getCityLabel(city);
   prayerLocationUpdatedAt = new Date().toISOString();
   prayerLocationMode = "manual";
+  prayerLocationTimezone = city.timezone || getPrayerTimeZone();
   prayerLocationIsCurrent = false;
   localStorage.setItem("noortech-prayer-location", JSON.stringify(prayerLocation));
   localStorage.setItem("noortech-prayer-location-name", prayerLocationName);
   localStorage.setItem("noortech-prayer-location-updated-at", prayerLocationUpdatedAt);
   localStorage.setItem("noortech-prayer-location-mode", prayerLocationMode);
+  localStorage.setItem("noortech-prayer-location-timezone", prayerLocationTimezone);
   renderPrayerTimes();
   renderPrayerLocation();
   setCityPickerOpen(false);
@@ -918,6 +1094,7 @@ els.shareBtn.addEventListener("click", shareVerse);
 els.favoritesBtn.addEventListener("click", toggleFavorite);
 els.prayerEnableBtn.addEventListener("click", enablePrayerReminders);
 els.prayerRefreshBtn.addEventListener("click", updatePrayerTimes);
+els.prayerCalendarBtn.addEventListener("click", savePrayerCalendar);
 els.prayerChangeBtn.addEventListener("click", () => {
   setCityPickerOpen(els.cityPicker.hidden);
 });

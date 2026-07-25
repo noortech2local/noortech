@@ -15,7 +15,7 @@
       rel="stylesheet"
     />
     <!-- Bump this version whenever local CSS or JavaScript assets change. -->
-    <link rel="stylesheet" href="styles.css?v=20260724-2" />
+    <link rel="stylesheet" href="styles.css?v=20260724-3" />
   </head>
   <body>
     <div class="bg-layer" aria-hidden="true"></div>
@@ -186,6 +186,9 @@
               >
                 Change city
               </button>
+              <button class="prayer-calendar" id="prayerCalendarBtn" type="button" hidden data-i18n="savePrayerCalendar">
+                Save to calendar
+              </button>
               <button class="prayer-disable" id="prayerDisableBtn" type="button" hidden data-i18n="turnOffPrayerReminders">
                 Turn off
               </button>
@@ -234,7 +237,7 @@
             Enable reminders to use your location and load today's prayer times.
           </p>
           <p class="prayer-hint" data-i18n="prayerHint">
-            Times mark the start of each prayer and can differ from your local masjid's jama'ah schedule. Alerts work while this site stays open.
+            Times mark the start of each prayer and can differ from your local masjid's jama'ah schedule. Calendar saves today's displayed times. Alerts work while this site stays open.
           </p>
         </section>
       </div>
@@ -308,6 +311,6 @@
 
     <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-    <script src="app.js?v=20260724-1"></script>
+    <script src="app.js?v=20260724-2"></script>
   </body>
 </html>

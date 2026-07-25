@@ -534,6 +534,7 @@ body.is-ar .track-artist {
 .prayer-enable,
 .prayer-refresh,
 .prayer-change,
+.prayer-calendar,
 .prayer-disable {
   min-height: 40px;
   padding: 0 0.85rem;
@@ -559,6 +560,7 @@ body.is-ar .track-artist {
 
 .prayer-refresh,
 .prayer-change,
+.prayer-calendar,
 .prayer-disable {
   border: 1px solid rgba(115, 86, 40, 0.25);
   color: #6d6255;
@@ -567,6 +569,7 @@ body.is-ar .track-artist {
 
 .prayer-refresh:hover,
 .prayer-change:hover,
+.prayer-calendar:hover,
 .prayer-disable:hover {
   background: rgba(222, 231, 245, 0.65);
 }
