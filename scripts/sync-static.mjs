@@ -16,7 +16,11 @@ for (const file of [
   "riyadh-wristband.png",
   "riyadh-wristband-detail.png",
   "riyadh-wristband-lifestyle.png",
+  "noor-hero.png",
+  "noor-nfc.png",
   "noor-collection.png",
+  "noor-packaging.png",
+  "og.png",
   "og-riyadh.png",
 ]) {
   copyFileSync(resolve(root, "assets", file), resolve(publicAssets, file));
