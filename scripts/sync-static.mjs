@@ -12,6 +12,12 @@ for (const file of ["sales.html", "sales.css", "sales.js"]) {
   copyFileSync(resolve(root, file), resolve(publicDir, file));
 }
 
-for (const file of ["noor-hero.png", "noor-nfc.png", "noor-collection.png", "noor-packaging.png", "og.png"]) {
+for (const file of [
+  "riyadh-wristband.png",
+  "riyadh-wristband-detail.png",
+  "riyadh-wristband-lifestyle.png",
+  "noor-collection.png",
+  "og-riyadh.png",
+]) {
   copyFileSync(resolve(root, "assets", file), resolve(publicAssets, file));
 }

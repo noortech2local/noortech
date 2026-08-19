@@ -7,25 +7,25 @@ const toast = document.querySelector("[data-toast]");
 const quantityOutput = document.querySelector("[data-qty]");
 
 const useCases = {
-  profile: {
+  landmarks: {
     icon: "01",
-    title: "Your profile, shared simply.",
-    body: "Choose the contact details, social links or message people see when they tap.",
+    title: "Riyadh’s skyline, drawn as rhythm.",
+    body: "Kingdom Centre, Al Faisaliah and familiar city silhouettes form a continuous architectural horizon.",
   },
-  prayer: {
+  geometry: {
     icon: "02",
-    title: "A quiet moment, when you need it.",
-    body: "Open a favorite prayer, daily reflection or meaningful reminder without searching for it.",
+    title: "Heritage without imitation.",
+    body: "Islamic arches and geometric structures are simplified and repeated for a clean contemporary expression.",
   },
-  story: {
+  palette: {
     icon: "03",
-    title: "Discover the city behind the pattern.",
-    body: "Reveal the landmarks, geometry and design decisions woven into each limited city edition.",
+    title: "The colors of stone, shade and growth.",
+    body: "Warm sand, deep green and muted gold balance the city’s natural landscape with its forward energy.",
   },
-  access: {
+  craft: {
     icon: "04",
-    title: "One touch can become your key.",
-    body: "Connect to a future event pass, invitation or verified experience through the same natural gesture.",
+    title: "Fine detail, built into the weave.",
+    body: "High-density nylon keeps small architectural lines legible while remaining soft, light and wearable.",
   },
 };
 
@@ -147,7 +147,7 @@ document.querySelector("[data-newsletter]").addEventListener("submit", (event) =
   const form = event.currentTarget;
   form.reset();
   form.querySelector("[data-form-note]").textContent = "Thank you — this preview did not send or store your email.";
-  showToast("You’re ready for Noor launch updates.");
+  showToast("You’re ready for Riyadh City Series launch updates.");
 });
 
 document.querySelectorAll(".faq details").forEach((detail) => {
