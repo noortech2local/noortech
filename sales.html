@@ -6,20 +6,17 @@
   <meta name="description" content="Noor Tech — a refined Islamic NFC bracelet connecting identity, place and digital experience.">
   <title>Noor Tech Islamic NFC Bracelet</title>
   <link rel="stylesheet" href="sales.css">
-  <style>
-    .offline-note{position:fixed;z-index:80;left:50%;bottom:18px;transform:translateX(-50%) translateY(90px);padding:12px 18px;border-radius:99px;background:#f5f0e7;color:#0d241f;box-shadow:0 12px 35px #0004;font-size:11px;transition:.35s}.offline-note.show{transform:translateX(-50%) translateY(0)}
-  </style>
 </head>
 <body>
 <main>
   <a class="skip-link" href="#main-content">Skip to main content</a>
-  <div class="announcement"><a href="#notify"><span>NOOR FIRST RELEASE</span> Join the private preview list for Saudi Arabia <b>Explore →</b></a></div>
+  <div class="announcement"><a href="#notify"><span>NOOR FIRST RELEASE</span> Saudi Arabia launch updates are coming soon <b>Learn more →</b></a></div>
   <header class="nav">
     <a class="brand" href="#top" aria-label="Noor Tech home"><span class="brand__mark">N</span><span>NOOR <i>TECH</i></span></a>
     <nav class="nav__links" aria-label="Primary navigation">
       <a href="#cities">Shop</a><a href="#connect">Technology</a><a href="#cities">Collections</a><a href="#packaging">Gifting</a><a href="#story">About</a>
     </nav>
-    <div class="nav__utilities"><a href="#footer" aria-label="Choose language">EN / العربية</a><a href="#notify" aria-label="Join launch list">◎</a></div>
+    <div class="nav__utilities"><a href="#notify" aria-label="Launch updates">◎</a></div>
     <a class="nav__cta" href="#cities">Explore collection <span>↗</span></a>
     <button class="menu" aria-expanded="false" aria-label="Toggle menu"><span></span><span></span></button>
   </header>
@@ -99,30 +96,25 @@
     <div class="footer__main" id="notify">
       <div class="footer__newsletter">
         <h2>Receive stories, launch<br>news and private offers.</h2>
-        <form class="newsletter"><label class="sr-only" for="email">Email address</label><input id="email" type="email" required placeholder="Email address"><button type="submit" aria-label="Join newsletter">→</button></form>
-        <p>We care about protecting your data.<br>Read more in our <a href="#legal">Privacy Policy</a>.</p>
+        <div class="newsletter newsletter--notice" role="note"><span>Launch list opening soon</span><span aria-hidden="true">✦</span></div>
+        <p>Email sign-ups are not open yet.<br>Return here for Saudi Arabia release updates.</p>
       </div>
       <div class="footer__columns">
-        <nav aria-label="Our Company"><h3>Our Company</h3><a href="#">About Noor</a><a href="#story">Our Story</a><a href="#main-content">Design Philosophy</a><a href="#packaging">Materials &amp; Making</a><a href="#">Newsroom</a><a href="#">Careers</a></nav>
-        <nav aria-label="Support"><h3>Support</h3><a href="#support">Help Center ↗</a><a href="#support">NFC Compatibility</a><a href="#">Sizing &amp; Fit</a><a href="#">Care Instructions</a><a href="#">Shipping &amp; Returns</a><a href="#">Warranty</a><a href="#">Contact</a></nav>
-        <nav aria-label="Partner With Us"><h3>Partner With Us</h3><a href="#">Retail Partners ↗</a><a href="#">Organizations ↗</a><a href="#">Hotels &amp; Tourism</a><a href="#">Events &amp; Gifting</a><a href="#">Developers</a></nav>
-        <nav aria-label="Connect"><h3>Connect</h3><a href="#">Journal</a><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">Pinterest</a><a href="#">YouTube</a><a href="#">LinkedIn</a></nav>
+        <nav aria-label="Our Company"><h3>Our Company</h3><a href="#story">Our Story</a><a href="#main-content">Design Philosophy</a><a href="#packaging">Materials &amp; Making</a></nav>
+        <nav aria-label="Support"><h3>Support</h3><a href="#support">Help Center ↗</a><a href="#support">NFC Compatibility</a></nav>
       </div>
     </div>
-    <div class="footer__legal" id="legal"><span>© 2026 NOOR TECH. All rights reserved.</span><nav><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Accessibility</a><a href="#support">NFC Compatibility</a><a href="#">Intellectual Property</a></nav><a href="#top">English / العربية ↑</a></div>
+    <div class="footer__legal" id="legal"><span>© 2026 NOOR TECH. All rights reserved.</span><nav><a href="#support">FAQ</a><a href="#support">NFC Compatibility</a></nav><a href="#top">Back to top ↑</a></div>
   </footer>
 </main>
-<div class="offline-note" role="status">Demo saved locally — no information was submitted.</div>
 <script>
   const nav=document.querySelector('.nav');
   const menu=document.querySelector('.menu');
   const links=document.querySelector('.nav__links');
-  const note=document.querySelector('.offline-note');
   addEventListener('scroll',()=>nav.classList.toggle('nav--solid',scrollY>24),{passive:true});
   menu.addEventListener('click',()=>{const open=links.classList.toggle('nav__links--open');menu.setAttribute('aria-expanded',String(open));});
   links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{links.classList.remove('nav__links--open');menu.setAttribute('aria-expanded','false');}));
   document.querySelectorAll('.city').forEach(button=>{const select=()=>{document.querySelectorAll('.city').forEach(x=>x.classList.remove('city--active'));button.classList.add('city--active');};button.addEventListener('mouseenter',select);button.addEventListener('focus',select);button.addEventListener('click',select);});
-  document.querySelector('.newsletter').addEventListener('submit',event=>{event.preventDefault();event.currentTarget.classList.add('newsletter--sent');event.currentTarget.querySelector('button').textContent='✓';note.textContent='Thank you — this offline demo did not submit any information.';note.classList.add('show');setTimeout(()=>note.classList.remove('show'),3000);});
 </script>
 </body>
 </html>
