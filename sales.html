@@ -3,118 +3,166 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Noor Tech — a refined Islamic NFC bracelet connecting identity, place and digital experience.">
+  <meta name="description" content="Noor Tech — a refined Islamic NFC bracelet connecting identity, place and digital experience." data-page-description>
   <title>Noor Tech Islamic NFC Bracelet</title>
   <link rel="stylesheet" href="sales.css">
 </head>
 <body>
 <main>
-  <a class="skip-link" href="#main-content">Skip to main content</a>
-  <div class="announcement"><a href="#notify"><span>NOOR FIRST RELEASE</span> Saudi Arabia launch updates are coming soon <b>Learn more →</b></a></div>
+  <a class="skip-link" href="#main-content" data-i18n="skipLink">Skip to main content</a>
+  <div class="announcement"><a href="#notify"><span class="announcement__release" data-i18n="announcementRelease">NOOR FIRST RELEASE</span><span class="announcement__message" data-i18n="announcementMessage">Saudi Arabia launch updates are coming soon</span><b data-i18n="announcementLink">Learn more →</b></a></div>
   <header class="nav">
-    <a class="brand" href="#top" aria-label="Noor Tech home"><span class="brand__mark">N</span><span>NOOR <i>TECH</i></span></a>
-    <nav class="nav__links" aria-label="Primary navigation">
-      <a href="#cities">Shop</a><a href="#connect">Technology</a><a href="#cities">Collections</a><a href="#packaging">Gifting</a><a href="#story">About</a>
+    <a class="brand" href="#top" aria-label="Noor Tech home" data-i18n-aria-label="brandLabel"><span class="brand__mark">N</span><span>NOOR <i>TECH</i></span></a>
+    <nav class="nav__links" aria-label="Primary navigation" data-i18n-aria-label="primaryNavigation">
+      <a href="#cities" data-i18n="navShop">Shop</a><a href="#connect" data-i18n="navTechnology">Technology</a><a href="#cities" data-i18n="navCollections">Collections</a><a href="#packaging" data-i18n="navGifting">Gifting</a><a href="#story" data-i18n="navAbout">About</a>
     </nav>
-    <div class="nav__utilities"><a href="#notify" aria-label="Launch updates">◎</a></div>
-    <a class="nav__cta" href="#cities">Explore collection <span>↗</span></a>
-    <button class="menu" aria-expanded="false" aria-label="Toggle menu"><span></span><span></span></button>
+    <div class="language-switch" role="group" aria-label="Language" data-i18n-aria-label="languageSwitch">
+      <button type="button" data-language="en" aria-pressed="true">EN</button><span aria-hidden="true">/</span><button type="button" data-language="ar" aria-pressed="false">العربية</button>
+    </div>
+    <div class="nav__utilities"><a href="#notify" aria-label="Launch updates" data-i18n-aria-label="launchUpdates">◎</a></div>
+    <a class="nav__cta" href="#cities" data-i18n-html="navCta">Explore collection <span>↗</span></a>
+    <button class="menu" aria-expanded="false" aria-label="Open menu"><span></span><span></span></button>
   </header>
 
   <section class="hero" id="top">
-    <img class="hero__image" src="assets/noor-hero.png" alt="Black woven Noor NFC bracelet with a gold clasp on limestone">
+    <img class="hero__image" src="assets/noor-hero.png" alt="Black woven Noor NFC bracelet with a gold clasp on limestone" data-i18n-alt="heroImageAlt">
     <div class="hero__shade"></div>
     <div class="hero__copy">
-      <p class="eyebrow">A NEW WAY TO CARRY MEANING</p>
-      <h1>Faith.<br><em>Made tangible.</em></h1>
-      <p class="hero__lead">A refined Islamic bracelet connecting identity, place and digital experience — with a single touch.</p>
-      <div class="hero__actions"><a class="button button--light" href="#cities">Discover Noor <span>→</span></a><a class="text-link" href="#connect">See how NFC works <span>↘</span></a></div>
+      <p class="eyebrow" data-i18n="heroEyebrow">A NEW WAY TO CARRY MEANING</p>
+      <h1 data-i18n-html="heroTitle">Faith.<br><em>Made tangible.</em></h1>
+      <p class="hero__lead" data-i18n="heroLead">A refined Islamic bracelet connecting identity, place and digital experience — with a single touch.</p>
+      <div class="hero__actions"><a class="button button--light" href="#cities" data-i18n-html="heroPrimary">Discover Noor <span>→</span></a><a class="text-link" href="#connect" data-i18n-html="heroSecondary">See how NFC works <span>↘</span></a></div>
     </div>
-    <div class="hero__meta"><span>DESIGNED BETWEEN<br>CHENGDU &amp; RIYADH</span><span class="arabic">نورٌ يُحمل</span></div>
-    <a class="scroll" href="#main-content"><span></span> Scroll to discover</a>
+    <div class="hero__meta"><span data-i18n-html="heroMeta">DESIGNED BETWEEN<br>CHENGDU &amp; RIYADH</span><span class="arabic">نورٌ يُحمل</span></div>
+    <a class="scroll" href="#main-content" data-i18n-html="scrollLink"><span></span> Scroll to discover</a>
   </section>
 
   <section class="manifesto" id="main-content">
-    <p class="section-tag">/ 01 — THE OBJECT</p>
-    <div><p class="kicker">FORM MEETS MEANING</p><h2>Quiet by design.<br><em>Powerful by touch.</em></h2><p class="manifesto__body">No screen. No noise. Noor feels like part of you — a minimal woven form carrying stories, access and connection inside.</p></div>
+    <p class="section-tag" data-i18n="objectTag">/ 01 — THE OBJECT</p>
+    <div><p class="kicker" data-i18n="objectKicker">FORM MEETS MEANING</p><h2 data-i18n-html="objectTitle">Quiet by design.<br><em>Powerful by touch.</em></h2><p class="manifesto__body" data-i18n="objectBody">No screen. No noise. Noor feels like part of you — a minimal woven form carrying stories, access and connection inside.</p></div>
   </section>
 
-  <section class="benefits" aria-label="Product benefits">
-    <article><span>01</span><h3>One natural gesture</h3><p>Share, enter or discover with a simple tap. No app is needed for the person receiving.</p></article>
-    <article><span>02</span><h3>Made for every day</h3><p>Soft woven nylon, a water-resistant NFC core, and no charging or screen to manage.</p></article>
-    <article><span>03</span><h3>Rooted in place</h3><p>Patterns translate Islamic geometry and Saudi landscapes into a quiet personal object.</p></article>
+  <section class="benefits" aria-label="Product benefits" data-i18n-aria-label="benefitsLabel">
+    <article><span>01</span><h3 data-i18n="benefitOneTitle">One natural gesture</h3><p data-i18n="benefitOneBody">Share, enter or discover with a simple tap. No app is needed for the person receiving.</p></article>
+    <article><span>02</span><h3 data-i18n="benefitTwoTitle">Made for every day</h3><p data-i18n="benefitTwoBody">Soft woven nylon, a water-resistant NFC core, and no charging or screen to manage.</p></article>
+    <article><span>03</span><h3 data-i18n="benefitThreeTitle">Rooted in place</h3><p data-i18n="benefitThreeBody">Patterns translate Islamic geometry and Saudi landscapes into a quiet personal object.</p></article>
   </section>
 
   <section class="connect" id="connect">
-    <div class="connect__visual"><img src="assets/noor-nfc.png" alt="Noor bracelet connecting with a smartphone"><div class="tap tap--one"></div><div class="tap tap--two"></div><span class="connect__label">TAP TO CONNECT</span></div>
-    <div class="connect__copy"><p class="section-tag">/ 02 — NFC CONNECTION</p><p class="kicker">ONE GESTURE. MANY POSSIBILITIES.</p><h2>Touch opens<br><em>a new layer.</em></h2><p>Hold Noor near any modern phone. Instantly share a digital profile, verify a ticket, open curated prayers or reveal the story behind your city edition.</p><div class="connect__stats"><div><strong>0</strong><span>charging<br>required</span></div><div><strong>&lt;1s</strong><span>typical<br>connection</span></div><div><strong>24/7</strong><span>ready<br>to tap</span></div></div></div>
+    <div class="connect__visual"><img src="assets/noor-nfc.png" alt="Noor bracelet connecting with a smartphone" data-i18n-alt="connectImageAlt"><div class="tap tap--one"></div><div class="tap tap--two"></div><span class="connect__label" data-i18n="connectLabel">TAP TO CONNECT</span></div>
+    <div class="connect__copy"><p class="section-tag" data-i18n="connectTag">/ 02 — NFC CONNECTION</p><p class="kicker" data-i18n="connectKicker">ONE GESTURE. MANY POSSIBILITIES.</p><h2 data-i18n-html="connectTitle">Touch opens<br><em>a new layer.</em></h2><p data-i18n="connectBody">Hold Noor near any modern phone. Instantly share a digital profile, verify a ticket, open curated prayers or reveal the story behind your city edition.</p><div class="connect__stats"><div><strong>0</strong><span data-i18n-html="statCharging">charging<br>required</span></div><div><strong>&lt;1s</strong><span data-i18n-html="statConnection">typical<br>connection</span></div><div><strong>24/7</strong><span data-i18n-html="statReady">ready<br>to tap</span></div></div></div>
   </section>
 
   <section class="cities" id="cities">
-    <div class="cities__head"><div><p class="section-tag">/ 03 — CITY SERIES</p><p class="kicker">FOUR PLACES. FOUR STORIES.</p><h2>Wear where<br><em>you belong.</em></h2></div><p>Each edition distills a Saudi city into line, texture and color. Created as a souvenir, a gift and a wearable connection to place.</p></div>
+    <div class="cities__head"><div><p class="section-tag" data-i18n="citiesTag">/ 03 — CITY SERIES</p><p class="kicker" data-i18n="citiesKicker">FOUR PLACES. FOUR STORIES.</p><h2 data-i18n-html="citiesTitle">Wear where<br><em>you belong.</em></h2></div><p data-i18n="citiesBody">Each edition distills a Saudi city into line, texture and color. Created as a souvenir, a gift and a wearable connection to place.</p></div>
     <div class="cities__stage">
-      <div class="cities__image"><img src="assets/noor-collection.png" alt="Four Noor city edition bracelets"><span>THE CITY COLLECTION / 2026</span></div>
+      <div class="cities__image"><img src="assets/noor-collection.png" alt="Four Noor city edition bracelets" data-i18n-alt="citiesImageAlt"><span data-i18n="citiesImageLabel">THE CITY COLLECTION / 2026</span></div>
       <div class="city-list">
-        <button class="city city--active" style="--city:#153d33"><span>01</span><div><h3>Riyadh</h3><p>The rhythm of a city moving forward.</p></div><b>الرياض</b><i>↗</i></button>
-        <button class="city" style="--city:#5d7e83"><span>02</span><div><h3>Jeddah</h3><p>Red Sea movement, drawn in light.</p></div><b>جدة</b><i>↗</i></button>
-        <button class="city" style="--city:#ba9b67"><span>03</span><div><h3>Makkah</h3><p>Concentric lines of gathering and faith.</p></div><b>مكة</b><i>↗</i></button>
-        <button class="city" style="--city:#6d2430"><span>04</span><div><h3>Madinah</h3><p>A quiet geometry of peace and memory.</p></div><b>المدينة</b><i>↗</i></button>
+        <button class="city city--active" style="--city:#153d33"><span>01</span><div><h3 data-i18n="riyadhName">Riyadh</h3><p data-i18n="riyadhBody">The rhythm of a city moving forward.</p></div><b data-i18n="riyadhAlt">الرياض</b><i>↗</i></button>
+        <button class="city" style="--city:#5d7e83"><span>02</span><div><h3 data-i18n="jeddahName">Jeddah</h3><p data-i18n="jeddahBody">Red Sea movement, drawn in light.</p></div><b data-i18n="jeddahAlt">جدة</b><i>↗</i></button>
+        <button class="city" style="--city:#ba9b67"><span>03</span><div><h3 data-i18n="makkahName">Makkah</h3><p data-i18n="makkahBody">Concentric lines of gathering and faith.</p></div><b data-i18n="makkahAlt">مكة</b><i>↗</i></button>
+        <button class="city" style="--city:#6d2430"><span>04</span><div><h3 data-i18n="madinahName">Madinah</h3><p data-i18n="madinahBody">A quiet geometry of peace and memory.</p></div><b data-i18n="madinahAlt">المدينة</b><i>↗</i></button>
       </div>
     </div>
   </section>
 
   <section class="packaging" id="packaging">
-    <div class="packaging__copy"><p class="section-tag">/ 04 — THE EXPERIENCE</p><p class="kicker">MADE TO GIVE. MADE TO KEEP.</p><h2>A meaningful object,<br><em>from first touch.</em></h2><p>Every detail is considered: tactile paper, restrained foil, a fitted presentation tray and a simple guide to activate your digital experience.</p><a class="button button--dark" href="#notify">View gift editions <span>→</span></a></div>
-    <div class="packaging__image"><img src="assets/noor-packaging.png" alt="Noor premium presentation box and bracelet"><span>PREMIUM GIFT EDITION</span></div>
+    <div class="packaging__copy"><p class="section-tag" data-i18n="packagingTag">/ 04 — THE EXPERIENCE</p><p class="kicker" data-i18n="packagingKicker">MADE TO GIVE. MADE TO KEEP.</p><h2 data-i18n-html="packagingTitle">A meaningful object,<br><em>from first touch.</em></h2><p data-i18n="packagingBody">Every detail is considered: tactile paper, restrained foil, a fitted presentation tray and a simple guide to activate your digital experience.</p><a class="button button--dark" href="#notify" data-i18n-html="packagingCta">View gift editions <span>→</span></a></div>
+    <div class="packaging__image"><img src="assets/noor-packaging.png" alt="Noor premium presentation box and bracelet" data-i18n-alt="packagingImageAlt"><span data-i18n="packagingImageLabel">PREMIUM GIFT EDITION</span></div>
   </section>
 
-  <section class="assurances" aria-label="Shopping and product assurances">
-    <article><span>◇</span><div><h3>Worldwide delivery</h3><p>Launching with Saudi Arabia and selected international destinations.</p></div></article>
-    <article><span>↺</span><div><h3>Simple returns</h3><p>A clear return window and exchange process for every online order.</p></div></article>
-    <article><span>✦</span><div><h3>No charging</h3><p>Passive NFC technology stays ready without a battery or subscription.</p></div></article>
-    <article><span>⌁</span><div><h3>Private by design</h3><p>You choose what your bracelet shares and can update it at any time.</p></div></article>
+  <section class="assurances" aria-label="Shopping and product assurances" data-i18n-aria-label="assurancesLabel">
+    <article><span>◇</span><div><h3 data-i18n="assuranceDeliveryTitle">Worldwide delivery</h3><p data-i18n="assuranceDeliveryBody">Launching with Saudi Arabia and selected international destinations.</p></div></article>
+    <article><span>↺</span><div><h3 data-i18n="assuranceReturnsTitle">Simple returns</h3><p data-i18n="assuranceReturnsBody">A clear return window and exchange process for every online order.</p></div></article>
+    <article><span>✦</span><div><h3 data-i18n="assuranceChargingTitle">No charging</h3><p data-i18n="assuranceChargingBody">Passive NFC technology stays ready without a battery or subscription.</p></div></article>
+    <article><span>⌁</span><div><h3 data-i18n="assurancePrivacyTitle">Private by design</h3><p data-i18n="assurancePrivacyBody">You choose what your bracelet shares and can update it at any time.</p></div></article>
   </section>
 
   <section class="faq" id="support">
-    <div class="faq__intro"><p class="section-tag">/ 05 — GOOD TO KNOW</p><p class="kicker">QUESTIONS, ANSWERED.</p><h2>Simple technology.<br><em>Clear answers.</em></h2><p>Everything you need to understand Noor before the first release.</p></div>
+    <div class="faq__intro"><p class="section-tag" data-i18n="faqTag">/ 05 — GOOD TO KNOW</p><p class="kicker" data-i18n="faqKicker">QUESTIONS, ANSWERED.</p><h2 data-i18n-html="faqTitle">Simple technology.<br><em>Clear answers.</em></h2><p data-i18n="faqBody">Everything you need to understand Noor before the first release.</p></div>
     <div class="faq__list">
-      <details open><summary><span>01</span>Which phones work with Noor?<i>+</i></summary><p>Noor is designed for modern NFC-enabled iPhone and Android devices. A detailed compatibility list will be published before launch.</p></details>
-      <details><summary><span>02</span>Does the bracelet need charging?<i>+</i></summary><p>No. Noor uses a passive NFC chip and contains no battery, screen or microphone.</p></details>
-      <details><summary><span>03</span>What information is stored on the bracelet?<i>+</i></summary><p>The bracelet holds a secure link. Personal content lives in your editable Noor profile, so you remain in control of what is visible.</p></details>
-      <details><summary><span>04</span>When will the City Series be available?<i>+</i></summary><p>The first Saudi City Series is currently in development. Join the list for sample previews, launch timing and early access.</p></details>
-      <a class="faq__more" href="#footer">Visit the future Help Center <span>↗</span></a>
+      <details open><summary><span class="faq__number">01</span><span class="faq__question" data-i18n="faqOneQuestion">Which phones work with Noor?</span><i>+</i></summary><p data-i18n="faqOneAnswer">Noor is designed for modern NFC-enabled iPhone and Android devices. A detailed compatibility list will be published before launch.</p></details>
+      <details><summary><span class="faq__number">02</span><span class="faq__question" data-i18n="faqTwoQuestion">Does the bracelet need charging?</span><i>+</i></summary><p data-i18n="faqTwoAnswer">No. Noor uses a passive NFC chip and contains no battery, screen or microphone.</p></details>
+      <details><summary><span class="faq__number">03</span><span class="faq__question" data-i18n="faqThreeQuestion">What information is stored on the bracelet?</span><i>+</i></summary><p data-i18n="faqThreeAnswer">The bracelet holds a secure link. Personal content lives in your editable Noor profile, so you remain in control of what is visible.</p></details>
+      <details><summary><span class="faq__number">04</span><span class="faq__question" data-i18n="faqFourQuestion">When will the City Series be available?</span><i>+</i></summary><p data-i18n="faqFourAnswer">The first Saudi City Series is currently in development. Join the list for sample previews, launch timing and early access.</p></details>
+      <a class="faq__more" href="#footer" data-i18n-html="faqMore">Visit the future Help Center <span>↗</span></a>
     </div>
   </section>
 
-  <section class="closing" id="story"><p class="arabic">النور في متناول يدك</p><h2>Carry the light.<br><em>Connect what matters.</em></h2><p>Technology becomes meaningful when it disappears into life.</p><a class="button button--light" href="https://noor-islamic-bracelet.jimmyfang777.chatgpt.site" target="_blank" rel="noreferrer">View live website <span>↗</span></a></section>
+  <section class="closing" id="story"><p class="arabic">النور في متناول يدك</p><h2 data-i18n-html="closingTitle">Carry the light.<br><em>Connect what matters.</em></h2><p data-i18n="closingBody">Technology becomes meaningful when it disappears into life.</p><a class="button button--light" href="https://noor-islamic-bracelet.jimmyfang777.chatgpt.site" target="_blank" rel="noreferrer" data-i18n-html="closingCta">View live website <span>↗</span></a></section>
 
   <footer id="footer">
     <div class="footer__top">
       <a class="brand brand--footer" href="#top"><span class="brand__mark">N</span><span>NOOR <i>TECH</i></span></a>
-      <div class="payment" aria-label="Planned payment options"><small>PLANNED PAYMENT OPTIONS</small><div><span>mada</span><span>VISA</span><span>mastercard</span><span>Apple Pay</span><span>AMEX</span></div></div>
+      <div class="payment" aria-label="Planned payment options" data-i18n-aria-label="paymentLabel"><small data-i18n="paymentTitle">PLANNED PAYMENT OPTIONS</small><div><span>mada</span><span>VISA</span><span>mastercard</span><span>Apple Pay</span><span>AMEX</span></div></div>
     </div>
     <div class="footer__main" id="notify">
       <div class="footer__newsletter">
-        <h2>Receive stories, launch<br>news and private offers.</h2>
-        <div class="newsletter newsletter--notice" role="note"><span>Launch list opening soon</span><span aria-hidden="true">✦</span></div>
-        <p>Email sign-ups are not open yet.<br>Return here for Saudi Arabia release updates.</p>
+        <h2 data-i18n-html="newsletterTitle">Receive stories, launch<br>news and private offers.</h2>
+        <div class="newsletter newsletter--notice" role="note"><span data-i18n="newsletterNotice">Launch list opening soon</span><span aria-hidden="true">✦</span></div>
+        <p data-i18n-html="newsletterBody">Email sign-ups are not open yet.<br>Return here for Saudi Arabia release updates.</p>
       </div>
       <div class="footer__columns">
-        <nav aria-label="Our Company"><h3>Our Company</h3><a href="#story">Our Story</a><a href="#main-content">Design Philosophy</a><a href="#packaging">Materials &amp; Making</a></nav>
-        <nav aria-label="Support"><h3>Support</h3><a href="#support">Help Center ↗</a><a href="#support">NFC Compatibility</a></nav>
+        <nav aria-label="Our Company" data-i18n-aria-label="companyLabel"><h3 data-i18n="companyTitle">Our Company</h3><a href="#story" data-i18n="companyStory">Our Story</a><a href="#main-content" data-i18n="companyDesign">Design Philosophy</a><a href="#packaging" data-i18n="companyMaterials">Materials &amp; Making</a></nav>
+        <nav aria-label="Support" data-i18n-aria-label="supportLabel"><h3 data-i18n="supportTitle">Support</h3><a href="#support" data-i18n="supportHelp">Help Center ↗</a><a href="#support" data-i18n="supportCompatibility">NFC Compatibility</a></nav>
       </div>
     </div>
-    <div class="footer__legal" id="legal"><span>© 2026 NOOR TECH. All rights reserved.</span><nav><a href="#support">FAQ</a><a href="#support">NFC Compatibility</a></nav><a href="#top">Back to top ↑</a></div>
+    <div class="footer__legal" id="legal"><span data-i18n="copyright">© 2026 NOOR TECH. All rights reserved.</span><nav><a href="#support" data-i18n="legalFaq">FAQ</a><a href="#support" data-i18n="supportCompatibility">NFC Compatibility</a></nav><a href="#top" data-i18n="backToTop">Back to top ↑</a></div>
   </footer>
 </main>
 <script>
+  const translations={
+    en:{
+      pageTitle:'Noor Tech Islamic NFC Bracelet',pageDescription:'Noor Tech — a refined Islamic NFC bracelet connecting identity, place and digital experience.',
+      skipLink:'Skip to main content',announcementRelease:'NOOR FIRST RELEASE',announcementMessage:'Saudi Arabia launch updates are coming soon',announcementLink:'Learn more →',brandLabel:'Noor Tech home',primaryNavigation:'Primary navigation',navShop:'Shop',navTechnology:'Technology',navCollections:'Collections',navGifting:'Gifting',navAbout:'About',languageSwitch:'Language',launchUpdates:'Launch updates',navCta:'Explore collection <span>↗</span>',menuOpen:'Open menu',menuClose:'Close menu',
+      heroImageAlt:'Black woven Noor NFC bracelet with a gold clasp on limestone',heroEyebrow:'A NEW WAY TO CARRY MEANING',heroTitle:'Faith.<br><em>Made tangible.</em>',heroLead:'A refined Islamic bracelet connecting identity, place and digital experience — with a single touch.',heroPrimary:'Discover Noor <span>→</span>',heroSecondary:'See how NFC works <span>↘</span>',heroMeta:'DESIGNED BETWEEN<br>CHENGDU &amp; RIYADH',scrollLink:'<span></span> Scroll to discover',
+      objectTag:'/ 01 — THE OBJECT',objectKicker:'FORM MEETS MEANING',objectTitle:'Quiet by design.<br><em>Powerful by touch.</em>',objectBody:'No screen. No noise. Noor feels like part of you — a minimal woven form carrying stories, access and connection inside.',benefitsLabel:'Product benefits',benefitOneTitle:'One natural gesture',benefitOneBody:'Share, enter or discover with a simple tap. No app is needed for the person receiving.',benefitTwoTitle:'Made for every day',benefitTwoBody:'Soft woven nylon, a water-resistant NFC core, and no charging or screen to manage.',benefitThreeTitle:'Rooted in place',benefitThreeBody:'Patterns translate Islamic geometry and Saudi landscapes into a quiet personal object.',
+      connectImageAlt:'Noor bracelet connecting with a smartphone',connectLabel:'TAP TO CONNECT',connectTag:'/ 02 — NFC CONNECTION',connectKicker:'ONE GESTURE. MANY POSSIBILITIES.',connectTitle:'Touch opens<br><em>a new layer.</em>',connectBody:'Hold Noor near any modern phone. Instantly share a digital profile, verify a ticket, open curated prayers or reveal the story behind your city edition.',statCharging:'charging<br>required',statConnection:'typical<br>connection',statReady:'ready<br>to tap',
+      citiesTag:'/ 03 — CITY SERIES',citiesKicker:'FOUR PLACES. FOUR STORIES.',citiesTitle:'Wear where<br><em>you belong.</em>',citiesBody:'Each edition distills a Saudi city into line, texture and color. Created as a souvenir, a gift and a wearable connection to place.',citiesImageAlt:'Four Noor city edition bracelets',citiesImageLabel:'THE CITY COLLECTION / 2026',riyadhName:'Riyadh',riyadhBody:'The rhythm of a city moving forward.',riyadhAlt:'الرياض',jeddahName:'Jeddah',jeddahBody:'Red Sea movement, drawn in light.',jeddahAlt:'جدة',makkahName:'Makkah',makkahBody:'Concentric lines of gathering and faith.',makkahAlt:'مكة',madinahName:'Madinah',madinahBody:'A quiet geometry of peace and memory.',madinahAlt:'المدينة',
+      packagingTag:'/ 04 — THE EXPERIENCE',packagingKicker:'MADE TO GIVE. MADE TO KEEP.',packagingTitle:'A meaningful object,<br><em>from first touch.</em>',packagingBody:'Every detail is considered: tactile paper, restrained foil, a fitted presentation tray and a simple guide to activate your digital experience.',packagingCta:'View gift editions <span>→</span>',packagingImageAlt:'Noor premium presentation box and bracelet',packagingImageLabel:'PREMIUM GIFT EDITION',assurancesLabel:'Shopping and product assurances',assuranceDeliveryTitle:'Worldwide delivery',assuranceDeliveryBody:'Launching with Saudi Arabia and selected international destinations.',assuranceReturnsTitle:'Simple returns',assuranceReturnsBody:'A clear return window and exchange process for every online order.',assuranceChargingTitle:'No charging',assuranceChargingBody:'Passive NFC technology stays ready without a battery or subscription.',assurancePrivacyTitle:'Private by design',assurancePrivacyBody:'You choose what your bracelet shares and can update it at any time.',
+      faqTag:'/ 05 — GOOD TO KNOW',faqKicker:'QUESTIONS, ANSWERED.',faqTitle:'Simple technology.<br><em>Clear answers.</em>',faqBody:'Everything you need to understand Noor before the first release.',faqOneQuestion:'Which phones work with Noor?',faqOneAnswer:'Noor is designed for modern NFC-enabled iPhone and Android devices. A detailed compatibility list will be published before launch.',faqTwoQuestion:'Does the bracelet need charging?',faqTwoAnswer:'No. Noor uses a passive NFC chip and contains no battery, screen or microphone.',faqThreeQuestion:'What information is stored on the bracelet?',faqThreeAnswer:'The bracelet holds a secure link. Personal content lives in your editable Noor profile, so you remain in control of what is visible.',faqFourQuestion:'When will the City Series be available?',faqFourAnswer:'The first Saudi City Series is currently in development. Join the list for sample previews, launch timing and early access.',faqMore:'Visit the future Help Center <span>↗</span>',
+      closingTitle:'Carry the light.<br><em>Connect what matters.</em>',closingBody:'Technology becomes meaningful when it disappears into life.',closingCta:'View live website <span>↗</span>',paymentLabel:'Planned payment options',paymentTitle:'PLANNED PAYMENT OPTIONS',newsletterTitle:'Receive stories, launch<br>news and private offers.',newsletterNotice:'Launch list opening soon',newsletterBody:'Email sign-ups are not open yet.<br>Return here for Saudi Arabia release updates.',companyLabel:'Our Company',companyTitle:'Our Company',companyStory:'Our Story',companyDesign:'Design Philosophy',companyMaterials:'Materials & Making',supportLabel:'Support',supportTitle:'Support',supportHelp:'Help Center ↗',supportCompatibility:'NFC Compatibility',copyright:'© 2026 NOOR TECH. All rights reserved.',legalFaq:'FAQ',backToTop:'Back to top ↑'
+    },
+    ar:{
+      pageTitle:'نور تك | سوار إسلامي بتقنية NFC',pageDescription:'نور تك — سوار إسلامي راقٍ بتقنية NFC يربط الهوية والمكان بالتجربة الرقمية.',
+      skipLink:'تخطَّ إلى المحتوى الرئيسي',announcementRelease:'الإصدار الأول من نور',announcementMessage:'تحديثات إطلاق السعودية قريبًا',announcementLink:'اعرف المزيد ←',brandLabel:'الصفحة الرئيسية لنور تك',primaryNavigation:'التنقل الرئيسي',navShop:'تسوّق',navTechnology:'التقنية',navCollections:'المجموعات',navGifting:'الهدايا',navAbout:'عن نور',languageSwitch:'اللغة',launchUpdates:'تحديثات الإطلاق',navCta:'استكشف المجموعة <span>↖</span>',menuOpen:'افتح القائمة',menuClose:'أغلق القائمة',
+      heroImageAlt:'سوار نور أسود منسوج بقفل ذهبي فوق حجر جيري',heroEyebrow:'طريقة جديدة لحمل المعنى',heroTitle:'الإيمان.<br><em>في متناول اليد.</em>',heroLead:'سوار إسلامي راقٍ يربط الهوية والمكان بالتجربة الرقمية — بلمسة واحدة.',heroPrimary:'اكتشف نور <span>←</span>',heroSecondary:'كيف تعمل تقنية NFC <span>↙</span>',heroMeta:'صُمِّم بين<br>تشنغدو والرياض',scrollLink:'<span></span> مرّر للاستكشاف',
+      objectTag:'/ 01 — السوار',objectKicker:'حين يلتقي الشكل بالمعنى',objectTitle:'هادئ في تصميمه.<br><em>قوي بلمسة.</em>',objectBody:'بلا شاشة وبلا ضجيج. يبدو نور جزءًا منك — تصميم منسوج بسيط يحمل القصص والدخول والاتصال في داخله.',benefitsLabel:'مزايا المنتج',benefitOneTitle:'إيماءة طبيعية واحدة',benefitOneBody:'شارك أو ادخل أو اكتشف بلمسة بسيطة. ولا يحتاج الشخص الآخر إلى أي تطبيق.',benefitTwoTitle:'مصنوع لكل يوم',benefitTwoBody:'نايلون منسوج ناعم، ونواة NFC مقاومة للماء، بلا شحن أو شاشة تحتاج إلى إدارة.',benefitThreeTitle:'متجذّر في المكان',benefitThreeBody:'تحوّل الأنماط الهندسية الإسلامية ومشاهد السعودية إلى قطعة شخصية هادئة.',
+      connectImageAlt:'سوار نور يتصل بهاتف ذكي',connectLabel:'المس لتتصل',connectTag:'/ 02 — اتصال NFC',connectKicker:'إيماءة واحدة. إمكانات كثيرة.',connectTitle:'لمسة تفتح<br><em>طبقة جديدة.</em>',connectBody:'قرّب نور من أي هاتف حديث. شارك ملفًا رقميًا فورًا، أو تحقّق من تذكرة، أو افتح أدعية مختارة، أو اكتشف قصة إصدار مدينتك.',statCharging:'لا يحتاج<br>إلى شحن',statConnection:'اتصال<br>في أقل من ثانية',statReady:'جاهز للمس<br>دائمًا',
+      citiesTag:'/ 03 — سلسلة المدن',citiesKicker:'أربعة أماكن. أربع حكايات.',citiesTitle:'ارتدِ المكان<br><em>الذي تنتمي إليه.</em>',citiesBody:'يختصر كل إصدار مدينة سعودية في خطوط وملمس وألوان. صُمّم كتذكار وهدية ورابط يمكن ارتداؤه مع المكان.',citiesImageAlt:'أربعة أساور من سلسلة مدن نور',citiesImageLabel:'مجموعة المدن / 2026',riyadhName:'الرياض',riyadhBody:'إيقاع مدينة تمضي إلى الأمام.',riyadhAlt:'Riyadh',jeddahName:'جدة',jeddahBody:'حركة البحر الأحمر مرسومة بالضوء.',jeddahAlt:'Jeddah',makkahName:'مكة',makkahBody:'دوائر من الاجتماع والإيمان.',makkahAlt:'Makkah',madinahName:'المدينة',madinahBody:'هندسة هادئة من السكينة والذكرى.',madinahAlt:'Madinah',
+      packagingTag:'/ 04 — التجربة',packagingKicker:'صُنع ليُهدى. صُنع ليبقى.',packagingTitle:'قطعة تحمل معنى،<br><em>من اللمسة الأولى.</em>',packagingBody:'كل تفصيل مدروس: ورق ملموس، ورقائق معدنية هادئة، صينية عرض مصممة بعناية، ودليل بسيط لتفعيل تجربتك الرقمية.',packagingCta:'شاهد إصدارات الهدايا <span>←</span>',packagingImageAlt:'علبة نور الفاخرة مع السوار',packagingImageLabel:'إصدار الهدايا الفاخر',assurancesLabel:'مزايا التسوق والمنتج',assuranceDeliveryTitle:'توصيل عالمي',assuranceDeliveryBody:'الانطلاق من السعودية إلى وجهات دولية مختارة.',assuranceReturnsTitle:'إرجاع بسيط',assuranceReturnsBody:'مدة واضحة للإرجاع وخطوات استبدال سهلة لكل طلب عبر الإنترنت.',assuranceChargingTitle:'بلا شحن',assuranceChargingBody:'تبقى تقنية NFC السلبية جاهزة بلا بطارية أو اشتراك.',assurancePrivacyTitle:'الخصوصية في صميم التصميم',assurancePrivacyBody:'أنت تختار ما يشاركه سوارك، ويمكنك تحديثه في أي وقت.',
+      faqTag:'/ 05 — معلومات مهمة',faqKicker:'أسئلة وإجابات واضحة.',faqTitle:'تقنية بسيطة.<br><em>إجابات واضحة.</em>',faqBody:'كل ما تحتاج إلى معرفته عن نور قبل الإصدار الأول.',faqOneQuestion:'ما الهواتف المتوافقة مع نور؟',faqOneAnswer:'صُمم نور لهواتف iPhone وAndroid الحديثة التي تدعم NFC. وسننشر قائمة توافق مفصلة قبل الإطلاق.',faqTwoQuestion:'هل يحتاج السوار إلى الشحن؟',faqTwoAnswer:'لا. يستخدم نور شريحة NFC سلبية ولا يحتوي على بطارية أو شاشة أو ميكروفون.',faqThreeQuestion:'ما المعلومات المخزنة على السوار؟',faqThreeAnswer:'يحمل السوار رابطًا آمنًا. ويبقى المحتوى الشخصي في ملف نور القابل للتعديل، لتظل متحكمًا فيما يظهر.',faqFourQuestion:'متى تتوفر سلسلة المدن؟',faqFourAnswer:'سلسلة المدن السعودية الأولى قيد التطوير حاليًا. تابع التحديثات لمعاينة النماذج ومعرفة موعد الإطلاق والوصول المبكر.',faqMore:'زر مركز المساعدة المستقبلي <span>↖</span>',
+      closingTitle:'احمل النور.<br><em>واتصل بما يهم.</em>',closingBody:'تصبح التقنية ذات معنى حين تنسجم بهدوء مع الحياة.',closingCta:'شاهد الموقع المباشر <span>↖</span>',paymentLabel:'خيارات الدفع المخطط لها',paymentTitle:'خيارات الدفع المخطط لها',newsletterTitle:'استقبل القصص وأخبار الإطلاق<br>والعروض الخاصة.',newsletterNotice:'قائمة الإطلاق ستفتح قريبًا',newsletterBody:'التسجيل بالبريد الإلكتروني غير متاح بعد.<br>عُد هنا لمتابعة تحديثات الإطلاق في السعودية.',companyLabel:'شركتنا',companyTitle:'شركتنا',companyStory:'قصتنا',companyDesign:'فلسفة التصميم',companyMaterials:'الخامات والصناعة',supportLabel:'الدعم',supportTitle:'الدعم',supportHelp:'مركز المساعدة ↖',supportCompatibility:'توافق NFC',copyright:'© 2026 NOOR TECH. جميع الحقوق محفوظة.',legalFaq:'الأسئلة الشائعة',backToTop:'العودة إلى الأعلى ↑'
+    }
+  };
   const nav=document.querySelector('.nav');
   const menu=document.querySelector('.menu');
   const links=document.querySelector('.nav__links');
+  const languageButtons=document.querySelectorAll('[data-language]');
+  const description=document.querySelector('[data-page-description]');
+  const setLanguage=language=>{
+    const copy=translations[language]||translations.en;
+    const isArabic=language==='ar';
+    document.documentElement.lang=language;
+    document.documentElement.dir=isArabic?'rtl':'ltr';
+    document.title=copy.pageTitle;
+    description.setAttribute('content',copy.pageDescription);
+    document.querySelectorAll('[data-i18n]').forEach(element=>{element.textContent=copy[element.dataset.i18n];});
+    document.querySelectorAll('[data-i18n-html]').forEach(element=>{element.innerHTML=copy[element.dataset.i18nHtml];});
+    document.querySelectorAll('[data-i18n-aria-label]').forEach(element=>{element.setAttribute('aria-label',copy[element.dataset.i18nAriaLabel]);});
+    document.querySelectorAll('[data-i18n-alt]').forEach(element=>{element.setAttribute('alt',copy[element.dataset.i18nAlt]);});
+    languageButtons.forEach(button=>{const active=button.dataset.language===language;button.setAttribute('aria-pressed',String(active));button.classList.toggle('is-active',active);});
+    menu.setAttribute('aria-label',copy[links.classList.contains('nav__links--open')?'menuClose':'menuOpen']);
+    try{localStorage.setItem('noor-sales-language',language);}catch{}
+  };
+  languageButtons.forEach(button=>button.addEventListener('click',()=>setLanguage(button.dataset.language)));
   addEventListener('scroll',()=>nav.classList.toggle('nav--solid',scrollY>24),{passive:true});
-  menu.addEventListener('click',()=>{const open=links.classList.toggle('nav__links--open');menu.setAttribute('aria-expanded',String(open));});
-  links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{links.classList.remove('nav__links--open');menu.setAttribute('aria-expanded','false');}));
+  menu.addEventListener('click',()=>{const open=links.classList.toggle('nav__links--open');menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',translations[document.documentElement.lang][open?'menuClose':'menuOpen']);});
+  links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{links.classList.remove('nav__links--open');menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label',translations[document.documentElement.lang].menuOpen);}));
   document.querySelectorAll('.city').forEach(button=>{const select=()=>{document.querySelectorAll('.city').forEach(x=>x.classList.remove('city--active'));button.classList.add('city--active');};button.addEventListener('mouseenter',select);button.addEventListener('focus',select);button.addEventListener('click',select);});
+  let savedLanguage='en';
+  try{savedLanguage=localStorage.getItem('noor-sales-language')||'en';}catch{}
+  setLanguage(savedLanguage==='ar'?'ar':'en');
 </script>
 </body>
 </html>
