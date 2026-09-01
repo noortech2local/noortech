@@ -17,6 +17,7 @@ for (const file of [
   "riyadh-wristband-detail.png",
   "riyadh-wristband-lifestyle.png",
   "noor-hero.png",
+  "noor-bracelet-cutout.png",
   "noor-nfc.png",
   "noor-collection.png",
   "noor-packaging.png",
