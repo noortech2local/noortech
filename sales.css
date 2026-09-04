@@ -52,3 +52,7 @@ html,body{overflow-x:clip}
 
 /* Mobile interaction polish */
 @media(max-width:900px){a,button{touch-action:manipulation}.language-switch{min-height:48px;padding:2px}.language-switch button{min-width:44px;min-height:44px;padding:0 9px}.menu{width:48px;height:48px;padding:12px}.menu span{margin:6px auto}.nav__links--open{gap:4px}.nav__links--open a{display:flex;align-items:center;min-height:48px}.hero__copy{pointer-events:none}.hero__actions{pointer-events:auto}.hero__actions .text-link{display:inline-flex;align-items:center;min-height:44px;padding-bottom:0}.hero__product{touch-action:manipulation}.button:active{transform:scale(.98)}.city{min-height:88px}}
+
+/* Dedicated locale links */
+.language-switch a{display:grid;place-items:center;border:0;border-radius:99px;background:transparent;color:#ffffff9c;padding:7px 9px;font-size:9px;cursor:pointer;transition:.2s}.language-switch a:hover{color:white}.language-switch a.is-active{background:#f5f0e7;color:var(--deep)}
+@media(max-width:900px){.language-switch a{min-width:44px;min-height:44px;padding:0 9px}}
