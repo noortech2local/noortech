@@ -276,15 +276,19 @@
   const cityButtons=[...document.querySelectorAll('.city')];
   const cityPhotos=[...document.querySelectorAll('.city-photo:not(.city-photo--overview)')];
   const cityOverview=document.querySelector('.city-photo--overview');
+  let cityResetTimer;
   const selectCity=index=>{
-    cityOverview.classList.remove('is-active');
-    cityOverview.setAttribute('aria-hidden','true');
+    clearTimeout(cityResetTimer);
+    const showOverview=index===-1;
+    cityOverview.classList.toggle('is-active',showOverview);
+    cityOverview.setAttribute('aria-hidden',String(!showOverview));
     cityButtons.forEach((button,i)=>{
       button.classList.toggle('city--active',i===index);
       button.setAttribute('aria-pressed',String(i===index));
       cityPhotos[i].classList.toggle('is-active',i===index);
       cityPhotos[i].setAttribute('aria-hidden',String(i!==index));
     });
+    if(!showOverview)cityResetTimer=setTimeout(()=>selectCity(-1),6000);
   };
   cityButtons.forEach((button,index)=>{
     button.addEventListener('click',()=>selectCity(index));
