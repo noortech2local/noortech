@@ -49,7 +49,7 @@ const buildLocalePage = (locale) => {
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${escapeText(copy.pageTitle)}</title>`)
     .replace(/(<meta name="description" content=")[^"]*(" data-page-description>)/, `$1${escapeAttribute(copy.pageDescription)}$2`)
     .replace(/(<link rel="canonical" href=")[^"]*(" data-canonical>)/, `$1${productionBase}/${locale}/$2`)
-    .replace('href="sales.css"', 'href="../sales.css"')
+    .replace('href="sales.css', 'href="../sales.css')
     .replaceAll('src="assets/', 'src="../assets/')
     .replace('href="en/" data-language="en"', 'href="../en/" data-language="en"')
     .replace('href="ar/" data-language="ar"', 'href="../ar/" data-language="ar"')
