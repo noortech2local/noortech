@@ -1,0 +1,14 @@
+import { readFileSync, mkdirSync, copyFileSync } from 'node:fs';
+import { Script } from 'node:vm';
+import { fileURLToPath } from 'node:url';
+const root = new URL('../', import.meta.url);
+const html = readFileSync(new URL('index.html', root), 'utf8');
+const scripts = [...html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)];
+if (scripts.length !== 3) throw new Error('Expected three scripts in the standalone page');
+for (const [i, match] of scripts.entries()) new Script(match[1], { filename: `inline-${i}.js` });
+if (!html.includes('class="locale-switch"') || !html.includes('noorDictionary')) throw new Error('Missing language controls');
+const assets = JSON.parse(html.match(/const noorAssets=(\{.*?\});/s)[1]);
+if (Object.keys(assets).length !== 12 || !Object.values(assets).every(x => x.startsWith('data:image/'))) throw new Error('Missing embedded images');
+mkdirSync(new URL('public/', root), { recursive: true });
+copyFileSync(new URL('index.html', root), new URL('public/index.html', root));
+console.log('Standalone build ready: public/index.html; 3 valid scripts, 12 embedded images, English and Arabic.');

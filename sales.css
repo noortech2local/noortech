@@ -99,3 +99,9 @@ html,body{overflow-x:clip}
 .packaging__image .gift-counter{position:relative;grid-area:2/1;left:auto;bottom:auto;justify-self:center;margin:20px;padding:10px 16px;color:var(--deep);font-size:12px;text-shadow:none;letter-spacing:.1em}
 [data-gift-next]{cursor:pointer;border:0;font:inherit}
 [data-gift-next]:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
+
+/* The default collection image opens the full bilingual collection. */
+.cities__image{position:relative}
+.city-overview-link{position:absolute;inset:0;z-index:2;cursor:pointer}
+.city-overview-link[hidden]{display:none}
+.city-overview-link:focus-visible{outline:3px solid var(--gold);outline-offset:-5px}

@@ -51,6 +51,7 @@ const buildLocalePage = (locale) => {
     .replace(/(<link rel="canonical" href=")[^"]*(" data-canonical>)/, `$1${productionBase}/${locale}/$2`)
     .replace('href="sales.css', 'href="../sales.css')
     .replaceAll('src="assets/', 'src="../assets/')
+    .replace('href="standalone-collections/index.html?lang=en"', `href="../standalone-collections/index.html?lang=${locale}"`)
     .replace('href="en/" data-language="en"', 'href="../en/" data-language="en"')
     .replace('href="ar/" data-language="ar"', 'href="../ar/" data-language="ar"')
     .replace(/(<button class="menu"[^>]*aria-label=")[^"]*(")/, `$1${escapeAttribute(copy.menuOpen)}$2`);
@@ -80,7 +81,7 @@ for (const [locale, html] of Object.entries(localePages)) {
 rmSync(publicDir, { recursive: true, force: true });
 mkdirSync(publicAssets, { recursive: true });
 
-for (const file of ["sales.html", "sales.css", "sales.js"]) {
+for (const file of ["sales.html", "sales.css", "sales.js", "collections.html"]) {
   copyFileSync(resolve(root, file), resolve(publicDir, file));
 }
 
@@ -117,3 +118,7 @@ for (const file of [
 ]) {
   copyFileSync(resolve(root, "assets", file), resolve(publicAssets, file));
 }
+
+const collectionDir = resolve(publicDir, "standalone-collections");
+mkdirSync(collectionDir, { recursive: true });
+copyFileSync(resolve(root, "standalone-collections/index.html"), resolve(collectionDir, "index.html"));
