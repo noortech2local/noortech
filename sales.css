@@ -78,3 +78,16 @@ html,body{overflow-x:clip}
 [lang=ar] :is(.brand,.hero__product-spec,.nfc-card,.connect__stats strong,.connect__stats span,.city>b,.city>span,.faq__number,.payment){font-family:Arial,Helvetica,sans-serif}
 @media(max-width:900px){[lang=ar] .manifesto__body{margin-right:0}[lang=ar] .hero h1{font-size:clamp(56px,11vw,88px)}[lang=ar] :is(.manifesto h2,.cities h2){font-size:clamp(48px,9vw,72px)}[lang=ar] :is(.connect h2,.packaging h2,.faq h2){font-size:clamp(44px,8vw,66px)}}
 @media(max-width:560px){[lang=ar] .hero h1{font-size:clamp(49px,14vw,64px);line-height:1.1}[lang=ar] :is(.manifesto h2,.cities h2,.connect h2,.packaging h2,.faq h2,.closing h2){font-size:clamp(40px,11.5vw,54px);line-height:1.18}[lang=ar] .hero__lead{font-size:16px;line-height:1.85}[lang=ar] .footer__newsletter h2{font-size:32px;line-height:1.35}[lang=ar] .city h3{font-size:24px}}
+
+/* City design sheets retain their full composition at every screen size. */
+.cities__stage{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);min-height:0;align-items:stretch}
+.cities__image{display:grid;align-content:center;min-height:0;background:#efebe5}
+.cities__image:after{display:none}
+.cities__image .city-photo,.cities.is-visible .cities__image .city-photo{grid-area:1/1;display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;transform:none;filter:none;opacity:0;visibility:hidden;transition:opacity .3s ease;will-change:auto}
+.cities__image .city-photo.is-active,.cities.is-visible .cities__image .city-photo.is-active{opacity:1;visibility:visible}
+.city{grid-template-columns:24px minmax(0,1fr) auto 16px;gap:14px;padding:24px}
+.city p{font-size:14px;line-height:1.5}
+.city--active:before{background:var(--deep)}
+.city:focus-visible{outline:3px solid var(--gold);outline-offset:-4px}
+@media(max-width:1100px){.cities__stage{grid-template-columns:1fr}.cities__image{min-height:0}.city-list{min-height:0}.city{min-height:108px}}
+@media(max-width:560px){.city{padding:18px 14px;gap:10px}.city p{font-size:14px}.city b{font-size:15px}}

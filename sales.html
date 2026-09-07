@@ -96,12 +96,17 @@
   <section class="cities" id="cities">
     <div class="cities__head"><div><p class="section-tag" data-i18n="citiesTag">/ 03 — CITY SERIES</p><p class="kicker" data-i18n="citiesKicker">FOUR PLACES. FOUR STORIES.</p><h2 data-i18n-html="citiesTitle">Wear where<br><em>you belong.</em></h2></div><p data-i18n="citiesBody">Each edition distills a Saudi city into line, texture and color. Created as a souvenir, a gift and a wearable connection to place.</p></div>
     <div class="cities__stage">
-      <div class="cities__image"><img src="assets/noor-collection-mobile.jpg" width="1448" height="1086" loading="lazy" decoding="async" alt="Four Noor city edition bracelets" data-i18n-alt="citiesImageAlt"><div class="cities__focus" aria-hidden="true"><span data-city-focus-name>RIYADH</span><i></i></div><span data-i18n="citiesImageLabel">THE CITY COLLECTION / 2026</span></div>
+      <div class="cities__image">
+        <img id="city-image-riyadh" class="city-photo is-active" src="assets/riyadh-city-band.jpg" width="1448" height="1086" loading="lazy" decoding="async" alt="Riyadh city edition band design and landmark details" data-i18n-alt="riyadhImageAlt" aria-hidden="false">
+        <img id="city-image-jeddah" class="city-photo" src="assets/jeddah-city-band.jpg" width="1448" height="1086" loading="lazy" decoding="async" alt="Jeddah city edition band design and landmark details" data-i18n-alt="jeddahImageAlt" aria-hidden="true">
+        <img id="city-image-makkah" class="city-photo" src="assets/makkah-city-band.jpg" width="1448" height="1086" loading="lazy" decoding="async" alt="Makkah city edition band design and landmark details" data-i18n-alt="makkahImageAlt" aria-hidden="true">
+        <img id="city-image-madinah" class="city-photo" src="assets/madinah-city-band.jpg" width="1448" height="1086" loading="lazy" decoding="async" alt="Madinah city edition band design and landmark details" data-i18n-alt="madinahImageAlt" aria-hidden="true">
+      </div>
       <div class="city-list">
-        <button class="city city--active" style="--city:#153d33"><span>01</span><div><h3 data-i18n="riyadhName">Riyadh</h3><p data-i18n="riyadhBody">The rhythm of a city moving forward.</p></div><b data-i18n="riyadhAlt">الرياض</b><i>↗</i></button>
-        <button class="city" style="--city:#5d7e83"><span>02</span><div><h3 data-i18n="jeddahName">Jeddah</h3><p data-i18n="jeddahBody">Red Sea movement, drawn in light.</p></div><b data-i18n="jeddahAlt">جدة</b><i>↗</i></button>
-        <button class="city" style="--city:#ba9b67"><span>03</span><div><h3 data-i18n="makkahName">Makkah</h3><p data-i18n="makkahBody">Concentric lines of gathering and faith.</p></div><b data-i18n="makkahAlt">مكة</b><i>↗</i></button>
-        <button class="city" style="--city:#6d2430"><span>04</span><div><h3 data-i18n="madinahName">Madinah</h3><p data-i18n="madinahBody">A quiet geometry of peace and memory.</p></div><b data-i18n="madinahAlt">المدينة</b><i>↗</i></button>
+        <button class="city city--active" style="--city:#153d33" type="button" aria-controls="city-image-riyadh" aria-pressed="true"><span>01</span><div><h3 data-i18n="riyadhName">Riyadh</h3><p data-i18n="riyadhBody">The rhythm of a city moving forward.</p></div><b data-i18n="riyadhAlt">الرياض</b><i>↗</i></button>
+        <button class="city" style="--city:#5d7e83" type="button" aria-controls="city-image-jeddah" aria-pressed="false"><span>02</span><div><h3 data-i18n="jeddahName">Jeddah</h3><p data-i18n="jeddahBody">Red Sea movement, drawn in light.</p></div><b data-i18n="jeddahAlt">جدة</b><i>↗</i></button>
+        <button class="city" style="--city:#ba9b67" type="button" aria-controls="city-image-makkah" aria-pressed="false"><span>03</span><div><h3 data-i18n="makkahName">Makkah</h3><p data-i18n="makkahBody">Concentric lines of gathering and faith.</p></div><b data-i18n="makkahAlt">مكة</b><i>↗</i></button>
+        <button class="city" style="--city:#6d2430" type="button" aria-controls="city-image-madinah" aria-pressed="false"><span>04</span><div><h3 data-i18n="madinahName">Madinah</h3><p data-i18n="madinahBody">A quiet geometry of peace and memory.</p></div><b data-i18n="madinahAlt">المدينة</b><i>↗</i></button>
       </div>
     </div>
   </section>
@@ -158,7 +163,7 @@
       heroImageAlt:'Black woven Noor NFC bracelet with a gold clasp on limestone',heroEyebrow:'A NEW WAY TO CARRY MEANING',heroTitle:'Faith.<br><em>Made tangible.</em>',heroLead:'A refined Islamic bracelet connecting identity, place and digital experience — with a single touch.',heroPrimary:'Discover Noor <span>→</span>',heroSecondary:'See how NFC works <span>↘</span>',heroMeta:'DESIGNED BETWEEN<br>CHENGDU &amp; RIYADH',scrollLink:'<span></span> Scroll to discover',tapProductLabel:'Animate the Noor bracelet',
       objectTag:'/ 01 — THE OBJECT',objectKicker:'FORM MEETS MEANING',objectTitle:'Quiet by design.<br><em>Powerful by touch.</em>',objectBody:'No screen. No noise. Noor feels like part of you — a minimal woven form carrying stories, access and connection inside.',benefitsLabel:'Product benefits',benefitOneTitle:'One natural gesture',benefitOneBody:'Share, enter or discover with a simple tap. No app is needed for the person receiving.',benefitTwoTitle:'Made for every day',benefitTwoBody:'Soft woven nylon, a water-resistant NFC core, and no charging or screen to manage.',benefitThreeTitle:'Rooted in place',benefitThreeBody:'Patterns translate Islamic geometry and Saudi landscapes into a quiet personal object.',reelLabel:'Noor product story',reelKicker:'THE NOOR EXPERIENCE',reelObjectEyebrow:'THE OBJECT',reelObjectTitle:'Made to be felt.<br><em>Designed to disappear.</em>',reelObjectBody:'A tactile woven form carries meaning without asking for attention.',reelConnectEyebrow:'THE CONNECTION',reelConnectTitle:'One gesture.<br><em>A world opens.</em>',reelConnectBody:'No app. No charging. Just a natural touch between object and phone.',reelCitiesEyebrow:'THE COLLECTION',reelCitiesTitle:'Four places.<br><em>Stories you can wear.</em>',reelCitiesBody:'Riyadh, Jeddah, Makkah and Madinah translated into line, color and memory.',
       connectImageAlt:'Noor bracelet connecting with a smartphone',connectLabel:'TAP TO CONNECT',connectTag:'/ 02 — NFC CONNECTION',connectKicker:'ONE GESTURE. MANY POSSIBILITIES.',connectTitle:'Touch opens<br><em>a new layer.</em>',connectBody:'Hold Noor near any modern phone. Instantly share a digital profile, verify a ticket, open curated prayers or reveal the story behind your city edition.',statCharging:'charging<br>required',statConnection:'typical<br>connection',statReady:'ready<br>to tap',
-      citiesTag:'/ 03 — CITY SERIES',citiesKicker:'FOUR PLACES. FOUR STORIES.',citiesTitle:'Wear where<br><em>you belong.</em>',citiesBody:'Each edition distills a Saudi city into line, texture and color. Created as a souvenir, a gift and a wearable connection to place.',citiesImageAlt:'Four Noor city edition bracelets',citiesImageLabel:'THE CITY COLLECTION / 2026',riyadhName:'Riyadh',riyadhBody:'The rhythm of a city moving forward.',riyadhAlt:'الرياض',jeddahName:'Jeddah',jeddahBody:'Red Sea movement, drawn in light.',jeddahAlt:'جدة',makkahName:'Makkah',makkahBody:'Concentric lines of gathering and faith.',makkahAlt:'مكة',madinahName:'Madinah',madinahBody:'A quiet geometry of peace and memory.',madinahAlt:'المدينة',
+      citiesTag:'/ 03 — CITY SERIES',citiesKicker:'FOUR PLACES. FOUR STORIES.',citiesTitle:'Wear where<br><em>you belong.</em>',citiesBody:'Each edition distills a Saudi city into line, texture and color. Created as a souvenir, a gift and a wearable connection to place.',citiesImageAlt:'Four Noor city edition bracelets',citiesImageLabel:'THE CITY COLLECTION / 2026',riyadhImageAlt:'Riyadh city edition band design and landmark details',riyadhName:'Riyadh',riyadhBody:'The rhythm of a city moving forward.',riyadhAlt:'الرياض',jeddahImageAlt:'Jeddah city edition band design and landmark details',jeddahName:'Jeddah',jeddahBody:'Red Sea movement, drawn in light.',jeddahAlt:'جدة',makkahImageAlt:'Makkah city edition band design and landmark details',makkahName:'Makkah',makkahBody:'Concentric lines of gathering and faith.',makkahAlt:'مكة',madinahImageAlt:'Madinah city edition band design and landmark details',madinahName:'Madinah',madinahBody:'A quiet geometry of peace and memory.',madinahAlt:'المدينة',
       packagingTag:'/ 04 — THE EXPERIENCE',packagingKicker:'MADE TO GIVE. MADE TO KEEP.',packagingTitle:'A meaningful object,<br><em>from first touch.</em>',packagingBody:'Every detail is considered: tactile paper, restrained foil, a fitted presentation tray and a simple guide to activate your digital experience.',packagingCta:'View gift editions <span>→</span>',packagingImageAlt:'Noor premium presentation box and bracelet',packagingImageLabel:'PREMIUM GIFT EDITION',assurancesLabel:'Shopping and product assurances',assuranceDeliveryTitle:'Worldwide delivery',assuranceDeliveryBody:'Launching with Saudi Arabia and selected international destinations.',assuranceReturnsTitle:'Simple returns',assuranceReturnsBody:'A clear return window and exchange process for every online order.',assuranceChargingTitle:'No charging',assuranceChargingBody:'Passive NFC technology stays ready without a battery or subscription.',assurancePrivacyTitle:'Private by design',assurancePrivacyBody:'You choose what your bracelet shares and can update it at any time.',
       faqTag:'/ 05 — GOOD TO KNOW',faqKicker:'QUESTIONS, ANSWERED.',faqTitle:'Simple technology.<br><em>Clear answers.</em>',faqBody:'Everything you need to understand Noor before the first release.',faqOneQuestion:'Which phones work with Noor?',faqOneAnswer:'Noor is designed for modern NFC-enabled iPhone and Android devices. A detailed compatibility list will be published before launch.',faqTwoQuestion:'Does the bracelet need charging?',faqTwoAnswer:'No. Noor uses a passive NFC chip and contains no battery, screen or microphone.',faqThreeQuestion:'What information is stored on the bracelet?',faqThreeAnswer:'The bracelet holds a secure link. Personal content lives in your editable Noor profile, so you remain in control of what is visible.',faqFourQuestion:'When will the City Series be available?',faqFourAnswer:'The first Saudi City Series is currently in development. Join the list for sample previews, launch timing and early access.',faqMore:'Visit the future Help Center <span>↗</span>',
       closingTitle:'Carry the light.<br><em>Connect what matters.</em>',closingBody:'Technology becomes meaningful when it disappears into life.',paymentLabel:'Planned payment options',paymentTitle:'PLANNED PAYMENT OPTIONS',newsletterTitle:'Receive stories, launch<br>news and private offers.',newsletterNotice:'Launch list opening soon',newsletterBody:'Email sign-ups are not open yet.<br>Return here for Saudi Arabia release updates.',companyLabel:'Our Company',companyTitle:'Our Company',companyStory:'Our Story',companyDesign:'Design Philosophy',companyMaterials:'Materials & Making',supportLabel:'Support',supportTitle:'Support',supportHelp:'Help Center ↗',supportCompatibility:'NFC Compatibility',copyright:'© 2026 NOOR TECH. All rights reserved.',legalFaq:'FAQ',backToTop:'Back to top ↑'
@@ -169,7 +174,7 @@
       heroImageAlt:'سوار نور أسود منسوج بقفل ذهبي فوق حجر جيري',heroEyebrow:'طريقة جديدة لحمل المعنى',heroTitle:'الإيمان.<br><em>في متناول اليد.</em>',heroLead:'سوار إسلامي راقٍ يربط الهوية والمكان بالتجربة الرقمية — بلمسة واحدة.',heroPrimary:'اكتشف نور <span>←</span>',heroSecondary:'كيف تعمل تقنية NFC <span>↙</span>',heroMeta:'صُمِّم بين<br>تشنغدو والرياض',scrollLink:'<span></span> مرّر للاستكشاف',tapProductLabel:'حرّك سوار نور',
       objectTag:'/ 01 — السوار',objectKicker:'حين يلتقي الشكل بالمعنى',objectTitle:'هادئ في تصميمه.<br><em>قوي بلمسة.</em>',objectBody:'بلا شاشة وبلا ضجيج. يبدو نور جزءًا منك — تصميم منسوج بسيط يحمل القصص والدخول والاتصال في داخله.',benefitsLabel:'مزايا المنتج',benefitOneTitle:'إيماءة طبيعية واحدة',benefitOneBody:'شارك أو ادخل أو اكتشف بلمسة بسيطة. ولا يحتاج الشخص الآخر إلى أي تطبيق.',benefitTwoTitle:'مصنوع لكل يوم',benefitTwoBody:'نايلون منسوج ناعم، ونواة NFC مقاومة للماء، بلا شحن أو شاشة تحتاج إلى إدارة.',benefitThreeTitle:'متجذّر في المكان',benefitThreeBody:'تحوّل الأنماط الهندسية الإسلامية ومشاهد السعودية إلى قطعة شخصية هادئة.',reelLabel:'قصة منتج نور',reelKicker:'تجربة نور',reelObjectEyebrow:'السوار',reelObjectTitle:'صُمم ليُحس.<br><em>ويختفي في حياتك.</em>',reelObjectBody:'شكل منسوج وملموس يحمل المعنى بهدوء من دون أن يطلب الانتباه.',reelConnectEyebrow:'الاتصال',reelConnectTitle:'إيماءة واحدة.<br><em>تفتح عالماً.</em>',reelConnectBody:'بلا تطبيق وبلا شحن. مجرد لمسة طبيعية بين السوار والهاتف.',reelCitiesEyebrow:'المجموعة',reelCitiesTitle:'أربعة أماكن.<br><em>قصص ترتديها.</em>',reelCitiesBody:'الرياض وجدة ومكة والمدينة تتحول إلى خطوط وألوان وذاكرة.',
       connectImageAlt:'سوار نور يتصل بهاتف ذكي',connectLabel:'المس لتتصل',connectTag:'/ 02 — اتصال NFC',connectKicker:'إيماءة واحدة. إمكانات كثيرة.',connectTitle:'لمسة تفتح<br><em>طبقة جديدة.</em>',connectBody:'قرّب نور من أي هاتف حديث. شارك ملفًا رقميًا فورًا، أو تحقّق من تذكرة، أو افتح أدعية مختارة، أو اكتشف قصة إصدار مدينتك.',statCharging:'لا يحتاج<br>إلى شحن',statConnection:'اتصال<br>في أقل من ثانية',statReady:'جاهز للمس<br>دائمًا',
-      citiesTag:'/ 03 — سلسلة المدن',citiesKicker:'أربعة أماكن. أربع حكايات.',citiesTitle:'ارتدِ المكان<br><em>الذي تنتمي إليه.</em>',citiesBody:'يختصر كل إصدار مدينة سعودية في خطوط وملمس وألوان. صُمّم كتذكار وهدية ورابط يمكن ارتداؤه مع المكان.',citiesImageAlt:'أربعة أساور من سلسلة مدن نور',citiesImageLabel:'مجموعة المدن / 2026',riyadhName:'الرياض',riyadhBody:'إيقاع مدينة تمضي إلى الأمام.',riyadhAlt:'Riyadh',jeddahName:'جدة',jeddahBody:'حركة البحر الأحمر مرسومة بالضوء.',jeddahAlt:'Jeddah',makkahName:'مكة',makkahBody:'دوائر من الاجتماع والإيمان.',makkahAlt:'Makkah',madinahName:'المدينة',madinahBody:'هندسة هادئة من السكينة والذكرى.',madinahAlt:'Madinah',
+      citiesTag:'/ 03 — سلسلة المدن',citiesKicker:'أربعة أماكن. أربع حكايات.',citiesTitle:'ارتدِ المكان<br><em>الذي تنتمي إليه.</em>',citiesBody:'يختصر كل إصدار مدينة سعودية في خطوط وملمس وألوان. صُمّم كتذكار وهدية ورابط يمكن ارتداؤه مع المكان.',citiesImageAlt:'أربعة أساور من سلسلة مدن نور',citiesImageLabel:'مجموعة المدن / 2026',riyadhImageAlt:'تصميم سوار إصدار الرياض وتفاصيل معالم المدينة',riyadhName:'الرياض',riyadhBody:'إيقاع مدينة تمضي إلى الأمام.',riyadhAlt:'Riyadh',jeddahImageAlt:'تصميم سوار إصدار جدة وتفاصيل معالم المدينة',jeddahName:'جدة',jeddahBody:'حركة البحر الأحمر مرسومة بالضوء.',jeddahAlt:'Jeddah',makkahImageAlt:'تصميم سوار إصدار مكة وتفاصيل معالم المدينة',makkahName:'مكة',makkahBody:'دوائر من الاجتماع والإيمان.',makkahAlt:'Makkah',madinahImageAlt:'تصميم سوار إصدار المدينة وتفاصيل معالم المدينة',madinahName:'المدينة',madinahBody:'هندسة هادئة من السكينة والذكرى.',madinahAlt:'Madinah',
       packagingTag:'/ 04 — التجربة',packagingKicker:'صُنع ليُهدى. صُنع ليبقى.',packagingTitle:'قطعة تحمل معنى،<br><em>من اللمسة الأولى.</em>',packagingBody:'كل تفصيل مدروس: ورق ملموس، ورقائق معدنية هادئة، صينية عرض مصممة بعناية، ودليل بسيط لتفعيل تجربتك الرقمية.',packagingCta:'شاهد إصدارات الهدايا <span>←</span>',packagingImageAlt:'علبة نور الفاخرة مع السوار',packagingImageLabel:'إصدار الهدايا الفاخر',assurancesLabel:'مزايا التسوق والمنتج',assuranceDeliveryTitle:'توصيل عالمي',assuranceDeliveryBody:'الانطلاق من السعودية إلى وجهات دولية مختارة.',assuranceReturnsTitle:'إرجاع بسيط',assuranceReturnsBody:'مدة واضحة للإرجاع وخطوات استبدال سهلة لكل طلب عبر الإنترنت.',assuranceChargingTitle:'بلا شحن',assuranceChargingBody:'تبقى تقنية NFC السلبية جاهزة بلا بطارية أو اشتراك.',assurancePrivacyTitle:'الخصوصية في صميم التصميم',assurancePrivacyBody:'أنت تختار ما يشاركه سوارك، ويمكنك تحديثه في أي وقت.',
       faqTag:'/ 05 — معلومات مهمة',faqKicker:'أسئلة وإجابات واضحة.',faqTitle:'تقنية بسيطة.<br><em>إجابات واضحة.</em>',faqBody:'كل ما تحتاج إلى معرفته عن نور قبل الإصدار الأول.',faqOneQuestion:'ما الهواتف المتوافقة مع نور؟',faqOneAnswer:'صُمم نور لهواتف iPhone وAndroid الحديثة التي تدعم NFC. وسننشر قائمة توافق مفصلة قبل الإطلاق.',faqTwoQuestion:'هل يحتاج السوار إلى الشحن؟',faqTwoAnswer:'لا. يستخدم نور شريحة NFC سلبية ولا يحتوي على بطارية أو شاشة أو ميكروفون.',faqThreeQuestion:'ما المعلومات المخزنة على السوار؟',faqThreeAnswer:'يحمل السوار رابطًا آمنًا. ويبقى المحتوى الشخصي في ملف نور القابل للتعديل، لتظل متحكمًا فيما يظهر.',faqFourQuestion:'متى تتوفر سلسلة المدن؟',faqFourAnswer:'سلسلة المدن السعودية الأولى قيد التطوير حاليًا. تابع التحديثات لمعاينة النماذج ومعرفة موعد الإطلاق والوصول المبكر.',faqMore:'زر مركز المساعدة المستقبلي <span>↖</span>',
       closingTitle:'احمل النور.<br><em>واتصل بما يهم.</em>',closingBody:'تصبح التقنية ذات معنى حين تنسجم بهدوء مع الحياة.',paymentLabel:'خيارات الدفع المخطط لها',paymentTitle:'خيارات الدفع المخطط لها',newsletterTitle:'استقبل القصص وأخبار الإطلاق<br>والعروض الخاصة.',newsletterNotice:'قائمة الإطلاق ستفتح قريبًا',newsletterBody:'التسجيل بالبريد الإلكتروني غير متاح بعد.<br>عُد هنا لمتابعة تحديثات الإطلاق في السعودية.',companyLabel:'شركتنا',companyTitle:'شركتنا',companyStory:'قصتنا',companyDesign:'فلسفة التصميم',companyMaterials:'الخامات والصناعة',supportLabel:'الدعم',supportTitle:'الدعم',supportHelp:'مركز المساعدة ↖',supportCompatibility:'توافق NFC',copyright:'© 2026 NOOR TECH. جميع الحقوق محفوظة.',legalFaq:'الأسئلة الشائعة',backToTop:'العودة إلى الأعلى ↑'
@@ -268,48 +273,20 @@
   });
 
   const cityButtons=[...document.querySelectorAll('.city')];
-  const cityFocusName=document.querySelector('[data-city-focus-name]');
-  const cityPositions=[
-    {x:'15%',y:'15%',scale:'1.62',rotate:'-1deg',glow:'#153d33'},
-    {x:'-15%',y:'15%',scale:'1.62',rotate:'1deg',glow:'#5d7e83'},
-    {x:'15%',y:'-15%',scale:'1.62',rotate:'1deg',glow:'#ba9b67'},
-    {x:'-15%',y:'-15%',scale:'1.62',rotate:'-1deg',glow:'#6d2430'}
-  ];
-  let activeCityIndex=0;
-  let cityTimer=0;
-  let cityResumeTimer=0;
-  let citiesInView=false;
+  const cityPhotos=[...document.querySelectorAll('.city-photo')];
   const selectCity=index=>{
-    activeCityIndex=index;
-    cityButtons.forEach((button,buttonIndex)=>button.classList.toggle('city--active',buttonIndex===index));
-    const position=cityPositions[index];
-    citiesSection.style.setProperty('--city-x',position.x);
-    citiesSection.style.setProperty('--city-y',position.y);
-    citiesSection.style.setProperty('--city-scale',position.scale);
-    citiesSection.style.setProperty('--city-rotate',position.rotate);
-    citiesSection.style.setProperty('--city-glow',position.glow);
-    cityFocusName.textContent=cityButtons[index].querySelector('h3').textContent.toUpperCase();
-  };
-  const stopCityCycle=()=>{if(cityTimer){clearInterval(cityTimer);cityTimer=0;}};
-  const startCityCycle=()=>{
-    if(reduceMotion||cityTimer||!citiesInView)return;
-    cityTimer=setInterval(()=>selectCity((activeCityIndex+1)%cityButtons.length),3000);
-  };
-  const pauseCityCycleForTouch=()=>{
-    stopCityCycle();
-    if(cityResumeTimer)clearTimeout(cityResumeTimer);
-    cityResumeTimer=setTimeout(startCityCycle,6500);
+    cityButtons.forEach((button,i)=>{
+      button.classList.toggle('city--active',i===index);
+      button.setAttribute('aria-pressed',String(i===index));
+      cityPhotos[i].classList.toggle('is-active',i===index);
+      cityPhotos[i].setAttribute('aria-hidden',String(i!==index));
+    });
   };
   cityButtons.forEach((button,index)=>{
-    const select=()=>selectCity(index);
-    button.addEventListener('mouseenter',select);
-    button.addEventListener('focus',select);
-    button.addEventListener('click',select);
-    button.addEventListener('pointerdown',event=>{if(event.pointerType!=='mouse')pauseCityCycleForTouch();},{passive:true});
+    button.addEventListener('mouseenter',()=>selectCity(index));
+    button.addEventListener('focus',()=>selectCity(index));
+    button.addEventListener('click',()=>selectCity(index));
   });
-  const cityList=document.querySelector('.city-list');
-  cityList.addEventListener('mouseenter',stopCityCycle);
-  cityList.addEventListener('mouseleave',startCityCycle);
   selectCity(0);
 
   const revealTargets=document.querySelectorAll('.manifesto > *, .benefits article, .connect__copy > *, .cities__head > *, .packaging__copy > *, .assurances article, .faq__intro > *, .faq__list > *, .closing > *');
@@ -324,11 +301,7 @@
       if(entry.isIntersecting){entry.target.classList.add('is-visible');imageObserver.unobserve(entry.target);}
     }),{threshold:.18});
     document.querySelectorAll('.connect,.cities,.packaging').forEach(section=>imageObserver.observe(section));
-    const cityCycleObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
-      citiesInView=entry.isIntersecting;
-      if(citiesInView)startCityCycle();else stopCityCycle();
-    }),{threshold:.12});
-    cityCycleObserver.observe(citiesSection);
+
   }else{
     revealTargets.forEach(target=>target.classList.add('is-visible'));
     document.querySelectorAll('.connect,.cities,.packaging').forEach(section=>section.classList.add('is-visible'));
