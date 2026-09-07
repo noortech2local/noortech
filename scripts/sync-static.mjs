@@ -91,6 +91,7 @@ for (const [locale, html] of Object.entries(localePages)) {
 }
 
 for (const file of [
+  "city-series-overview.jpg",
   "riyadh-city-band.jpg",
   "jeddah-city-band.jpg",
   "makkah-city-band.jpg",
