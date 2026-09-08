@@ -105,3 +105,60 @@ html,body{overflow-x:clip}
 .city-overview-link{position:absolute;inset:0;z-index:2;cursor:pointer}
 .city-overview-link[hidden]{display:none}
 .city-overview-link:focus-visible{outline:3px solid var(--gold);outline-offset:-5px}
+
+/* Keep anchor destinations below the fixed announcement and navigation. */
+html{scroll-padding-top:125px}
+@media(max-width:900px){
+  html{--announcement-height:4rem;scroll-padding-top:calc(var(--announcement-height) + 86px)}
+  .announcement{height:var(--announcement-height);font-size:12px;letter-spacing:0}
+  .announcement a{width:100%;min-height:48px;justify-content:center;gap:12px}
+  .announcement__message{max-width:28ch}
+  .announcement b{flex-shrink:0}
+  .nav{top:var(--announcement-height)}
+  .nav .brand{min-height:48px;min-width:0;font-size:14px;letter-spacing:.1em;gap:8px}
+  .brand__mark,.menu,.language-switch{flex-shrink:0}
+  .language-switch a{font-size:12px;padding-inline:6px}
+  .nav__links--open,[dir=rtl] .nav__links--open{
+    inset-inline:0;width:auto;margin:0;top:100%;padding:12px 6vw;
+    max-height:calc(100svh - var(--announcement-height) - 70px);
+    overflow-y:auto;overscroll-behavior:contain;font-size:14px;
+  }
+  .nav__links--open a{flex-shrink:0;opacity:1}
+  .button,.text-link,.faq__more{font-size:14px;min-height:48px}
+  .button{gap:24px}
+  .footer__columns a,.footer__legal a{
+    display:flex;align-items:center;min-height:48px;min-width:48px;
+    margin:0;font-size:14px;line-height:1.5;
+  }
+  .footer__columns h3,.newsletter--notice{font-size:14px}
+  .footer__newsletter>p,.footer__legal{font-size:12px;color:#aaa9a2}
+  .footer__legal nav{gap:8px 18px}
+}
+
+/* Short viewports use normal document flow so scrolling never fades out a CTA
+   before it can be reached. Tall phones retain the cinematic hero. */
+@media(max-width:900px) and (max-height:700px){
+  .hero{height:auto;min-height:100svh}
+  .hero__stage{position:relative;height:auto;min-height:100svh}
+  .hero__copy,[dir=rtl] .hero__copy{
+    width:100%;padding:calc(var(--announcement-height) + 90px) 7vw 24px;
+    transform:none;opacity:1;
+  }
+  .hero h1,[lang=ar] .hero h1{font-size:44px;line-height:1.06;margin-top:16px}
+  .hero__lead,[lang=ar] .hero__lead{font-size:16px;line-height:1.6;margin-top:20px}
+  .hero__actions{margin-top:20px;gap:12px}
+  .hero__stage>.hero__image{opacity:1;transform:none}
+  .hero__shade{opacity:1}
+  .hero__meta{position:relative;inset:auto;margin:0;padding:0 7vw 24px;opacity:1}
+  .hero__product,.hero__word,.hero__orbit,.hero__progress{display:none}
+}
+@media(min-width:561px) and (max-width:900px) and (max-height:500px){
+  .hero__copy,[dir=rtl] .hero__copy{
+    display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 28px;
+    padding-top:calc(var(--announcement-height) + 86px);
+  }
+  .hero__copy .eyebrow{margin:0}
+  .hero h1,[lang=ar] .hero h1{margin:0;font-size:40px}
+  .hero__lead,[lang=ar] .hero__lead{margin:0;max-width:520px}
+  .hero__actions{grid-column:2;grid-row:1 / 4;align-self:center;flex-direction:column;align-items:flex-start;margin:0}
+}
