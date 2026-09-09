@@ -45,11 +45,13 @@ assert all(key in used for key in source_strings), 'Untranslated Chinese content
 # its seven texture crops with locale-aware HTML captions instead of that strip.
 board_image = '(0,d.jsx)("img",{loading:"lazy",decoding:"async",src:"/assets/star-collection.webp",alt:noorT("Seven designs in the Noor Tech Islamic Art Series")})'
 assert code.count(board_image) == 1
+# Cropped images extend beyond their visible cards. Load them eagerly and reserve
+# their intrinsic proportions so mobile lazy-loading cannot leave blank textures.
 cards = []
 for title, _, description, _, x in patterns:
     cards.append('(0,d.jsxs)("li",{children:['
         '(0,d.jsx)("div",{className:"pattern-texture","aria-hidden":"true",children:'
-        '(0,d.jsx)("img",{loading:"lazy",decoding:"async",src:"/assets/star-collection.webp",alt:"",style:{left:"' + str(-x / 198 * 100) + '%"}})}),'
+        '(0,d.jsx)("img",{loading:"eager",decoding:"async",width:1536,height:1024,src:"/assets/star-collection.webp",alt:"",style:{left:"' + str(-x / 198 * 100) + '%"}})}),'
         '(0,d.jsx)("h3",{children:noorT(' + json.dumps(title) + ')}),'
         '(0,d.jsx)("p",{children:noorT(' + json.dumps(description) + ')})]})')
 localized_board = '(0,d.jsxs)("div",{children:[' \
