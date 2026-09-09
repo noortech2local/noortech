@@ -1,3 +1,12 @@
+// Storage can be unavailable in private browsing or when the device is full.
+const storage = {
+  getItem(key) { try { return localStorage.getItem(key); } catch { return null; } },
+  setItem(key, value) { try { localStorage.setItem(key, value); } catch {} },
+  removeItem(key) { try { localStorage.removeItem(key); } catch {} },
+};
+function readStored(key, fallback) {
+  try { return JSON.parse(storage.getItem(key)) ?? fallback; } catch { return fallback; }
+}
 const fallbackVerse = {
   ar: "إِنَّ مَعَ الْعُسْرِ يُسْرًا",
   en: "Indeed, with hardship comes ease.",
@@ -98,6 +107,9 @@ const i18n = {
     verseTitle: "A small moment of reflection",
     newInspiration: "Draw another verse",
     share: "Share",
+    save: "Save", saved: "Saved", savedVerses: "Saved verses", closeSaved: "Close saved verses",
+    savedHint: "Saved on this device.", emptySaved: "No saved verses yet. Tap Save on a verse to keep it here.",
+    removeSaved: "Remove", retry: "Try again", openSaved: "Read verse",
     scrollHint: "Scroll down for more",
     moreTitle: "Reflections for the Heart",
     moreLead:
@@ -162,6 +174,9 @@ const i18n = {
     verseTitle: "لحظة قصيرة للتأمل",
     newInspiration: "اختر آية أخرى",
     share: "مشاركة",
+    save: "حفظ", saved: "محفوظة", savedVerses: "الآيات المحفوظة", closeSaved: "إغلاق الآيات المحفوظة",
+    savedHint: "محفوظة على هذا الجهاز.", emptySaved: "لا توجد آيات محفوظة بعد. اضغط حفظ للاحتفاظ بآية هنا.",
+    removeSaved: "إزالة", retry: "حاول مجددًا", openSaved: "قراءة الآية",
     scrollHint: "مرّر للأسفل للمزيد",
     moreTitle: "تأملات للقلب",
     moreLead: "تذكيرات لطيفة ليومك — شكر، وصبر، ونور.",
@@ -259,27 +274,33 @@ const els = {
   prayerStatus: document.getElementById("prayerStatus"),
 };
 
-let lang = localStorage.getItem("noortech-lang") || "en";
+let lang = storage.getItem("noortech-lang") === "ar" ? "ar" : "en";
 let currentVerse = fallbackVerse;
 let currentVerseNumber = null;
 let lastVerseNumber = null;
 let verseRequestId = 0;
 let trackIndex = Math.floor(Math.random() * tracks.length);
-let favorites = new Set(JSON.parse(localStorage.getItem("noortech-favs") || "[]"));
+const storedFavorites = readStored("noortech-favs", []);
+let favorites = new Set(Array.isArray(storedFavorites) ? storedFavorites.filter(x => typeof x === "string") : []);
+const storedTexts = readStored("noortech-saved-verses", {});
+let savedVerses = storedTexts && typeof storedTexts === "object" && !Array.isArray(storedTexts) ? storedTexts : {};
+let pendingVerseNumber = null;
+let nextVerse = null;
+const verseCache = new Map();
 let prayerTimings = null;
-let prayerLocation = JSON.parse(localStorage.getItem("noortech-prayer-location") || "null");
-let prayerLocationName = localStorage.getItem("noortech-prayer-location-name") || "";
+let prayerLocation = JSON.parse(storage.getItem("noortech-prayer-location") || "null");
+let prayerLocationName = storage.getItem("noortech-prayer-location-name") || "";
 let prayerLocationUpdatedAt =
-  localStorage.getItem("noortech-prayer-location-updated-at") || "";
+  storage.getItem("noortech-prayer-location-updated-at") || "";
 let prayerLocationMode =
-  localStorage.getItem("noortech-prayer-location-mode") || "saved";
+  storage.getItem("noortech-prayer-location-mode") || "saved";
 let prayerLocationTimezone =
-  localStorage.getItem("noortech-prayer-location-timezone") ||
+  storage.getItem("noortech-prayer-location-timezone") ||
   Intl.DateTimeFormat().resolvedOptions().timeZone ||
   "UTC";
 let prayerLocationIsCurrent = false;
 let prayerRemindersEnabled =
-  localStorage.getItem("noortech-prayer-reminders-enabled") === "true";
+  storage.getItem("noortech-prayer-reminders-enabled") === "true";
 let prayerTimers = {};
 let prayerRefreshTimer = null;
 let citySearchRequestId = 0;
@@ -355,69 +376,155 @@ function getVerseNumberFromUrl() {
     : null;
 }
 
-async function loadRandomVerse(animate = true, requestedVerseNumber = null) {
-  const verseNumber = requestedVerseNumber || getRandomVerseNumber();
-  const requestId = ++verseRequestId;
+function validVerse(verse) {
+  return verse && typeof verse.ar === "string" && typeof verse.en === "string" &&
+    typeof verse.ref === "string" && Number.isInteger(verse.number) && verse.number >= 1 && verse.number <= QURAN_AYAH_COUNT;
+}
 
-  if (animate) {
-    els.quoteCard.classList.remove("is-switching");
-    void els.quoteCard.offsetWidth;
-    els.quoteCard.classList.add("is-switching");
-  }
-  els.quoteCard.classList.add("is-loading");
-
+async function fetchVerse(identifier) {
+  if (verseCache.has(identifier)) return verseCache.get(identifier);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 10000);
   try {
-    const response = await fetch(
-      `${QURAN_API_BASE}/${verseNumber}/editions/quran-uthmani,en.sahih`
-    );
+    const response = await fetch(`${QURAN_API_BASE}/${identifier}/editions/quran-uthmani,en.sahih`, { signal: controller.signal });
     if (!response.ok) throw new Error("Verse request failed");
-
     const result = await response.json();
-    const [arabic, translation] = result.data || [];
-    if (!arabic?.text || !translation?.text || !translation?.surah) {
-      throw new Error("Verse response was incomplete");
-    }
-    if (requestId !== verseRequestId) return;
+    const arabic = result.data?.find(item => item.edition?.identifier === "quran-uthmani");
+    const translation = result.data?.find(item => item.edition?.identifier === "en.sahih");
+    if (!arabic?.text || !translation?.text || !translation.surah || arabic.number !== translation.number) throw new Error("Incomplete verse");
+    const verse = { ar: arabic.text, en: translation.text, number: arabic.number,
+      ref: `${translation.surah.englishName} ${translation.surah.number}:${translation.numberInSurah}` };
+    if (!validVerse(verse)) throw new Error("Invalid verse");
+    if (verseCache.size >= 30) verseCache.delete(verseCache.keys().next().value);
+    verseCache.set(identifier, verse);
+    return verse;
+  } finally { clearTimeout(timeout); }
+}
 
-    currentVerse = {
-      ar: arabic.text,
-      en: translation.text,
-      ref: `${translation.surah.englishName} ${translation.surah.number}:${translation.numberInSurah}`,
-    };
-    currentVerseNumber = verseNumber;
-    lastVerseNumber = verseNumber;
-    renderQuote(false);
-    updateFavoriteState();
+function preloadNextVerse() {
+  const number = getRandomVerseNumber();
+  nextVerse = { number, promise: fetchVerse(number).catch(() => null) };
+}
+
+function displayVerse(verse, animate) {
+  currentVerse = verse;
+  currentVerseNumber = verse.number;
+  lastVerseNumber = verse.number;
+  storage.setItem("noortech-last-verse", JSON.stringify(verse));
+  if (favorites.has(verse.ref)) {
+    savedVerses[verse.ref] = verse;
+    persistFavorites();
+  }
+  renderQuote(animate);
+  updateFavoriteState();
+}
+
+async function loadRandomVerse(animate = true, requestedVerseNumber = null) {
+  const queued = requestedVerseNumber ? null : nextVerse;
+  const verseNumber = requestedVerseNumber || queued?.number || getRandomVerseNumber();
+  nextVerse = null;
+  pendingVerseNumber = verseNumber;
+  const requestId = ++verseRequestId;
+  document.getElementById("verseFeedback").hidden = true;
+  els.quoteCard.classList.add("is-loading");
+  els.quoteCard.setAttribute("aria-busy", "true");
+  try {
+    const verse = (queued && await queued.promise) || await fetchVerse(verseNumber);
+    if (requestId !== verseRequestId) return;
+    displayVerse(verse, animate);
+    pendingVerseNumber = null;
+    preloadNextVerse();
   } catch {
     if (requestId !== verseRequestId) return;
-    showToast(i18n[lang].verseLoadFailed);
+    document.getElementById("verseFeedback").hidden = false;
   } finally {
     if (requestId === verseRequestId) {
       els.quoteCard.classList.remove("is-loading");
+      els.quoteCard.setAttribute("aria-busy", "false");
     }
   }
 }
 
+function persistFavorites() {
+  storage.setItem("noortech-favs", JSON.stringify([...favorites]));
+  storage.setItem("noortech-saved-verses", JSON.stringify(savedVerses));
+}
+
 function updateFavoriteState() {
-  const key = currentVerse.ref;
-  els.favoritesBtn.classList.toggle("is-active", favorites.has(key));
-  els.favoritesBtn.setAttribute(
-    "aria-pressed",
-    favorites.has(key) ? "true" : "false"
-  );
+  const saved = favorites.has(currentVerse.ref);
+  const button = document.getElementById("saveVerseBtn");
+  button.classList.toggle("is-active", saved);
+  button.setAttribute("aria-pressed", String(saved));
+  document.getElementById("saveVerseLabel").textContent = i18n[lang][saved ? "saved" : "save"];
 }
 
 function toggleFavorite() {
   const key = currentVerse.ref;
   if (favorites.has(key)) {
     favorites.delete(key);
+    delete savedVerses[key];
     showToast(i18n[lang].unfavored);
   } else {
     favorites.add(key);
+    savedVerses[key] = { ...currentVerse, number: currentVerseNumber };
     showToast(i18n[lang].favored);
   }
-  localStorage.setItem("noortech-favs", JSON.stringify([...favorites]));
+  persistFavorites();
   updateFavoriteState();
+}
+
+function hasSavedText(verse) {
+  return validVerse(verse) || (verse && verse.number === null &&
+    typeof verse.ar === "string" && typeof verse.en === "string" &&
+    typeof verse.ref === "string" && /\d+:\d+$/.test(verse.ref));
+}
+
+function renderFavorites() {
+  const list = document.getElementById("favoritesList");
+  list.replaceChildren();
+  if (!favorites.size) {
+    const empty = document.createElement("p");
+    empty.textContent = i18n[lang].emptySaved;
+    list.append(empty);
+  }
+  for (const ref of [...favorites].reverse()) {
+    const row = document.createElement("article");
+    row.className = "saved-verse";
+    const open = document.createElement("button");
+    open.className = "saved-verse-open";
+    open.textContent = ref;
+    open.setAttribute("aria-label", `${i18n[lang].openSaved}: ${ref}`);
+    const verse = savedVerses[ref];
+    if (hasSavedText(verse)) {
+      const preview = document.createElement("p");
+      preview.lang = "ar"; preview.dir = "rtl"; preview.textContent = verse.ar;
+      row.append(preview);
+    }
+    open.addEventListener("click", () => {
+      document.getElementById("favoritesDialog").close();
+      if (hasSavedText(verse)) {
+        ++verseRequestId;
+        pendingVerseNumber = null;
+        document.getElementById("verseFeedback").hidden = true;
+        els.quoteCard.classList.remove("is-loading");
+        els.quoteCard.setAttribute("aria-busy", "false");
+        displayVerse(verse, true);
+        preloadNextVerse();
+      } else {
+        const identifier = ref.match(/(\d+:\d+)$/)?.[1];
+        if (identifier) loadRandomVerse(true, identifier);
+      }
+      els.quoteCard.scrollIntoView({ block: "center" });
+    });
+    const remove = document.createElement("button");
+    remove.textContent = i18n[lang].removeSaved;
+    remove.setAttribute("aria-label", `${i18n[lang].removeSaved}: ${ref}`);
+    remove.addEventListener("click", () => {
+      favorites.delete(ref); delete savedVerses[ref]; persistFavorites(); updateFavoriteState(); renderFavorites();
+      (list.querySelector("button") || document.getElementById("closeFavoritesBtn")).focus();
+    });
+    row.append(open, remove); list.append(row);
+  }
 }
 
 function getVerseShareUrl() {
@@ -693,7 +800,7 @@ async function loadPrayerLocationName() {
     );
     prayerLocationName = locationParts.join(", ");
     if (prayerLocationName) {
-      localStorage.setItem("noortech-prayer-location-name", prayerLocationName);
+      storage.setItem("noortech-prayer-location-name", prayerLocationName);
       renderPrayerLocation();
     }
   } catch {
@@ -811,7 +918,7 @@ function renderPrayerTimes() {
 }
 
 function renderPrayerReminders() {
-  const savedMethod = localStorage.getItem("noortech-prayer-method") || "3";
+  const savedMethod = storage.getItem("noortech-prayer-method") || "3";
   els.prayerMethod.value = savedMethod;
   els.prayerDisableBtn.hidden = !prayerRemindersEnabled;
   renderPrayerTimes();
@@ -978,7 +1085,7 @@ async function loadLocalPrayerTimes(silent = false) {
     const apiTimezone = result.data?.meta?.timezone;
     if (apiTimezone) {
       prayerLocationTimezone = apiTimezone;
-      localStorage.setItem("noortech-prayer-location-timezone", prayerLocationTimezone);
+      storage.setItem("noortech-prayer-location-timezone", prayerLocationTimezone);
     }
     renderPrayerTimes();
     renderPrayerLocation();
@@ -1012,11 +1119,11 @@ function requestPrayerLocation() {
       prayerLocationMode = "device";
       prayerLocationTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
       prayerLocationIsCurrent = true;
-      localStorage.setItem("noortech-prayer-location", JSON.stringify(prayerLocation));
-      localStorage.removeItem("noortech-prayer-location-name");
-      localStorage.setItem("noortech-prayer-location-updated-at", prayerLocationUpdatedAt);
-      localStorage.setItem("noortech-prayer-location-mode", prayerLocationMode);
-      localStorage.setItem("noortech-prayer-location-timezone", prayerLocationTimezone);
+      storage.setItem("noortech-prayer-location", JSON.stringify(prayerLocation));
+      storage.removeItem("noortech-prayer-location-name");
+      storage.setItem("noortech-prayer-location-updated-at", prayerLocationUpdatedAt);
+      storage.setItem("noortech-prayer-location-mode", prayerLocationMode);
+      storage.setItem("noortech-prayer-location-timezone", prayerLocationTimezone);
       renderPrayerLocation();
       loadLocalPrayerTimes();
       loadPrayerLocationName();
@@ -1031,7 +1138,7 @@ function requestPrayerLocation() {
 
 function activatePrayerReminders() {
   prayerRemindersEnabled = true;
-  localStorage.setItem("noortech-prayer-reminders-enabled", "true");
+  storage.setItem("noortech-prayer-reminders-enabled", "true");
   els.prayerDisableBtn.hidden = false;
   requestPrayerNotificationPermission();
 }
@@ -1059,11 +1166,11 @@ function selectPrayerCity(city) {
   prayerLocationMode = "manual";
   prayerLocationTimezone = city.timezone || getPrayerTimeZone();
   prayerLocationIsCurrent = false;
-  localStorage.setItem("noortech-prayer-location", JSON.stringify(prayerLocation));
-  localStorage.setItem("noortech-prayer-location-name", prayerLocationName);
-  localStorage.setItem("noortech-prayer-location-updated-at", prayerLocationUpdatedAt);
-  localStorage.setItem("noortech-prayer-location-mode", prayerLocationMode);
-  localStorage.setItem("noortech-prayer-location-timezone", prayerLocationTimezone);
+  storage.setItem("noortech-prayer-location", JSON.stringify(prayerLocation));
+  storage.setItem("noortech-prayer-location-name", prayerLocationName);
+  storage.setItem("noortech-prayer-location-updated-at", prayerLocationUpdatedAt);
+  storage.setItem("noortech-prayer-location-mode", prayerLocationMode);
+  storage.setItem("noortech-prayer-location-timezone", prayerLocationTimezone);
   renderPrayerTimes();
   renderPrayerLocation();
   setCityPickerOpen(false);
@@ -1074,7 +1181,7 @@ function selectPrayerCity(city) {
 
 function disablePrayerReminders() {
   prayerRemindersEnabled = false;
-  localStorage.setItem("noortech-prayer-reminders-enabled", "false");
+  storage.setItem("noortech-prayer-reminders-enabled", "false");
   clearPrayerSchedules();
   renderPrayerReminders();
   showToast(i18n[lang].prayerDisabled);
@@ -1084,14 +1191,19 @@ function disablePrayerReminders() {
 document.querySelectorAll(".lang-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     lang = btn.dataset.lang;
-    localStorage.setItem("noortech-lang", lang);
+    storage.setItem("noortech-lang", lang);
     applyI18n();
   });
 });
 
-els.newInspirationBtn.addEventListener("click", loadRandomVerse);
+els.newInspirationBtn.addEventListener("click", () => loadRandomVerse());
 els.shareBtn.addEventListener("click", shareVerse);
-els.favoritesBtn.addEventListener("click", toggleFavorite);
+document.getElementById("saveVerseBtn").addEventListener("click", toggleFavorite);
+els.favoritesBtn.addEventListener("click", () => {
+  renderFavorites(); document.getElementById("favoritesDialog").showModal();
+});
+document.getElementById("closeFavoritesBtn").addEventListener("click", () => document.getElementById("favoritesDialog").close());
+document.getElementById("retryVerseBtn").addEventListener("click", () => loadRandomVerse(true, pendingVerseNumber));
 els.prayerEnableBtn.addEventListener("click", enablePrayerReminders);
 els.prayerRefreshBtn.addEventListener("click", updatePrayerTimes);
 els.prayerCalendarBtn.addEventListener("click", savePrayerCalendar);
@@ -1103,7 +1215,7 @@ els.citySearchForm.addEventListener("submit", submitCitySearch);
 els.citySearchInput.addEventListener("input", queueCitySearch);
 els.prayerDisableBtn.addEventListener("click", disablePrayerReminders);
 els.prayerMethod.addEventListener("change", () => {
-  localStorage.setItem("noortech-prayer-method", els.prayerMethod.value);
+  storage.setItem("noortech-prayer-method", els.prayerMethod.value);
   if (isValidPrayerLocation(prayerLocation)) loadLocalPrayerTimes();
 });
 
@@ -1134,6 +1246,10 @@ els.audioEl.addEventListener("error", () => {
 });
 
 /* Init */
+const cachedVerse = readStored("noortech-last-verse", null);
+if (validVerse(cachedVerse)) {
+  currentVerse = cachedVerse; currentVerseNumber = cachedVerse.number; lastVerseNumber = cachedVerse.number;
+}
 applyI18n();
 loadRandomVerse(false, getVerseNumberFromUrl());
 if (prayerRemindersEnabled && isValidPrayerLocation(prayerLocation)) {

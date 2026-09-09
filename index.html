@@ -15,7 +15,7 @@
       rel="stylesheet"
     />
     <!-- Bump this version whenever local CSS or JavaScript assets change. -->
-    <link rel="stylesheet" href="styles.css?v=20260727-1" />
+    <link rel="stylesheet" href="styles.css?v=20260909-1" />
   </head>
   <body>
     <div class="bg-layer" aria-hidden="true"></div>
@@ -60,7 +60,8 @@
           class="icon-btn"
           type="button"
           id="favoritesBtn"
-          aria-label="Favorites"
+          aria-label="Saved verses"
+          data-i18n-aria-label="savedVerses" aria-haspopup="dialog"
           title="Favorites"
         >
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6">
@@ -105,6 +106,10 @@
           <p class="verse-reference" id="quoteReference">Al-Baqarah 2:201</p>
         </div>
 
+        <div class="verse-feedback" id="verseFeedback" hidden>
+          <p role="status" data-i18n="verseLoadFailed">Could not load a new verse. Please try again.</p>
+          <button type="button" id="retryVerseBtn" data-i18n="retry">Try again</button>
+        </div>
         <div class="card-actions">
           <button type="button" class="card-action" id="newInspirationBtn">
             <span class="action-circle">
@@ -118,6 +123,10 @@
             <span data-i18n="newInspiration">New Inspiration</span>
           </button>
 
+          <button type="button" class="card-action" id="saveVerseBtn" aria-pressed="false">
+            <span class="action-circle" aria-hidden="true">♡</span>
+            <span id="saveVerseLabel">Save</span>
+          </button>
           <button type="button" class="card-action" id="shareBtn">
             <span class="action-circle">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -308,10 +317,19 @@
       </div>
     </div>
 
+    <dialog id="favoritesDialog" class="favorites-dialog" aria-labelledby="favoritesTitle">
+      <div class="favorites-heading">
+        <h2 id="favoritesTitle" data-i18n="savedVerses">Saved verses</h2>
+        <button type="button" id="closeFavoritesBtn" data-i18n-aria-label="closeSaved" aria-label="Close saved verses">×</button>
+      </div>
+      <p data-i18n="savedHint">Saved on this device.</p>
+      <div id="favoritesList"></div>
+    </dialog>
+
     <audio id="audioEl" preload="metadata"></audio>
 
     <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-    <script src="app.js?v=20260724-2"></script>
+    <script src="app.js?v=20260909-1"></script>
   </body>
 </html>
