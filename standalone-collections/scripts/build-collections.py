@@ -14,6 +14,18 @@ for row in (src / 'arabic-ui.txt').read_text().splitlines():
     en, ar = row.split('|')
     translations[en] = [en, ar]
 assert all(len(value) == 2 and all(value) for value in translations.values())
+patterns = [
+    ('Star overlap', 'تداخل النجوم', 'Intersection and balance', 'التقاطع والتوازن', 40),
+    ('Deconstructed star', 'نجمة مفككة', 'Break apart and recompose', 'التفكيك وإعادة التكوين', 250),
+    ('Radiating star', 'نجمة مشعة', 'Light and expansion', 'الضوء والامتداد', 458),
+    ('Star flow', 'تدفق النجوم', 'Continuity and rhythm', 'الاستمرارية والإيقاع', 667),
+    ('Layered star', 'نجمة متعددة الطبقات', 'Layers and order', 'الطبقات والنظام', 873),
+    ('Star mosaic', 'فسيفساء النجوم', 'Diversity and harmony', 'التنوع والانسجام', 1083),
+    ('Abstract star line', 'خط نجمي تجريدي', 'Minimalism and purity', 'البساطة والنقاء', 1290),
+]
+for title, title_ar, description, description_ar, _ in patterns:
+    translations[title] = [title, title_ar]
+    translations[description] = [description, description_ar]
 start = original.index('var At=')
 prefix, code = original[:start], original[start:]
 used = set()
@@ -29,6 +41,21 @@ def translate(match):
     return raw
 code = re.sub(r'"(?:[^"\\]|\\.)*"', translate, code)
 assert all(key in used for key in source_strings), 'Untranslated Chinese content'
+# The source board has rasterised Chinese captions. Display the upper board and
+# its seven texture crops with locale-aware HTML captions instead of that strip.
+board_image = '(0,d.jsx)("img",{loading:"lazy",decoding:"async",src:"/assets/star-collection.webp",alt:noorT("Seven designs in the Noor Tech Islamic Art Series")})'
+assert code.count(board_image) == 1
+cards = []
+for title, _, description, _, x in patterns:
+    cards.append('(0,d.jsxs)("li",{children:['
+        '(0,d.jsx)("div",{className:"pattern-texture","aria-hidden":"true",children:'
+        '(0,d.jsx)("img",{loading:"lazy",decoding:"async",src:"/assets/star-collection.webp",alt:"",style:{left:"' + str(-x / 198 * 100) + '%"}})}),'
+        '(0,d.jsx)("h3",{children:noorT(' + json.dumps(title) + ')}),'
+        '(0,d.jsx)("p",{children:noorT(' + json.dumps(description) + ')})]})')
+localized_board = '(0,d.jsxs)("div",{children:[' \
+    '(0,d.jsx)("div",{className:"collection-board-art",children:' + board_image + '}),' \
+    '(0,d.jsxs)("ol",{className:"pattern-captions",children:[' + ','.join(cards) + ']})]})'
+code = code.replace(board_image, localized_board)
 # Translate dynamic image descriptions while preserving the asset routes.
 for en, ar in [
  (' City Series circular wristband',' — سوار دائري من مجموعة المدن'),

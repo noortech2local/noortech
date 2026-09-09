@@ -8,3 +8,15 @@ html{scroll-padding-top:115px}body{overflow-wrap:break-word}button,a,summary{tou
 html[dir=rtl] .locale-switch{right:auto;left:20px}
 @media(max-width:1000px){html[dir=rtl] .locale-switch{left:16px}}
 @media(max-width:680px){html[dir=rtl] .locale-switch{left:12px}}
+/* Localized captions replace the Chinese text embedded in the design board. */
+.collection-board-art{position:relative;aspect-ratio:1536 / 770;overflow:hidden}
+.collection-board-art img{position:absolute;inset:0;width:100%;height:auto}
+.pattern-captions{list-style:none;margin:0;padding:16px 0 0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:12px}
+.pattern-captions li{min-width:0}
+.pattern-texture{position:relative;aspect-ratio:198 / 124;overflow:hidden}
+.pattern-texture img{position:absolute;width:775.757576%;max-width:none;height:auto;top:-637.096774%}
+.pattern-captions h3{font:600 14px/1.5 var(--font-sans),Arial,sans-serif;margin:14px 0 6px;letter-spacing:0}
+.pattern-captions p{font:400 13px/1.6 var(--font-sans),Arial,sans-serif;margin:0;color:#657069}
+[dir=rtl] .pattern-captions :is(h3,p){font-family:var(--font-arabic),Arial,sans-serif}
+@media(max-width:1100px){.pattern-captions{grid-template-columns:repeat(4,minmax(0,1fr));gap:24px 14px}}
+@media(max-width:600px){.pattern-captions{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 12px}.pattern-captions p{font-size:14px}}
