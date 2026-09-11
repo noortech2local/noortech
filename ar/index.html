@@ -9,7 +9,7 @@
   <link rel="alternate" hreflang="en" href="https://noortech2local.github.io/noortech/en/">
   <link rel="alternate" hreflang="ar" href="https://noortech2local.github.io/noortech/ar/">
   <link rel="alternate" hreflang="x-default" href="https://noortech2local.github.io/noortech/sales.html">
-  <link rel="stylesheet" href="../sales.css?v=20260907-gift-editions">
+  <link rel="stylesheet" href="../sales.css?v=20260911-scroll-journey">
 </head>
 <body>
 <main>
@@ -62,7 +62,7 @@
     <article><span>03</span><h3 data-i18n="benefitThreeTitle">متجذّر في المكان</h3><p data-i18n="benefitThreeBody">تحوّل الأنماط الهندسية الإسلامية ومشاهد السعودية إلى قطعة شخصية هادئة.</p></article>
   </section>
 
-  <section class="story-reel" aria-label="قصة منتج نور" data-i18n-aria-label="reelLabel">
+  <section class="story-reel" id="parallax" aria-label="قصة منتج نور" data-i18n-aria-label="reelLabel">
     <div class="story-reel__stage">
       <div class="story-reel__topline"><span data-i18n="reelKicker">تجربة نور</span><span><b data-reel-current>01</b> / 03</span></div>
       <article class="reel-scene reel-scene--object is-active" data-reel-scene="0">
@@ -78,6 +78,7 @@
         <div class="reel-scene__copy"><p data-i18n="reelCitiesEyebrow">المجموعة</p><h2 data-i18n-html="reelCitiesTitle">أربعة أماكن.<br><em>قصص ترتديها.</em></h2><p data-i18n="reelCitiesBody">الرياض وجدة ومكة والمدينة تتحول إلى خطوط وألوان وذاكرة.</p></div>
       </article>
       <div class="story-reel__rail" aria-hidden="true"><span class="is-active"></span><span></span><span></span></div>
+      <div class="story-reel__progress" aria-hidden="true"><span></span></div>
     </div>
   </section>
 
@@ -251,7 +252,20 @@
     const activeScene=Math.min(2,Math.floor(scenePosition));
     const localProgress=scenePosition-activeScene;
     reel.style.setProperty('--reel-local',localProgress.toFixed(4));
+    reel.style.setProperty('--journey-progress',reelProgress.toFixed(4));
     reelScenes.forEach((scene,index)=>{
+      // A reading pause in the middle of each chapter; camera travel resumes
+      // toward the next scene. Every state is reversible directly by scrolling.
+      const progress=clamp(scenePosition-index);
+      const camera=progress<.35?progress/.35*.45:
+        progress<.65?.45+(progress-.35)/.3*.1:
+        .55+(progress-.65)/.35*.45;
+      scene.style.setProperty('--reel-local',camera.toFixed(4));
+      const fade=index===0?1:clamp((scenePosition-index+.18)/.36);
+      const exit=index===reelScenes.length-1?0:clamp((scenePosition-index-1+.18)/.36);
+      const opacity=fade*fade*(3-2*fade)*(1-exit*exit*(3-2*exit));
+      scene.style.setProperty('--scene-opacity',opacity.toFixed(4));
+      scene.setAttribute('aria-hidden',String(index!==activeScene));
       scene.classList.toggle('is-active',index===activeScene);
       scene.classList.toggle('is-past',index<activeScene);
     });

@@ -167,3 +167,48 @@ html{scroll-padding-top:125px}
   .hero__lead,[lang=ar] .hero__lead{margin:0;max-width:520px}
   .hero__actions{grid-column:2;grid-row:1 / 4;align-self:center;flex-direction:column;align-items:flex-start;margin:0}
 }
+
+/* Layered parallax: retain the pinned reel and existing reveal choreography.
+   Scale provides overscan at both travel extremes; text moves independently. */
+@media(prefers-reduced-motion:no-preference){
+  .reel-scene__media img{
+    transform:scale(1.32) translate3d(calc((.5 - var(--reel-local))*3%),calc((var(--reel-local) - .5)*20%),0);
+  }
+  .reel-scene__number{
+    transform:translate3d(0,calc((.5 - var(--reel-local))*100px),0);
+  }
+  .reel-scene__copy{
+    transform:translate3d(0,calc(-50% + (.5 - var(--reel-local))*80px),0);
+  }
+}
+
+/* Scroll-driven chapter dissolves and reading holds, inspired by the
+   huangbai-scrolling journey approach. Uses Noor images, not video scrubbing. */
+.story-reel__progress{position:absolute;z-index:9;inset:auto 0 0;height:3px;background:#ffffff26;pointer-events:none}
+.story-reel__progress span{display:block;width:100%;height:100%;background:var(--gold);transform:scaleX(var(--journey-progress,0));transform-origin:left}
+[dir=rtl] .story-reel__progress span{transform-origin:right}
+@media(prefers-reduced-motion:no-preference){
+  .story-reel{height:390svh}
+  .reel-scene,.reel-scene.is-active,.reel-scene.is-past{
+    visibility:visible;opacity:var(--scene-opacity,0);transition:none;
+    pointer-events:none;
+  }
+  .reel-scene:first-of-type{--scene-opacity:1}
+  .reel-scene.is-active{pointer-events:auto}
+}
+@media(max-width:900px) and (prefers-reduced-motion:no-preference){
+  .story-reel{height:360svh}
+  .story-reel__topline{top:calc(var(--announcement-height,4rem) + 86px);font-size:12px;letter-spacing:.1em}
+}
+@media(prefers-reduced-motion:reduce){.story-reel__progress{display:none}}
+@media(max-width:900px) and (prefers-reduced-motion:no-preference){
+  .reel-scene__media img{
+    transform:scale(1.24) translate3d(0,calc((var(--reel-local) - .5)*14%),0);
+  }
+  .reel-scene__copy{
+    transform:translate3d(0,calc((.5 - var(--reel-local))*44px),0);
+  }
+  .reel-scene__number{
+    transform:translate3d(0,calc((.5 - var(--reel-local))*60px),0);
+  }
+}
