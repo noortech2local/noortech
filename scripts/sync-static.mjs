@@ -51,6 +51,7 @@ const buildLocalePage = (locale) => {
     .replace(/(<link rel="canonical" href=")[^"]*(" data-canonical>)/, `$1${productionBase}/${locale}/$2`)
     .replace('href="sales.css', 'href="../sales.css')
     .replaceAll('src="assets/', 'src="../assets/')
+    .replaceAll('srcset="assets/', 'srcset="../assets/')
     .replace('href="standalone-collections/index.html?lang=en"', `href="../standalone-collections/index.html?lang=${locale}"`)
     .replace('href="en/" data-language="en"', 'href="../en/" data-language="en"')
     .replace('href="ar/" data-language="ar"', 'href="../ar/" data-language="ar"')
@@ -93,6 +94,11 @@ for (const [locale, html] of Object.entries(localePages)) {
 
 for (const file of [
   "gift-edition-1.jpg",
+  "noor-product-scroll.mp4",
+  "noor-product-scroll-mobile.mp4",
+  "noor-product-scroll-mobile-poster.jpg",
+  "noor-product-scroll-poster.jpg",
+  "noor-scroll-video.js",
   "gift-edition-2.jpg",
   "gift-edition-3.jpg",
   "city-series-overview.jpg",
