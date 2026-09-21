@@ -125,6 +125,15 @@ for (const file of [
   copyFileSync(resolve(root, "assets", file), resolve(publicAssets, file));
 }
 
+const filmFramesDir = resolve(publicAssets, "noor-film-frames");
+mkdirSync(filmFramesDir, { recursive: true });
+for (const variant of ["desktop", "mobile"]) {
+  for (let index = 0; index < 22; index++) {
+    const file = `${variant}-${String(index).padStart(2, "0")}.webp`;
+    copyFileSync(resolve(root, "assets/noor-film-frames", file), resolve(filmFramesDir, file));
+  }
+}
+
 const collectionDir = resolve(publicDir, "standalone-collections");
 mkdirSync(collectionDir, { recursive: true });
 copyFileSync(resolve(root, "standalone-collections/index.html"), resolve(collectionDir, "index.html"));
