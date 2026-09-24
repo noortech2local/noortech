@@ -1,18 +1,18 @@
 :root {
-  --gold: #d4af37;
-  --gold-soft: #e8c96a;
-  --gold-deep: #a67c00;
-  --ink: #2a2a2a;
-  --ink-soft: #4a4a4a;
-  --muted: #6b6b6b;
-  --glass: rgba(255, 253, 247, 0.72);
-  --glass-strong: rgba(255, 253, 247, 0.84);
-  --glass-border: rgba(119, 105, 73, 0.18);
-  --shadow: 0 20px 50px rgba(86, 72, 43, 0.12);
-  --radius-card: 28px;
+  --gold: #b7955f;
+  --gold-soft: #d4bd93;
+  --gold-deep: #80633c;
+  --ink: #102d27;
+  --ink-soft: #526b65;
+  --muted: #64756f;
+  --glass: #faf8f3;
+  --glass-strong: #faf8f3;
+  --glass-border: rgba(16, 45, 39, 0.16);
+  --shadow: 0 8px 28px rgba(16, 45, 39, 0.04);
+  --radius-card: 4px;
   --radius-pill: 999px;
-  --font-ui: "Outfit", "Segoe UI", sans-serif;
-  --font-quote: "Cormorant Garamond", Georgia, serif;
+  --font-ui: Arial, Helvetica, sans-serif;
+  --font-quote: Georgia, "Times New Roman", serif;
   --font-ar: "Amiri", "Traditional Arabic", serif;
   --header-h: 88px;
   --player-h: 88px;
@@ -26,7 +26,7 @@
 
 html {
   scroll-behavior: smooth;
-  background: #f8f4ea;
+  background: #f2eee5;
 }
 
 body {
@@ -58,71 +58,11 @@ body.is-ar .track-artist {
   inset: 0;
   z-index: 0;
   overflow: hidden;
-  background: #f8f4ea;
+  background: #f2eee5;
   pointer-events: none;
 }
 
-.bg-layer::before,
-.bg-layer::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  will-change: transform, opacity;
-}
-
-.bg-layer::before {
-  width: min(72rem, 96vw);
-  aspect-ratio: 1;
-  top: -12rem;
-  left: -12rem;
-  background: radial-gradient(circle, rgba(145, 176, 133, 0.56) 0%, rgba(173, 196, 160, 0.3) 42%, rgba(173, 196, 160, 0) 72%);
-  filter: blur(20px);
-  animation: sageDrift 12s linear -6s infinite alternate;
-}
-
-.bg-layer::after {
-  width: min(62rem, 88vw);
-  aspect-ratio: 1;
-  top: -16rem;
-  right: -12rem;
-  background: radial-gradient(circle, rgba(220, 181, 94, 0.54) 0%, rgba(234, 205, 144, 0.28) 42%, rgba(234, 205, 144, 0) 72%);
-  filter: blur(24px);
-  animation: goldDrift 16s linear -8s infinite alternate;
-}
-
-@keyframes sageDrift {
-  from {
-    transform: translate3d(-3vw, 3vh, 0) scale(0.96);
-    opacity: 0.7;
-  }
-
-  to {
-    transform: translate3d(30vw, 15vh, 0) scale(1.08);
-    opacity: 1;
-  }
-}
-
-@keyframes goldDrift {
-  from {
-    transform: translate3d(4vw, -1vh, 0) scale(0.94);
-    opacity: 0.62;
-  }
-
-  to {
-    transform: translate3d(-24vw, 18vh, 0) scale(1.1);
-    opacity: 0.94;
-  }
-}
-
-.bg-veil {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(248, 242, 229, 0.3) 100%);
-  pointer-events: none;
-}
+.bg-veil { display: none; }
 
 .site-header,
 .hero,
@@ -316,7 +256,7 @@ body.is-ar .track-artist {
   font-size: clamp(1.2rem, 2.4vw, 1.55rem);
   font-weight: 600;
   line-height: 1.15;
-  color: #1f2430;
+  color: #102d27;
 }
 
 .verse-content {
@@ -334,7 +274,7 @@ body.is-ar .track-artist {
   font-weight: 500;
   font-style: italic;
   line-height: 1.5;
-  color: #1a1a1a;
+  color: #526b65;
 }
 
 .quote-ar {
@@ -344,7 +284,7 @@ body.is-ar .track-artist {
   font-size: clamp(2.15rem, 5.2vw, 3rem);
   font-weight: 400;
   line-height: 1.8;
-  color: #2c2c2c;
+  color: #102d27;
 }
 
 .verse-reference {
@@ -461,8 +401,8 @@ body.is-ar .track-artist {
   flex: 0 0 auto;
   place-items: center;
   border-radius: 50%;
-  color: #647da8;
-  background: rgba(222, 231, 245, 0.8);
+  color: #102d27;
+  background: #e8e1d5;
 }
 
 .prayer-reminder-header h3 {
@@ -470,14 +410,14 @@ body.is-ar .track-artist {
   font-family: var(--font-quote);
   font-size: 1.35rem;
   font-weight: 600;
-  color: #1f2430;
+  color: #102d27;
 }
 
 .prayer-reminder-header p,
 .prayer-status,
 .prayer-hint {
   margin: 0;
-  color: #5a6270;
+  color: #64756f;
   font-size: 0.88rem;
   line-height: 1.45;
 }
@@ -508,7 +448,7 @@ body.is-ar .track-artist {
 }
 
 .prayer-time-card time {
-  color: #2e3440;
+  color: #102d27;
   font-family: var(--font-quote);
   font-size: 1.05rem;
   font-weight: 600;
@@ -569,12 +509,12 @@ body.is-ar .track-artist {
 .prayer-enable {
   border: 0;
   color: #fff;
-  background: #526f9d;
+  background: #0d241f;
   box-shadow: 0 7px 14px rgba(82, 111, 157, 0.2);
 }
 
 .prayer-enable:hover {
-  background: #415d8a;
+  background: #24483e;
   transform: translateY(-1px);
 }
 
@@ -591,7 +531,7 @@ body.is-ar .track-artist {
 .prayer-change:hover,
 .prayer-calendar:hover,
 .prayer-disable:hover {
-  background: rgba(222, 231, 245, 0.65);
+  background: #e8e1d5;
 }
 
 .city-picker {
@@ -661,7 +601,7 @@ body.is-ar .track-artist {
   border: 0;
   border-radius: var(--radius-pill);
   color: #fff;
-  background: #526f9d;
+  background: #0d241f;
   font-family: var(--font-ui);
   font-size: 0.78rem;
   font-weight: 600;
@@ -669,7 +609,7 @@ body.is-ar .track-artist {
 }
 
 .city-search-submit:hover {
-  background: #415d8a;
+  background: #24483e;
 }
 
 .city-search-status {
@@ -727,7 +667,7 @@ body.is-ar .track-artist {
   padding: 0.72rem 0.8rem;
   border: 1px solid rgba(82, 111, 157, 0.17);
   border-radius: 11px;
-  color: #526f9d;
+  color: #0d241f;
   background: rgba(222, 231, 245, 0.38);
 }
 
@@ -850,7 +790,7 @@ body.is-ar .track-artist {
   height: 48px;
   border: none;
   border-radius: 50%;
-  background: #3d4450;
+  background: #0d241f;
   color: #fff;
   cursor: pointer;
   box-shadow: 0 6px 18px rgba(30, 35, 45, 0.28);
@@ -859,7 +799,7 @@ body.is-ar .track-artist {
 
 .play-btn:hover {
   transform: scale(1.05);
-  background: #2f3540;
+  background: #24483e;
 }
 
 .volume-group {
@@ -1140,7 +1080,7 @@ body.is-ar .track-meta {
 .card-action.is-active .action-circle { background: #e7edde; color: #244b38; }
 .verse-feedback { margin-top: 1rem; font-size: .9rem; }
 .verse-feedback button, .favorites-dialog button { min-height: 44px; padding: .6rem 1rem; border: 1px solid #d5cbbb; border-radius: 12px; background: #faf7f0; color: #293e32; font: inherit; cursor: pointer; }
-.favorites-dialog { width: min(620px, calc(100% - 28px)); max-height: 80dvh; padding: 24px; border: 1px solid #d5cbbb; border-radius: 24px; background: #f8f4ea; color: var(--ink); box-shadow: var(--shadow); }
+.favorites-dialog { width: min(620px, calc(100% - 28px)); max-height: 80dvh; padding: 24px; border: 1px solid #d5cbbb; border-radius: 24px; background: #f2eee5; color: var(--ink); box-shadow: var(--shadow); }
 .favorites-dialog::backdrop { background: #14271e80; }
 .favorites-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .favorites-heading h2 { margin: 0; font-family: var(--font-quote); }
@@ -1153,3 +1093,112 @@ button:focus-visible, a:focus-visible { outline: 3px solid #346445; outline-offs
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* Shared Noor identity: quiet paper surfaces and forest-green controls. */
+.site-header {
+  min-height: 94px;
+  padding: 20px 5vw;
+  background: #0d241f;
+  color: #f2eee5;
+  border-bottom: 1px solid #b7955f66;
+  animation: none;
+}
+.brand { gap: 12px; }
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #f2eee5;
+  border-radius: 50%;
+  font: 18px Georgia, serif;
+  filter: none;
+}
+.brand-name {
+  font: 700 15px Arial, Helvetica, sans-serif;
+  letter-spacing: .16em;
+  color: inherit;
+  text-shadow: none;
+}
+.brand-name span { font-weight: 400; opacity: .65; }
+.brand-tagline { color: #c4cec8; font-size: 12px; margin-top: 7px; }
+.header-actions { gap: 12px; }
+.sales-link, .icon-btn, .lang-toggle {
+  background: transparent;
+  border-color: #ffffff4d;
+  color: #f2eee5;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.sales-link { min-height: 44px; padding: 0 18px; font-size: 12px; font-weight: 400; }
+.sales-link:hover, .icon-btn:hover { background: #ffffff15; color: #fff; }
+.icon-btn { width: 44px; height: 44px; }
+.icon-btn.is-active { background: #f2eee5; color: #0d241f; }
+.lang-btn { min-width: 44px; min-height: 44px; color: #d0d8d3; font-size: 11px; }
+.lang-btn.is-active { color: #0d241f; background: #f2eee5; box-shadow: none; }
+.hero { min-height: calc(100svh - 94px); padding: 56px 24px 130px; }
+.inspiration-label { color: #80633c; font-size: 11px; letter-spacing: .2em; animation: none; }
+.quote-card {
+  width: min(760px, 100%);
+  padding: 42px 48px 28px;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  animation: none;
+}
+.verse-title { font-size: clamp(22px, 3vw, 30px); font-weight: 400; margin-bottom: 26px; line-height: 1.3; letter-spacing: -.025em; }
+.verse-content { padding: 30px 0; border-color: #102d2729; }
+.quote-ar { max-width: 100%; font-size: clamp(32px, 4.4vw, 46px); line-height: 1.95; margin-bottom: 22px; }
+.quote-en { font-size: clamp(19px, 2.5vw, 23px); line-height: 1.6; font-weight: 400; }
+.verse-reference { color: #64756f; font-size: 11px; margin-top: 20px; }
+.card-actions { gap: 12px 24px; margin-top: 24px; }
+.card-action { font-size: 13px; padding: 0 8px; }
+.action-circle { width: 28px; height: 32px; border: 0; background: transparent; box-shadow: none; color: inherit; }
+#newInspirationBtn { min-height: 48px; padding: 0 20px; border-radius: 999px; background: #0d241f; color: #f2eee5; }
+#newInspirationBtn:hover { background: #24483e; }
+.card-action.is-active { color: #0d241f; }
+.card-action.is-active .action-circle { background: #e8e1d5; }
+.scroll-hint { animation: none; color: #64756f; }
+.more-section { background: #e8e1d5; border-top: 1px solid #102d2729; padding-top: 56px; }
+.prayer-reminder-card { background: #faf8f3; border-color: #102d2729; border-radius: 4px; box-shadow: none; padding: 32px; }
+.prayer-reminder-header h3 { font-size: 26px; font-weight: 400; }
+.prayer-time-card { border-color: #102d2729; background: #f2eee5; border-radius: 4px; padding: 18px 8px; }
+.prayer-time-card span { color: #526b65; }
+.prayer-time-card time { font-size: 20px; font-weight: 400; }
+.prayer-enable, .city-search-submit { background: #0d241f; box-shadow: none; }
+.prayer-enable:hover, .city-search-submit:hover { background: #24483e; }
+.prayer-actions button, .prayer-method { min-height: 44px; }
+.city-picker { background: #f2eee5; border-color: #102d2729; }
+.city-search-result:hover, .city-search-result:focus-visible { background: #e8e1d5; border-color: #102d27; }
+.player-bar { border-radius: 8px; background: #faf8f3; border-color: #102d2729; box-shadow: 0 8px 30px #102d2714; backdrop-filter: none; -webkit-backdrop-filter: none; animation: none; }
+.play-btn { box-shadow: none; }
+.ctrl-btn { width: 44px; height: 44px; }
+.favorites-dialog { background: #faf8f3; border-color: #102d2729; border-radius: 8px; }
+:where(a, button, select, input):focus-visible { outline: 2px solid #b7955f; outline-offset: 4px; }
+body.is-ar .verse-title { font-family: var(--font-ar); letter-spacing: 0; line-height: 1.7; }
+body.is-ar .inspiration-label { letter-spacing: 0; }
+@media (max-width: 600px) {
+  .site-header { padding: 18px 20px; flex-wrap: wrap; gap: 16px; }
+  .brand-tagline { display: none; }
+  .header-actions { width: 100%; justify-content: space-between; gap: 8px; }
+  .hero { min-height: 0; padding: 36px 16px 48px; }
+  .quote-card { padding: 28px 20px 24px; }
+  .verse-title { font-size: 24px; margin-bottom: 22px; }
+  .verse-content { padding: 22px 0; }
+  .quote-ar { font-size: 32px; }
+  .card-actions { gap: 12px; }
+  #newInspirationBtn { justify-content: center; width: 100%; }
+  .more-section { padding: 32px 16px 180px; }
+  .prayer-reminder-card { padding: 22px 18px; }
+  .prayer-reminder-header h3 { font-size: 23px; }
+  .player-bar { display: grid; grid-template-columns: 1fr auto; gap: 6px; padding: 10px 12px; }
+  .track-meta { grid-column: 1 / -1; }
+  .player-controls { justify-content: flex-start; }
+  .volume-group { justify-content: flex-end; }
+  .track-thumb { width: 36px; height: 36px; border-radius: 4px; }
+}
+
+/* Layout rules must not reveal inactive controls or empty status panels. */
+[hidden] { display: none !important; }
+.prayer-location { background: #f2eee5; border-color: #102d2729; }
+
+body.is-ar .inspiration-label, body.is-ar .card-action { font-size: 16px; }
