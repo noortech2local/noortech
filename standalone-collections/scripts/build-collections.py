@@ -78,6 +78,7 @@ document.title = noorT('NOOR TECH — Collections');
 document.querySelector('meta[name="description"]').content = noorLocale === 'ar' ? 'اكتشف أساور نور تك ومجموعة المدن: الرياض وجدة ومكة والمدينة المنورة. تصاميم منسوجة وتجارب NFC وهدايا مميزة.' : 'Discover NOOR TECH woven wristbands, NFC experiences and the Riyadh, Jeddah, Makkah and Madinah city collections.';
 </script>'''.replace('DICTIONARY', json.dumps(translations, ensure_ascii=False))
 controls = '''<nav class="locale-switch" aria-label="Language / اللغة">
+<a href="../privacy.html">Privacy / الخصوصية</a>
 <a href="?lang=en" lang="en" hreflang="en" data-locale="en">EN</a>
 <a href="?lang=ar" lang="ar" hreflang="ar" data-locale="ar">العربية</a>
 </nav><script>
@@ -90,6 +91,7 @@ function updateLanguageLinks(){
 updateLanguageLinks();window.addEventListener('hashchange',updateLanguageLinks);
 </script>'''
 output = prefix + code
+output = output.replace("<head>", "<head>" + '<meta name="referrer" content="no-referrer">\n<meta http-equiv="Content-Security-Policy" content="default-src \'self\' data:; script-src \'self\' \'unsafe-inline\'; style-src \'self\' \'unsafe-inline\'; img-src \'self\' data: blob:; media-src \'self\'; font-src \'self\' data:; connect-src \'none\'; form-action \'none\'; object-src \'none\'; base-uri \'self\'">', 1)
 output = output.replace('<html lang="zh-CN">', '<html lang="en" dir="ltr">')
 output = output.replace('</head>', '<style>' + (src / 'mobile.css').read_text() + '</style>' + setup + '</head>')
 output = output.replace('<body>', '<body>' + controls + '<noscript><p>Please enable JavaScript to view the collection. / يرجى تفعيل جافاسكريبت لعرض المجموعة.</p></noscript>')

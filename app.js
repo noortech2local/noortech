@@ -1,9 +1,18 @@
-// Storage can be unavailable in private browsing or when the device is full.
+// Demo launch: no persistent preferences, personal data, external APIs or permissions.
+const DEMO_MODE = true;
+const demoValues = new Map();
 const storage = {
-  getItem(key) { try { return localStorage.getItem(key); } catch { return null; } },
-  setItem(key, value) { try { localStorage.setItem(key, value); } catch {} },
-  removeItem(key) { try { localStorage.removeItem(key); } catch {} },
+  getItem(key) { return demoValues.get(key) ?? null; },
+  setItem(key, value) { demoValues.set(key, String(value)); },
+  removeItem(key) { demoValues.delete(key); },
 };
+// Remove this site's legacy saved data without reading or transmitting its contents.
+try {
+  for (let i = localStorage.length - 1; i >= 0; i--) {
+    const key = localStorage.key(i);
+    if (key?.startsWith("noortech-") || key === "noor-sales-language") localStorage.removeItem(key);
+  }
+} catch {}
 function readStored(key, fallback) {
   try { return JSON.parse(storage.getItem(key)) ?? fallback; } catch { return fallback; }
 }
@@ -346,6 +355,7 @@ function applyI18n() {
   renderTrackMeta();
   updateFavoriteState();
   renderPrayerReminders();
+  if (DEMO_MODE) renderDemoRestrictions();
 }
 
 function renderQuote(animate = true) {
@@ -382,6 +392,7 @@ function validVerse(verse) {
 }
 
 async function fetchVerse(identifier) {
+  if (DEMO_MODE) return;
   if (verseCache.has(identifier)) return verseCache.get(identifier);
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 10000);
@@ -402,6 +413,7 @@ async function fetchVerse(identifier) {
 }
 
 function preloadNextVerse() {
+  if (DEMO_MODE) return;
   const number = getRandomVerseNumber();
   nextVerse = { number, promise: fetchVerse(number).catch(() => null) };
 }
@@ -571,6 +583,7 @@ function renderTrackMeta() {
 }
 
 function loadTrack(index, autoplay = false) {
+  if (DEMO_MODE) return;
   trackIndex = (index + tracks.length) % tracks.length;
   const track = tracks[trackIndex];
   els.audioEl.src = track.src;
@@ -598,6 +611,7 @@ function setPlayingUI(isPlaying) {
 }
 
 function togglePlay() {
+  if (DEMO_MODE) return;
   if (els.audioEl.paused) {
     els.audioEl.play().catch(() => {
       showToast(lang === "ar" ? "تعذّر تشغيل الصوت" : "Audio could not play");
@@ -712,6 +726,7 @@ function renderCitySearchResults(results) {
 }
 
 async function searchCities(query, minimumLength = 2) {
+  if (DEMO_MODE) return;
   if (query.length < minimumLength) {
     clearCitySearchResults();
     setCitySearchStatus(i18n[lang].citySearchPrompt);
@@ -777,6 +792,7 @@ function queueCitySearch() {
 }
 
 async function loadPrayerLocationName() {
+  if (DEMO_MODE) return;
   if (!isValidPrayerLocation(prayerLocation)) return;
 
   const { latitude, longitude } = prayerLocation;
@@ -934,6 +950,7 @@ function renderPrayerReminders() {
 }
 
 async function requestPrayerNotificationPermission() {
+  if (DEMO_MODE) return;
   if (!("Notification" in window) || Notification.permission === "granted") {
     return;
   }
@@ -1061,6 +1078,7 @@ function savePrayerCalendar() {
 }
 
 async function loadLocalPrayerTimes(silent = false) {
+  if (DEMO_MODE) return;
   if (!isValidPrayerLocation(prayerLocation)) return;
 
   if (!silent) els.prayerStatus.textContent = i18n[lang].prayerLoading;
@@ -1100,6 +1118,7 @@ async function loadLocalPrayerTimes(silent = false) {
 }
 
 function requestPrayerLocation() {
+  if (DEMO_MODE) return;
   if (!navigator.geolocation) {
     els.prayerStatus.textContent = i18n[lang].prayerLocationDenied;
     return;
@@ -1137,6 +1156,7 @@ function requestPrayerLocation() {
 }
 
 function activatePrayerReminders() {
+  if (DEMO_MODE) return;
   prayerRemindersEnabled = true;
   storage.setItem("noortech-prayer-reminders-enabled", "true");
   els.prayerDisableBtn.hidden = false;
@@ -1185,6 +1205,16 @@ function disablePrayerReminders() {
   clearPrayerSchedules();
   renderPrayerReminders();
   showToast(i18n[lang].prayerDisabled);
+}
+
+function renderDemoRestrictions() {
+  const message = lang === "ar" ? "عرض تجريبي: الموقع والبحث عن المدن والتنبيهات والصوت الخارجي غير مفعّلة. الآية المعروضة نموذج ثابت." : "Demo: location, city search, reminders and external audio are disabled. The verse is a fixed sample.";
+  els.prayerStatus.textContent = message;
+  for (const id of ["prayerEnableBtn", "prayerRefreshBtn", "prayerChangeBtn", "prayerCalendarBtn", "prayerMethod", "citySearchInput", "newInspirationBtn", "playBtn", "prevBtn", "nextBtn", "playlistBtn"]) {
+    const element = document.getElementById(id);
+    if (element) { element.disabled = true; element.title = message; }
+  }
+  document.querySelectorAll(".prayer-hint").forEach(element => element.textContent = message);
 }
 
 /* Events */
@@ -1251,7 +1281,7 @@ if (validVerse(cachedVerse)) {
   currentVerse = cachedVerse; currentVerseNumber = cachedVerse.number; lastVerseNumber = cachedVerse.number;
 }
 applyI18n();
-loadRandomVerse(false, getVerseNumberFromUrl());
+if (!DEMO_MODE) loadRandomVerse(false, getVerseNumberFromUrl());
 if (prayerRemindersEnabled && isValidPrayerLocation(prayerLocation)) {
   loadLocalPrayerTimes();
   if (!prayerLocationName) loadPrayerLocationName();

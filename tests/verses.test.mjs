@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
 import test from 'node:test';
-const source = readFileSync(new URL('../app.js', import.meta.url), 'utf8').split('/* Events */')[0];
+const source = readFileSync(new URL('../app.js', import.meta.url), 'utf8').split('/* Events */')[0].replace('const DEMO_MODE = true;', 'const DEMO_MODE = false;'); // Exercise dormant online behaviour separately from the demo.
 function setup() {
   const nodes = new Map();
   const node = () => ({ hidden: true, textContent: '', children: [], classList: { add() {}, remove() {}, toggle() {} }, setAttribute() {}, append(...items) { this.children.push(...items); }, replaceChildren() { this.children = []; }, addEventListener(name, fn) { this[name] = fn; }, close() {}, scrollIntoView() {}, focus() {}, querySelector() { return this.children.find(x => x.click); } });
@@ -18,7 +18,7 @@ function setup() {
   vm.runInContext(source, context);
   // Keep preloading bounded and observable without leaving real network timers running.
   vm.runInContext('preloadNextVerse = () => { nextVerse = null; };', context);
-  return { run: code => vm.runInContext(code, context), nodes, values, requests };
+  return { run: code => vm.runInContext(code, context), nodes, values: vm.runInContext("demoValues", context), requests };
 }
 const response = number => ({ ok: true, json: async () => ({ data: [
   { text: 'Arabic verse', number, edition: { identifier: 'quran-uthmani' } },

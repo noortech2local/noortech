@@ -49,6 +49,7 @@ const buildLocalePage = (locale) => {
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${escapeText(copy.pageTitle)}</title>`)
     .replace(/(<meta name="description" content=")[^"]*(" data-page-description>)/, `$1${escapeAttribute(copy.pageDescription)}$2`)
     .replace(/(<link rel="canonical" href=")[^"]*(" data-canonical>)/, `$1${productionBase}/${locale}/$2`)
+    .replaceAll('href="privacy.html"', 'href="../privacy.html"')
     .replace('href="sales.css', 'href="../sales.css')
     .replaceAll('src="assets/', 'src="../assets/')
     .replaceAll('srcset="assets/', 'srcset="../assets/')
@@ -82,7 +83,7 @@ for (const [locale, html] of Object.entries(localePages)) {
 rmSync(publicDir, { recursive: true, force: true });
 mkdirSync(publicAssets, { recursive: true });
 
-for (const file of ["sales.html", "sales.css", "sales.js", "collections.html"]) {
+for (const file of ["sales.html", "sales.css", "sales.js", "collections.html", "privacy.html"]) {
   copyFileSync(resolve(root, file), resolve(publicDir, file));
 }
 
