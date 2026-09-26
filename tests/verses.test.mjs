@@ -2,8 +2,8 @@ import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
 import test from 'node:test';
-const source = readFileSync(new URL('../app.js', import.meta.url), 'utf8').split('/* Events */')[0].replace('const DEMO_MODE = true;', 'const DEMO_MODE = false;'); // Exercise dormant online behaviour separately from the demo.
-function setup() {
+const source = readFileSync(new URL('../app.js', import.meta.url), 'utf8').split('/* Events */')[0];
+function setup(demo = false) {
   const nodes = new Map();
   const node = () => ({ hidden: true, textContent: '', children: [], classList: { add() {}, remove() {}, toggle() {} }, setAttribute() {}, append(...items) { this.children.push(...items); }, replaceChildren() { this.children = []; }, addEventListener(name, fn) { this[name] = fn; }, close() {}, scrollIntoView() {}, focus() {}, querySelector() { return this.children.find(x => x.click); } });
   const values = new Map();
@@ -15,7 +15,8 @@ function setup() {
     setTimeout, clearTimeout,
     fetch(url, options) { return new Promise((resolve, reject) => { requests.push({ url, resolve, reject }); options.signal.addEventListener('abort', () => reject(new Error('timeout'))); }); },
   });
-  vm.runInContext(source, context);
+  vm.runInContext(readFileSync(new URL('../assets/quran-verses.js', import.meta.url), 'utf8'), context);
+  vm.runInContext(demo ? source : source.replace('const DEMO_MODE = true;', 'const DEMO_MODE = false;'), context);
   // Keep preloading bounded and observable without leaving real network timers running.
   vm.runInContext('preloadNextVerse = () => { nextVerse = null; };', context);
   return { run: code => vm.runInContext(code, context), nodes, values: vm.runInContext("demoValues", context), requests };
@@ -72,4 +73,32 @@ test('request aborts after its deadline', async () => {
   const pending = s.run('loadRandomVerse(false, 30)');
   s.run('expire()'); await pending;
   assert.equal(s.nodes.get('verseFeedback').hidden, false);
+});
+
+test('demo draws different bundled verses and resolves shared references without requests', async () => {
+  const s = setup(true);
+  assert.equal(s.run('NOOR_QURAN_VERSES.length'), 6236);
+  assert.equal(s.run('NOOR_QURAN_VERSES.every((verse, index) => validVerse(verse) && verse.number === index + 1)'), true);
+  await s.run('loadRandomVerse(false, 1)');
+  assert.equal(s.run('currentVerse.ref'), 'Al-Faatiha 1:1');
+  for (let i = 0; i < 30; i++) {
+    const previous = s.run('currentVerseNumber');
+    await s.run('loadRandomVerse(false)');
+    assert.notEqual(s.run('currentVerseNumber'), previous);
+    assert.equal(s.nodes.get('verseFeedback').hidden, true);
+  }
+  await s.run('loadRandomVerse(false, "94:6")');
+  assert.equal(s.run('currentVerse.ref'), 'Ash-Sharh 94:6');
+  s.run('toggleFavorite(); renderFavorites()');
+  assert.equal(s.run('favorites.has("Ash-Sharh 94:6")'), true);
+  assert.equal(s.requests.length, 0);
+});
+test('missing bundle keeps the existing verse and shows a retry instead of calling the API', async () => {
+  const s = setup(true);
+  const before = s.run('currentVerse.ar');
+  s.run('NOOR_QURAN_VERSES.length = 0');
+  await s.run('loadRandomVerse(false, 1)');
+  assert.equal(s.run('currentVerse.ar'), before);
+  assert.equal(s.nodes.get('verseFeedback').hidden, false);
+  assert.equal(s.requests.length, 0);
 });

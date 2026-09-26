@@ -12,6 +12,7 @@ test('demo blocks APIs, device permissions and audio even when invoked directly'
  navigator:new Proxy({}, {get(){throw Error('device API accessed')}}),
  fetch(){throw Error('network accessed')}
  });
+ vm.runInContext(read('assets/quran-verses.js'),context);
  vm.runInContext(read('app.js').split('/* Events */')[0],context);
  for(const call of ['fetchVerse(1)','searchCities("Riyadh")','loadPrayerLocationName()','loadLocalPrayerTimes()','requestPrayerLocation()','requestPrayerNotificationPermission()','activatePrayerReminders()','loadTrack(0,true)','togglePlay()','preloadNextVerse()']) await vm.runInContext(call,context);
  assert.equal(legacy.has('noortech-prayer-location'),false);

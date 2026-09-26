@@ -392,7 +392,14 @@ function validVerse(verse) {
 }
 
 async function fetchVerse(identifier) {
-  if (DEMO_MODE) return;
+  if (DEMO_MODE) {
+    const verses = typeof NOOR_QURAN_VERSES === "undefined" ? [] : NOOR_QURAN_VERSES;
+    const verse = typeof identifier === "string" && identifier.includes(":")
+      ? verses.find(item => item.ref.endsWith(` ${identifier}`))
+      : verses[Number(identifier) - 1];
+    if (!validVerse(verse)) throw new Error("Bundled verse unavailable");
+    return verse;
+  }
   if (verseCache.has(identifier)) return verseCache.get(identifier);
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 10000);
@@ -1208,9 +1215,9 @@ function disablePrayerReminders() {
 }
 
 function renderDemoRestrictions() {
-  const message = lang === "ar" ? "عرض تجريبي: الموقع والبحث عن المدن والتنبيهات والصوت الخارجي غير مفعّلة. الآية المعروضة نموذج ثابت." : "Demo: location, city search, reminders and external audio are disabled. The verse is a fixed sample.";
+  const message = lang === "ar" ? "عرض تجريبي: الموقع والبحث عن المدن والتنبيهات والصوت الخارجي غير مفعّلة. الآيات مضمّنة في هذا العرض التجريبي." : "Demo: location, city search, reminders and external audio are disabled. Verses are bundled with this demo.";
   els.prayerStatus.textContent = message;
-  for (const id of ["prayerEnableBtn", "prayerRefreshBtn", "prayerChangeBtn", "prayerCalendarBtn", "prayerMethod", "citySearchInput", "newInspirationBtn", "playBtn", "prevBtn", "nextBtn", "playlistBtn"]) {
+  for (const id of ["prayerEnableBtn", "prayerRefreshBtn", "prayerChangeBtn", "prayerCalendarBtn", "prayerMethod", "citySearchInput", "playBtn", "prevBtn", "nextBtn", "playlistBtn"]) {
     const element = document.getElementById(id);
     if (element) { element.disabled = true; element.title = message; }
   }
@@ -1281,7 +1288,7 @@ if (validVerse(cachedVerse)) {
   currentVerse = cachedVerse; currentVerseNumber = cachedVerse.number; lastVerseNumber = cachedVerse.number;
 }
 applyI18n();
-if (!DEMO_MODE) loadRandomVerse(false, getVerseNumberFromUrl());
+loadRandomVerse(false, getVerseNumberFromUrl());
 if (prayerRemindersEnabled && isValidPrayerLocation(prayerLocation)) {
   loadLocalPrayerTimes();
   if (!prayerLocationName) loadPrayerLocationName();
