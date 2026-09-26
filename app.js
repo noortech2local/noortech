@@ -1,5 +1,5 @@
-// Demo launch: no persistent preferences, personal data, external APIs or permissions.
-const DEMO_MODE = true;
+// Preferences and location stay in page memory; optional services are called directly.
+const USE_BUNDLED_QURAN = true;
 const demoValues = new Map();
 const storage = {
   getItem(key) { return demoValues.get(key) ?? null; },
@@ -355,7 +355,6 @@ function applyI18n() {
   renderTrackMeta();
   updateFavoriteState();
   renderPrayerReminders();
-  if (DEMO_MODE) renderDemoRestrictions();
 }
 
 function renderQuote(animate = true) {
@@ -392,7 +391,7 @@ function validVerse(verse) {
 }
 
 async function fetchVerse(identifier) {
-  if (DEMO_MODE) {
+  if (USE_BUNDLED_QURAN) {
     const verses = typeof NOOR_QURAN_VERSES === "undefined" ? [] : NOOR_QURAN_VERSES;
     const verse = typeof identifier === "string" && identifier.includes(":")
       ? verses.find(item => item.ref.endsWith(` ${identifier}`))
@@ -420,7 +419,7 @@ async function fetchVerse(identifier) {
 }
 
 function preloadNextVerse() {
-  if (DEMO_MODE) return;
+  if (USE_BUNDLED_QURAN) return;
   const number = getRandomVerseNumber();
   nextVerse = { number, promise: fetchVerse(number).catch(() => null) };
 }
@@ -590,13 +589,12 @@ function renderTrackMeta() {
 }
 
 function loadTrack(index, autoplay = false) {
-  if (DEMO_MODE) return;
   trackIndex = (index + tracks.length) % tracks.length;
   const track = tracks[trackIndex];
   els.audioEl.src = track.src;
   renderTrackMeta();
   if (autoplay) {
-    els.audioEl.play().catch(() => setPlayingUI(false));
+    els.audioEl.play().catch(error => { if (error.name !== "AbortError") setPlayingUI(false); });
   }
 }
 
@@ -618,9 +616,9 @@ function setPlayingUI(isPlaying) {
 }
 
 function togglePlay() {
-  if (DEMO_MODE) return;
   if (els.audioEl.paused) {
-    els.audioEl.play().catch(() => {
+    els.audioEl.play().catch(error => {
+      if (error.name === "AbortError") return;
       showToast(lang === "ar" ? "تعذّر تشغيل الصوت" : "Audio could not play");
       setPlayingUI(false);
     });
@@ -733,7 +731,6 @@ function renderCitySearchResults(results) {
 }
 
 async function searchCities(query, minimumLength = 2) {
-  if (DEMO_MODE) return;
   if (query.length < minimumLength) {
     clearCitySearchResults();
     setCitySearchStatus(i18n[lang].citySearchPrompt);
@@ -746,7 +743,8 @@ async function searchCities(query, minimumLength = 2) {
 
   try {
     const response = await fetch(
-      `${CITY_SEARCH_API_BASE}?name=${encodeURIComponent(query)}&count=6&language=${lang}&format=json`
+      `${CITY_SEARCH_API_BASE}?name=${encodeURIComponent(query)}&count=6&language=${lang}&format=json`,
+      { credentials: "omit", referrerPolicy: "no-referrer" }
     );
     if (!response.ok) throw new Error("City search request failed");
 
@@ -799,14 +797,14 @@ function queueCitySearch() {
 }
 
 async function loadPrayerLocationName() {
-  if (DEMO_MODE) return;
   if (!isValidPrayerLocation(prayerLocation)) return;
 
   const { latitude, longitude } = prayerLocation;
   const locationKey = `${latitude},${longitude}`;
   try {
     const response = await fetch(
-      `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${encodeURIComponent(latitude)}&longitude=${encodeURIComponent(longitude)}&localityLanguage=${lang}`
+      `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${encodeURIComponent(latitude)}&longitude=${encodeURIComponent(longitude)}&localityLanguage=${lang}`,
+      { credentials: "omit", referrerPolicy: "no-referrer" }
     );
     if (!response.ok) throw new Error("Location name request failed");
 
@@ -957,7 +955,6 @@ function renderPrayerReminders() {
 }
 
 async function requestPrayerNotificationPermission() {
-  if (DEMO_MODE) return;
   if (!("Notification" in window) || Notification.permission === "granted") {
     return;
   }
@@ -1085,7 +1082,6 @@ function savePrayerCalendar() {
 }
 
 async function loadLocalPrayerTimes(silent = false) {
-  if (DEMO_MODE) return;
   if (!isValidPrayerLocation(prayerLocation)) return;
 
   if (!silent) els.prayerStatus.textContent = i18n[lang].prayerLoading;
@@ -1094,7 +1090,8 @@ async function loadLocalPrayerTimes(silent = false) {
 
   try {
     const response = await fetch(
-      `${PRAYER_TIMES_API_BASE}/${getPrayerApiDate()}?latitude=${latitude}&longitude=${longitude}&method=${method}`
+      `${PRAYER_TIMES_API_BASE}/${getPrayerApiDate()}?latitude=${latitude}&longitude=${longitude}&method=${method}`,
+      { credentials: "omit", referrerPolicy: "no-referrer" }
     );
     if (!response.ok) throw new Error("Prayer time request failed");
 
@@ -1125,7 +1122,6 @@ async function loadLocalPrayerTimes(silent = false) {
 }
 
 function requestPrayerLocation() {
-  if (DEMO_MODE) return;
   if (!navigator.geolocation) {
     els.prayerStatus.textContent = i18n[lang].prayerLocationDenied;
     return;
@@ -1163,7 +1159,6 @@ function requestPrayerLocation() {
 }
 
 function activatePrayerReminders() {
-  if (DEMO_MODE) return;
   prayerRemindersEnabled = true;
   storage.setItem("noortech-prayer-reminders-enabled", "true");
   els.prayerDisableBtn.hidden = false;
@@ -1212,16 +1207,6 @@ function disablePrayerReminders() {
   clearPrayerSchedules();
   renderPrayerReminders();
   showToast(i18n[lang].prayerDisabled);
-}
-
-function renderDemoRestrictions() {
-  const message = lang === "ar" ? "عرض تجريبي: الموقع والبحث عن المدن والتنبيهات والصوت الخارجي غير مفعّلة. الآيات مضمّنة في هذا العرض التجريبي." : "Demo: location, city search, reminders and external audio are disabled. Verses are bundled with this demo.";
-  els.prayerStatus.textContent = message;
-  for (const id of ["prayerEnableBtn", "prayerRefreshBtn", "prayerChangeBtn", "prayerCalendarBtn", "prayerMethod", "citySearchInput", "playBtn", "prevBtn", "nextBtn", "playlistBtn"]) {
-    const element = document.getElementById(id);
-    if (element) { element.disabled = true; element.title = message; }
-  }
-  document.querySelectorAll(".prayer-hint").forEach(element => element.textContent = message);
 }
 
 /* Events */

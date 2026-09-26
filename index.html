@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self'; font-src 'self' data:; connect-src 'none'; form-action 'none'; object-src 'none'; base-uri 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' https://www.soundhelix.com; font-src 'self' data:; connect-src https://api.aladhan.com https://api.bigdatacloud.net https://geocoding-api.open-meteo.com; form-action 'none'; object-src 'none'; base-uri 'self'">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NoorTech — Daily Inspiration</title>
@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="styles.css?v=20260923-3" />
   </head>
   <body>
-<aside style="position:relative;z-index:5;padding:16px;text-align:center">Demo: no sign-up, tracking or location collection. Choices reset on reload. <a href="privacy.html">Privacy / الخصوصية</a><br><span lang="ar" dir="rtl">عرض تجريبي دون تسجيل أو تتبع أو جمع الموقع. تُمسح الاختيارات عند إعادة التحميل.</span></aside>
+<aside style="position:relative;z-index:5;padding:16px;text-align:center">No accounts or analytics. Preferences reset on reload. Optional services receive requests directly. <a href="privacy.html">Privacy / الخصوصية</a><br><span lang="ar" dir="rtl">دون حسابات أو تحليلات. تُمسح التفضيلات عند إعادة التحميل. تتلقى الخدمات الاختيارية الطلبات مباشرة.</span></aside>
     <div class="bg-layer" aria-hidden="true"></div>
     <div class="bg-veil" aria-hidden="true"></div>
 
@@ -218,6 +218,7 @@
               <p class="prayer-location-updated" id="prayerLocationUpdated"></p>
             </div>
           </div>
+          <p class="prayer-hint">Using location sends coordinates directly to AlAdhan (prayer times) and BigDataCloud (city name). City searches go to Open-Meteo. Noor Tech does not save these details on its servers. Providers may log requests. Choose “Change city” to avoid device location.<br><span lang="ar" dir="rtl">يرسل استخدام الموقع الإحداثيات مباشرة إلى AlAdhan لمواقيت الصلاة وBigDataCloud لاسم المدينة. تُرسل عمليات البحث إلى Open-Meteo. لا تحفظ نور تك هذه البيانات على خوادمها، وقد تسجّل الجهات المزوّدة الطلبات. اختر تغيير المدينة لتجنّب استخدام موقع الجهاز.</span></p>
           <p class="prayer-status" id="prayerStatus" aria-live="polite" data-i18n="prayerLocationPrompt">
             Enable reminders to use your location and load today's prayer times.
           </p>
@@ -301,12 +302,12 @@
       <div id="favoritesList"></div>
     </dialog>
 
-    <audio id="audioEl" preload="metadata"></audio>
+    <audio id="audioEl" preload="none"></audio>
 
     <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
     <p style="position:relative;text-align:center;padding:16px 20px 100px;font-size:12px">Quran text: Uthmani · English: Saheeh International · <a href="https://alquran.cloud/api" rel="noreferrer">Al Quran Cloud</a><br><span lang="ar" dir="rtl">نص القرآن بالرسم العثماني · الترجمة الإنجليزية: صحيح إنترناشونال</span></p>
     <script src="assets/quran-verses.js?v=1"></script>
-    <script src="app.js?v=privacy-local-verses-1"></script>
+    <script src="app.js?v=local-features-1"></script>
   </body>
 </html>

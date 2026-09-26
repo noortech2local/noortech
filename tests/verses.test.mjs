@@ -16,7 +16,7 @@ function setup(demo = false) {
     fetch(url, options) { return new Promise((resolve, reject) => { requests.push({ url, resolve, reject }); options.signal.addEventListener('abort', () => reject(new Error('timeout'))); }); },
   });
   vm.runInContext(readFileSync(new URL('../assets/quran-verses.js', import.meta.url), 'utf8'), context);
-  vm.runInContext(demo ? source : source.replace('const DEMO_MODE = true;', 'const DEMO_MODE = false;'), context);
+  vm.runInContext(demo ? source : source.replace('const USE_BUNDLED_QURAN = true;', 'const USE_BUNDLED_QURAN = false;'), context);
   // Keep preloading bounded and observable without leaving real network timers running.
   vm.runInContext('preloadNextVerse = () => { nextVerse = null; };', context);
   return { run: code => vm.runInContext(code, context), nodes, values: vm.runInContext("demoValues", context), requests };
