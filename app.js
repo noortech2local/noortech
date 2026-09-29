@@ -283,7 +283,8 @@ const els = {
   prayerStatus: document.getElementById("prayerStatus"),
 };
 
-let lang = storage.getItem("noortech-lang") === "ar" ? "ar" : "en";
+const requestedLanguage = new URLSearchParams(window.location.search).get("lang");
+let lang = (requestedLanguage || storage.getItem("noortech-lang")) === "ar" ? "ar" : "en";
 let currentVerse = fallbackVerse;
 let currentVerseNumber = null;
 let lastVerseNumber = null;

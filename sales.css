@@ -261,3 +261,6 @@ html{scroll-padding-top:125px}
 @media(prefers-reduced-motion:reduce){.product-film__sequence{display:none}}
 /* Safari versions without overflow:clip must not create a sticky scroll parent. */
 @supports not (overflow:clip){html,body{overflow-x:visible}}
+
+/* Entry to the live Quran experience from the product story. */
+.connect__demo{margin-top:28px;max-width:100%;white-space:normal;text-align:center;line-height:1.5}
