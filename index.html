@@ -11,10 +11,10 @@
       content="NoorTech — find daily Islamic inspiration to nourish your soul."
     />
     <!-- Bump this version whenever local CSS or JavaScript assets change. -->
-    <link rel="stylesheet" href="styles.css?v=20260923-3" />
+    <link rel="stylesheet" href="styles.css?v=reader-20261118" />
   </head>
   <body>
-<aside style="position:relative;z-index:5;padding:16px;text-align:center">No accounts or analytics. Preferences reset on reload. Optional services receive requests directly. <a href="privacy.html">Privacy / الخصوصية</a><br><span lang="ar" dir="rtl">دون حسابات أو تحليلات. تُمسح التفضيلات عند إعادة التحميل. تتلقى الخدمات الاختيارية الطلبات مباشرة.</span></aside>
+<aside class="reading-notice"><span data-i18n="notice">No accounts or analytics.</span> · <a href="privacy.html" data-i18n="privacyLink">Privacy</a></aside>
     <div class="bg-layer" aria-hidden="true"></div>
     <div class="bg-veil" aria-hidden="true"></div>
 
@@ -30,7 +30,7 @@
       </div>
 
       <div class="header-actions">
-        <a class="sales-link" href="sales.html">Shop City Series</a>
+        <a class="sales-link" href="en/" data-i18n="salesLink">City Series</a>
         <button
           class="icon-btn"
           type="button"
@@ -72,13 +72,11 @@
       </div>
 
       <article class="quote-card" id="quoteCard">
-        <h2 class="verse-title" data-i18n="verseTitle">A small moment of reflection</h2>
+        <h2 class="reader-reference" id="quoteReference" dir="auto" tabindex="-1"></h2>
         <div class="verse-content">
-          <p class="quote-ar" id="quoteAr" dir="rtl" lang="ar">
-            رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً
-          </p>
-          <p class="quote-en" id="quoteEn" lang="en" dir="ltr">“Our Lord, grant us good in this life and good in the next.”</p>
-          <p class="verse-reference" id="quoteReference">Al-Baqarah 2:201</p>
+          <p class="quote-ar" id="quoteAr" dir="rtl" lang="ar"></p>
+          <p class="quote-en" id="quoteEn" lang="en" dir="ltr"></p>
+
         </div>
 
         <div class="verse-feedback" id="verseFeedback" hidden>
@@ -117,12 +115,71 @@
         </div>
       </article>
 
-      <p class="scroll-hint">
-        <span data-i18n="scrollHint">Scroll down for more</span>
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6">
-          <polyline points="6 9 12 15 18 9" />
-        </svg>
-      </p>
+<details class="listen"><summary data-i18n="listen">Listen to ambient music</summary>    <div class="player-bar" role="region" aria-label="Music player">
+      <div class="track-meta">
+        <img
+          class="track-thumb"
+          src="assets/thumb.jpg"
+          alt=""
+          width="48"
+          height="48"
+        />
+        <div>
+          <p class="track-title" data-i18n="trackTitle">Peaceful Piano</p>
+          <p class="track-artist" data-i18n="trackArtist">Ambient Music</p>
+        </div>
+      </div>
+
+      <div class="player-controls">
+        <button type="button" class="ctrl-btn" id="prevBtn" aria-label="Previous">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M6 6h2v12H6V6zm3.5 6 8.5 6V6l-8.5 6z" />
+          </svg>
+        </button>
+        <button type="button" class="play-btn" id="playBtn" aria-label="Play">
+          <svg class="icon-play" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+            <path d="M8 5v14l11-7L8 5z" />
+          </svg>
+          <svg class="icon-pause" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" hidden>
+            <path d="M6 5h4v14H6V5zm8 0h4v14h-4V5z" />
+          </svg>
+        </button>
+        <button type="button" class="ctrl-btn" id="nextBtn" aria-label="Next">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M16 6h2v12h-2V6zM6 18l8.5-6L6 6v12z" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="volume-group">
+        <button type="button" class="ctrl-btn" id="muteBtn" aria-label="Volume">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path
+              d="M3 10v4h4l5 4V6L7 10H3zm13.5 2c0-1.8-1-3.3-2.5-4v8c1.5-.7 2.5-2.2 2.5-4z"
+            />
+          </svg>
+        </button>
+        <input
+          type="range"
+          class="volume-slider"
+          id="volumeSlider"
+          min="0"
+          max="1"
+          step="0.01"
+          value="0.55"
+          aria-label="Volume level"
+        />
+        <button type="button" class="ctrl-btn" id="playlistBtn" aria-label="Playlist">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8">
+            <line x1="4" y1="7" x2="20" y2="7" />
+            <line x1="4" y1="12" x2="20" y2="12" />
+            <line x1="4" y1="17" x2="14" y2="17" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+</details>
     </main>
 
     <section class="more-section" id="more">
@@ -229,76 +286,12 @@
       </div>
     </section>
 
-    <div class="player-bar" role="region" aria-label="Music player">
-      <div class="track-meta">
-        <img
-          class="track-thumb"
-          src="assets/thumb.jpg"
-          alt=""
-          width="48"
-          height="48"
-        />
-        <div>
-          <p class="track-title" data-i18n="trackTitle">Peaceful Piano</p>
-          <p class="track-artist" data-i18n="trackArtist">Ambient Music</p>
-        </div>
-      </div>
-
-      <div class="player-controls">
-        <button type="button" class="ctrl-btn" id="prevBtn" aria-label="Previous">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-            <path d="M6 6h2v12H6V6zm3.5 6 8.5 6V6l-8.5 6z" />
-          </svg>
-        </button>
-        <button type="button" class="play-btn" id="playBtn" aria-label="Play">
-          <svg class="icon-play" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-            <path d="M8 5v14l11-7L8 5z" />
-          </svg>
-          <svg class="icon-pause" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" hidden>
-            <path d="M6 5h4v14H6V5zm8 0h4v14h-4V5z" />
-          </svg>
-        </button>
-        <button type="button" class="ctrl-btn" id="nextBtn" aria-label="Next">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-            <path d="M16 6h2v12h-2V6zM6 18l8.5-6L6 6v12z" />
-          </svg>
-        </button>
-      </div>
-
-      <div class="volume-group">
-        <button type="button" class="ctrl-btn" id="muteBtn" aria-label="Volume">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-            <path
-              d="M3 10v4h4l5 4V6L7 10H3zm13.5 2c0-1.8-1-3.3-2.5-4v8c1.5-.7 2.5-2.2 2.5-4z"
-            />
-          </svg>
-        </button>
-        <input
-          type="range"
-          class="volume-slider"
-          id="volumeSlider"
-          min="0"
-          max="1"
-          step="0.01"
-          value="0.55"
-          aria-label="Volume level"
-        />
-        <button type="button" class="ctrl-btn" id="playlistBtn" aria-label="Playlist">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8">
-            <line x1="4" y1="7" x2="20" y2="7" />
-            <line x1="4" y1="12" x2="20" y2="12" />
-            <line x1="4" y1="17" x2="14" y2="17" />
-          </svg>
-        </button>
-      </div>
-    </div>
-
     <dialog id="favoritesDialog" class="favorites-dialog" aria-labelledby="favoritesTitle">
       <div class="favorites-heading">
         <h2 id="favoritesTitle" data-i18n="savedVerses">Saved verses</h2>
         <button type="button" id="closeFavoritesBtn" data-i18n-aria-label="closeSaved" aria-label="Close saved verses">×</button>
       </div>
-      <p data-i18n="savedHint">Saved on this device.</p>
+      <p data-i18n="savedHint">Saved until this page is reloaded.</p>
       <div id="favoritesList"></div>
     </dialog>
 
@@ -308,6 +301,6 @@
 
     <p style="position:relative;text-align:center;padding:16px 20px 100px;font-size:12px">Quran text: Uthmani · English: Saheeh International · <a href="https://alquran.cloud/api" rel="noreferrer">Al Quran Cloud</a><br><span lang="ar" dir="rtl">نص القرآن بالرسم العثماني · الترجمة الإنجليزية: صحيح إنترناشونال</span></p>
     <script src="assets/quran-verses.js?v=1"></script>
-    <script src="app.js?v=quran-link-1"></script>
+    <script src="app.js?v=reader-20261118"></script>
   </body>
 </html>

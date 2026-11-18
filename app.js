@@ -111,13 +111,14 @@ const tracks = [
 
 const i18n = {
   en: {
+    notice:"No accounts or analytics.",privacyLink:"Privacy",salesLink:"City Series",listen:"Listen to ambient music",
     tagline: "Find inspiration. Nourish your soul.",
     dailyLabel: "A verse for today",
     verseTitle: "A small moment of reflection",
     newInspiration: "Draw another verse",
     share: "Share",
     save: "Save", saved: "Saved", savedVerses: "Saved verses", closeSaved: "Close saved verses",
-    savedHint: "Saved on this device.", emptySaved: "No saved verses yet. Tap Save on a verse to keep it here.",
+    savedHint: "Saved until this page is reloaded.", emptySaved: "No saved verses yet. Tap Save on a verse to keep it here.",
     removeSaved: "Remove", retry: "Try again", openSaved: "Read verse",
     scrollHint: "Scroll down for more",
     moreTitle: "Reflections for the Heart",
@@ -178,13 +179,14 @@ const i18n = {
       "Times mark the start of each prayer and can differ from your local masjid's jama'ah schedule. Calendar saves today's displayed times. Alerts work while this site stays open.",
   },
   ar: {
+    notice:"دون حسابات أو تحليلات.",privacyLink:"الخصوصية",salesLink:"مجموعة المدن",listen:"الاستماع إلى موسيقى هادئة",
     tagline: "ابحث عن الإلهام. غذِّ روحك.",
     dailyLabel: "آية لليوم",
     verseTitle: "لحظة قصيرة للتأمل",
     newInspiration: "اختر آية أخرى",
     share: "مشاركة",
     save: "حفظ", saved: "محفوظة", savedVerses: "الآيات المحفوظة", closeSaved: "إغلاق الآيات المحفوظة",
-    savedHint: "محفوظة على هذا الجهاز.", emptySaved: "لا توجد آيات محفوظة بعد. اضغط حفظ للاحتفاظ بآية هنا.",
+    savedHint: "تظل الآيات محفوظة حتى إعادة تحميل الصفحة.", emptySaved: "لا توجد آيات محفوظة بعد. اضغط حفظ للاحتفاظ بآية هنا.",
     removeSaved: "إزالة", retry: "حاول مجددًا", openSaved: "قراءة الآية",
     scrollHint: "مرّر للأسفل للمزيد",
     moreTitle: "تأملات للقلب",
@@ -329,6 +331,7 @@ function showToast(message) {
 
 function applyI18n() {
   const dict = i18n[lang];
+  document.querySelector('.sales-link').href = lang + '/';
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
   document.body.classList.toggle("is-ar", lang === "ar");
@@ -1219,7 +1222,13 @@ document.querySelectorAll(".lang-btn").forEach((btn) => {
   });
 });
 
-els.newInspirationBtn.addEventListener("click", () => loadRandomVerse());
+els.newInspirationBtn.addEventListener("click", async () => {
+  await loadRandomVerse();
+  if (pendingVerseNumber === null) {
+    els.quoteReference.focus({preventScroll:true});
+    if (els.quoteReference.getBoundingClientRect().top < 0) els.quoteReference.scrollIntoView({block:"start", behavior:"instant"});
+  }
+});
 els.shareBtn.addEventListener("click", shareVerse);
 document.getElementById("saveVerseBtn").addEventListener("click", toggleFavorite);
 els.favoritesBtn.addEventListener("click", () => {
@@ -1273,8 +1282,7 @@ const cachedVerse = readStored("noortech-last-verse", null);
 if (validVerse(cachedVerse)) {
   currentVerse = cachedVerse; currentVerseNumber = cachedVerse.number; lastVerseNumber = cachedVerse.number;
 }
-applyI18n();
-loadRandomVerse(false, getVerseNumberFromUrl());
+loadRandomVerse(false, getVerseNumberFromUrl()).then(applyI18n);
 if (prayerRemindersEnabled && isValidPrayerLocation(prayerLocation)) {
   loadLocalPrayerTimes();
   if (!prayerLocationName) loadPrayerLocationName();

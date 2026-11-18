@@ -1202,3 +1202,22 @@ body.is-ar .inspiration-label { letter-spacing: 0; }
 .prayer-location { background: #f2eee5; border-color: #102d2729; }
 
 body.is-ar .inspiration-label, body.is-ar .card-action { font-size: 16px; }
+
+.reading-notice{position:relative;padding:6px 16px;text-align:center;font:12px/1.4 system-ui;color:#3a5146;background:#ede7da}
+.reading-notice a{color:inherit;text-underline-offset:3px}
+.hero{min-height:0;padding:clamp(25px,5vw,72px) 18px 32px;background:#f3efe6}
+.inspiration-label{margin-bottom:18px}
+.quote-card{background:#fffdf7;border:1px solid #d5c9ae;border-top:3px solid #a88a50;border-radius:3px;width:min(840px,100%);padding:clamp(20px,4vw,52px);box-shadow:0 8px 30px #40331408}
+.reader-reference{font:normal clamp(25px,3vw,38px)/1.25 Georgia,serif;color:#264a3e;margin:0;scroll-margin-top:24px}
+.reader-reference:focus{outline:none}
+.verse-content{border:0;padding:24px 0 0}
+.quote-ar{margin:0 auto 18px;line-height:1.95;font-size:clamp(30px,4vw,46px);max-width:25em}
+.quote-en{max-width:48ch;margin:0 auto;font:normal clamp(18px,2vw,23px)/1.55 Georgia,serif;color:#46544b;text-wrap:pretty}
+.card-actions{border-top:1px solid #ded5c3;padding-top:16px}
+.listen{width:min(840px,100%);color:#40554d;margin-top:12px}
+.listen summary{cursor:pointer;padding:12px 4px;min-height:44px;font-size:14px}
+.listen .player-bar{position:static;transform:none;width:100%;margin:0}
+.more-section{padding-bottom:32px}
+.quote-card.is-switching{animation:none}
+@media(prefers-reduced-motion:no-preference){.quote-card.is-switching .verse-content{animation:reader-fade .24s ease-out}@keyframes reader-fade{from{opacity:.45}to{opacity:1}}}
+@media(max-width:600px){.site-header{padding:10px 16px;gap:8px}.header-actions{width:auto;flex:1;justify-content:flex-end;gap:5px}.sales-link{padding:0 8px}.brand-text{display:none}.hero{padding:22px 12px}.quote-card{padding:22px 16px}.quote-ar{font-size:30px}.card-actions{gap:4px}.inspiration-label{margin-bottom:12px}}
